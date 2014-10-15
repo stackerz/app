@@ -15,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -155,7 +157,6 @@ public class Stackerz extends Activity
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -167,14 +168,16 @@ public class Stackerz extends Activity
             fragment.setArguments(args);
             return fragment;
         }
-
         public PlaceholderFragment() {
         }
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_stackerz, container, false);
+            WebView webView = (WebView) rootView.findViewById(R.id.webView);
+            webView.loadUrl("https://stack.limagic.com/horizon");
             return rootView;
         }
 
