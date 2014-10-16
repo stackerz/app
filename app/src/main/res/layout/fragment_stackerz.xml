@@ -29,8 +29,7 @@
         android:layout_centerHorizontal="true"
         android:clickable="true"
         android:textColor="#ffffff"
-        android:background="#222222"
-        android:stateListAnimator="@android:color/white" />
+        android:background="#222222"/>
 
 
 </RelativeLayout>

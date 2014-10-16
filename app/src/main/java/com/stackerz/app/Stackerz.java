@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -179,6 +180,25 @@ public class Stackerz extends Activity
             View rootView = inflater.inflate(R.layout.fragment_stackerz, container, false);
             //WebView webView = (WebView) rootView.findViewById(R.id.webView);
             //webView.loadUrl("https://stack.limagic.com/horizon");
+            //Button btn = (Button)rootView.findViewById(R.id.connectButtonLogin);
+
+            //btn.setOnClickListener(new View.OnClickListener() {
+
+               // @Override
+               // public void onClick(View v) {
+                    // Create new fragment and transaction
+               //     Fragment newFragment = getFragmentManager().findFragmentById(R.id.login);
+               //     FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                    // Replace whatever is in the fragment_container view with this fragment,
+                    // and add the transaction to the back stack
+               //     transaction.replace(R.id.container, newFragment);
+               //     transaction.addToBackStack(null);
+
+                    // Commit the transaction
+                //    transaction.commit();
+            //    }
+          //  });
             return rootView;
         }
 
