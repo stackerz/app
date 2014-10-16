@@ -176,8 +176,8 @@ public class Stackerz extends Activity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_stackerz, container, false);
-            WebView webView = (WebView) rootView.findViewById(R.id.webView);
-            webView.loadUrl("https://stack.limagic.com/horizon");
+            //WebView webView = (WebView) rootView.findViewById(R.id.webView);
+            //webView.loadUrl("https://stack.limagic.com/horizon");
             return rootView;
         }
 
