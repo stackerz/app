@@ -10,6 +10,12 @@
     <string name="routersSection">Routers</string>
     <string name="projectsSection">Projects</string>
     <string name="usersSection">Users</string>
+    <string name="userLoginTV">User Name:</string>
+    <string name="userLoginET">john.doe</string>
+    <string name="userPasswordTV">Password:</string>
+    <string name="userPasswordET">p@ssw0rd</string>
+    <string name="serverTV">Server:</string>
+    <string name="serverET">Horizon/Keystone URL</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Action</string>
