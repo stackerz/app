@@ -28,6 +28,6 @@
         android:layout_alignParentBottom="false"
         android:layout_alignParentRight="true"
         android:layout_alignWithParentIfMissing="false"
-        android:alpha="0.2"/>
+        android:alpha="0.1"/>
 
 </RelativeLayout>
