@@ -65,13 +65,6 @@ public class Login extends Activity implements View.OnClickListener{
         Intent intent = new Intent(Login.this,Stackerz.class);
         startActivity(intent);
 
-
-        //FragmentManager fragmentManager = getFragmentManager();
-        //fragmentManager.beginTransaction()
-        //        .replace(R.id.container, Stackerz.PlaceholderFragment.newInstance(0))
-        //        .commit();
-
-
     }
 
 
