@@ -1,6 +1,7 @@
 package com.stackerz.app;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -55,6 +56,10 @@ public class Login extends Activity implements View.OnClickListener{
         password = passInput.getText().toString();
         endpoint = serverInput.getText().toString();
         sharedPreferences();
+        //FragmentManager fragmentManager = getFragmentManager();
+        //fragmentManager.beginTransaction()
+        //        .replace(R.id.container, Stackerz.PlaceholderFragment.newInstance(0))
+        //        .commit();
 
 
     }
