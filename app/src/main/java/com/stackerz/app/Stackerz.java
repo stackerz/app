@@ -86,6 +86,10 @@ public class Stackerz extends Activity
             case 7:
                 fragmentManager.beginTransaction().replace(R.id.container, UsersFragment.newInstance(position)).commit();
                 break;
+            default:
+                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position)).commit();
+                break;
+
         }
 
     }
