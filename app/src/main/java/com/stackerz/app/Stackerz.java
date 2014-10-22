@@ -8,6 +8,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -186,10 +187,11 @@ public class Stackerz extends Activity
             View rootView = inflater.inflate(R.layout.fragment_stackerz, container, false);
             //WebView webView = (WebView) rootView.findViewById(R.id.webView);
             //webView.loadUrl("https://stack.limagic.com/horizon");
-            Button connect = (Button)rootView.findViewById(R.id.connectButtonMain);
+            final Button connect = (Button)rootView.findViewById(R.id.connectButtonMain);
             connect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    connect.setBackgroundColor(Color.RED);
                     Intent intent = new Intent(getActivity(),Login.class);
                     startActivity(intent);
                 }

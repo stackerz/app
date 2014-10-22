@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -49,10 +50,12 @@ public class Login extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View v){
         v.getId();
+        v.setBackgroundColor(Color.RED);
         username = userInput.getText().toString();
         password = passInput.getText().toString();
         endpoint = serverInput.getText().toString();
         sharedPreferences();
+
 
     }
 
