@@ -64,6 +64,7 @@ public class Login extends Activity implements View.OnClickListener{
         sharedPreferences();
         Intent intent = new Intent(Login.this,Stackerz.class);
         startActivity(intent);
+        finish();
 
     }
 

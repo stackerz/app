@@ -5,25 +5,16 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.webkit.WebView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 
 public class Stackerz extends Activity
@@ -63,8 +54,8 @@ public class Stackerz extends Activity
                 .commit();
         switch (position) {
             case 0:
-                //fragmentManager.beginTransaction().replace(R.id.container, OverviewFragment.newInstance(position)).commit();
-                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, OverviewFragment.newInstance(position)).commit();
+                //fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position)).commit();
                 break;
             case 1:
                 fragmentManager.beginTransaction().replace(R.id.container, InstancesFragment.newInstance(position)).commit();
@@ -184,7 +175,7 @@ public class Stackerz extends Activity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_stackerz, container, false);
+            View rootView = inflater.inflate(R.layout.activity_connect, container, false);
             //WebView webView = (WebView) rootView.findViewById(R.id.webView);
             //webView.loadUrl("https://stack.limagic.com/horizon");
             final Button connect = (Button)rootView.findViewById(R.id.connectButtonMain);
