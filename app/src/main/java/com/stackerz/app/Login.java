@@ -6,11 +6,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Patterns;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * Created by limedv0 on 17/10/2014.
@@ -55,17 +64,59 @@ public class Login extends Activity implements View.OnClickListener{
     }
     @Override
     public void onClick(View v){
+        boolean reachable = false;
         v.getId();
         //v.setBackground(R.drawable.rounded_red);
         //v.setBackgroundColor(Color.RED);
         username = userInput.getText().toString();
         password = passInput.getText().toString();
         endpoint = serverInput.getText().toString();
-        sharedPreferences();
-        Intent intent = new Intent(Login.this,Stackerz.class);
-        startActivity(intent);
-        finish();
+        if (isNetworkAvailable()){
+            if (isValidUrl(endpoint)){
+                reachable = true;
+            }else{
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "This is not a valid URL address, make sure there are no blank spaces at the end. Please try again.", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                toast.show();
+                serverInput.setText("");
+                reachable = false;
+            }
+        }else{
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "You don't seem to be connected to the network now. Please try again later.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+            toast.show();
+            serverInput.setText("");
+            reachable = false;
+        }
+        if (reachable) {
+            sharedPreferences();
+            Intent intent = new Intent(Login.this, Stackerz.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
+    public boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        // if no network is available networkInfo will be null
+        // otherwise check if we are connected
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isValidUrl(String url) {
+        Pattern p = Patterns.WEB_URL;
+        Matcher m = p.matcher(url);
+        if(m.matches())
+            return true;
+        else
+            return false;
     }
 
 
