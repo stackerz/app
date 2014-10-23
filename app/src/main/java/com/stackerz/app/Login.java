@@ -24,7 +24,7 @@ public class Login extends Activity implements View.OnClickListener{
     public Button connect;
     public String username, password, endpoint;
     public EditText userInput, passInput, serverInput;
-    public SharedPreferences shPref;
+    public SharedPreferences shPref ;
     public Editor toEdit;
     public LinearLayout mainLayout;
 
@@ -47,12 +47,15 @@ public class Login extends Activity implements View.OnClickListener{
     }
 
     public void sharedPreferences() {
-        shPref = getSharedPreferences("Login Credentials", MODE_PRIVATE);
+        //shPref = getSharedPreferences("Login Credentials", MODE_PRIVATE);
+        shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login Credentials", Context.MODE_PRIVATE) );
         toEdit = shPref.edit();
         toEdit.putString("Username", username);
         toEdit.putString("Password", password);
         toEdit.putString("Endpoint", endpoint);
         toEdit.commit();
+
+        // retrieve => shPref.getString("Username",null);
     }
     @Override
     public void onClick(View v){
