@@ -47,7 +47,9 @@
                 android:layout_alignEnd="@+id/userName"
                 android:layout_alignStart="@+id/userName"
                 android:layout_below="@+id/serverTV"
-                android:layout_alignParentLeft="true" />
+                android:layout_alignParentLeft="true"
+                android:background="@android:drawable/toast_frame"
+                android:textColor="@android:color/white" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,7 +77,9 @@
                 android:padding="10dp"
                 android:layout_alignEnd="@+id/imageView"
                 android:layout_below="@+id/userNameTV"
-                android:layout_alignParentLeft="true" />
+                android:layout_alignParentLeft="true"
+                android:background="@android:drawable/toast_frame"
+                android:textColor="@android:color/white" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -104,7 +108,9 @@
                 android:padding="10dp"
                 android:layout_alignStart="@+id/userName"
                 android:layout_below="@+id/passwordTV"
-                android:layout_alignParentLeft="true" />
+                android:layout_alignParentLeft="true"
+                android:background="@android:drawable/toast_frame"
+                android:textColor="@android:color/white" />
 
 
             <ImageView
@@ -118,7 +124,7 @@
                 android:layout_alignParentBottom="false"
                 android:layout_alignParentRight="true"
                 android:layout_alignWithParentIfMissing="false"
-                android:alpha="0.1"/>
+                android:alpha="0.05"/>
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
