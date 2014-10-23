@@ -10,20 +10,21 @@ import android.widget.Button;
 /**
  * Created by ed on 22/10/14.
  */
-public class Connect extends Activity implements View.OnClickListener{
+public class Connect extends Activity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect);
-        Button connect = (Button) findViewById(R.id.connectButtonMain);
-    }
-        @Override
-        public void onClick(View v){
-            v.getId();
-            //v.setBackground(R.drawable.rounded_red);
-            v.setBackgroundColor(Color.RED);
-            Intent intent = new Intent(Connect.this, Login.class);
-            startActivity(intent);
-            finish();
+        final Button connect = (Button) findViewById(R.id.connectButtonMain);
+        connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //connect.setBackground(R.drawable.rounded_red);
+                connect.setBackgroundColor(Color.RED);
+                Intent intent = new Intent(Connect.this, Login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
