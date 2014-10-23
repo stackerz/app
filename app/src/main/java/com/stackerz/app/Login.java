@@ -57,7 +57,7 @@ public class Login extends Activity implements View.OnClickListener{
     public void onClick(View v){
         v.getId();
         //v.setBackground(R.drawable.rounded_red);
-        v.setBackgroundColor(Color.RED);
+        //v.setBackgroundColor(Color.RED);
         username = userInput.getText().toString();
         password = passInput.getText().toString();
         endpoint = serverInput.getText().toString();

@@ -19,8 +19,7 @@ public class Connect extends Activity {
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //connect.setBackground(R.drawable.rounded_red);
-                connect.setBackgroundColor(Color.RED);
+                //connect.setBackgroundColor(Color.RED);
                 Intent intent = new Intent(Connect.this, Login.class);
                 startActivity(intent);
                 finish();
