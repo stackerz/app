@@ -79,7 +79,7 @@ public class Login extends Activity implements View.OnClickListener{
                         "This is not a valid URL address, make sure there are no blank spaces at the end. Please try again.", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                 toast.show();
-                serverInput.setText("");
+                //serverInput.setText("");
                 reachable = false;
             }
         }else{
@@ -87,7 +87,7 @@ public class Login extends Activity implements View.OnClickListener{
                     "You don't seem to be connected to the network now. Please try again later.", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
             toast.show();
-            serverInput.setText("");
+            //serverInput.setText("");
             reachable = false;
         }
         if (reachable) {
