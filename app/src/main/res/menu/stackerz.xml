@@ -4,8 +4,17 @@
     <item android:id="@+id/action_example"
         android:title="@string/action_example"
         android:showAsAction="withText|ifRoom" />
+    <item android:id="@+id/action_connect"
+        android:title="@string/action_connect"
+        android:orderInCategory="90"
+        android:showAsAction="never" />
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
+    <item android:id="@+id/action_about"
+        android:title="@string/action_about"
+        android:orderInCategory="120"
+        android:showAsAction="never" />
+
 </menu>
