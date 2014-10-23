@@ -36,7 +36,7 @@
         android:layout_centerHorizontal="true"
         android:clickable="true"
         android:textColor="#ffffff"
-        android:background="#222222"/>
+        android:background="@drawable/rounded"/>
 
 
 </RelativeLayout>
