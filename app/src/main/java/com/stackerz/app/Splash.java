@@ -15,7 +15,7 @@ public class Splash extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         Intent intent;
-        SharedPreferences sharedPreferences = getSharedPreferences("Login Credentials", 0);
+        SharedPreferences sharedPreferences = getSharedPreferences("Login_Credentials", 0);
         if (sharedPreferences.contains("Username")) {
             intent = new Intent(this, Stackerz.class);
         } else {
