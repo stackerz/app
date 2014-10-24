@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -14,15 +13,16 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 /**
- * Created by limedv0 on 17/10/2014.
+ * Created by ed on 17/10/2014.
  */
 public class Login extends Activity implements View.OnClickListener{
 
@@ -31,9 +31,6 @@ public class Login extends Activity implements View.OnClickListener{
     public EditText userInput, passInput, serverInput;
     public SharedPreferences shPref ;
     public Editor toEdit;
-    public LinearLayout mainLayout;
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,17 +48,29 @@ public class Login extends Activity implements View.OnClickListener{
 
     }
 
-    public void sharedPreferences() {
+    public void setSharedPrefs() {
         //shPref = getSharedPreferences("Login Credentials", MODE_PRIVATE);
-        shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login Credentials", Context.MODE_PRIVATE) );
+        shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE) );
         toEdit = shPref.edit();
         toEdit.putString("Username", username);
         toEdit.putString("Password", password);
         toEdit.putString("Endpoint", endpoint);
         toEdit.commit();
 
-        // retrieve => shPref.getString("Username",null);
     }
+
+    //public SharedPreferences getShPref() {
+    //    return shPref;
+    //}
+
+    public String[] getSharedPrefs(){
+        String storedUser, storedPass, storedURL;
+        storedUser = shPref.getString("Username",null);
+        storedPass = shPref.getString("Password",null);
+        storedURL = shPref.getString("Endpoint",null);
+        return new String[] {storedUser,storedPass,storedURL};
+    }
+
     @Override
     public void onClick(View v){
         boolean reachable = false;
@@ -90,8 +99,16 @@ public class Login extends Activity implements View.OnClickListener{
             //serverInput.setText("");
             reachable = false;
         }
+        if (username.isEmpty()||password.isEmpty()){
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Keystone needs to know who you are. Check your user name and password.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,120);
+            toast.show();
+            //serverInput.setText("");
+            reachable = false;
+        }
         if (reachable) {
-            sharedPreferences();
+            setSharedPrefs();
             Intent intent = new Intent(Login.this, Stackerz.class);
             startActivity(intent);
             finish();
@@ -119,5 +136,5 @@ public class Login extends Activity implements View.OnClickListener{
             return false;
     }
 
-
+   
 }
