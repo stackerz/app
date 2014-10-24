@@ -136,5 +136,15 @@ public class Login extends Activity implements View.OnClickListener{
             return false;
     }
 
+    public void verifyREST(View view){
+        String[] urlString = getSharedPrefs();
+        String user, passwd, endpt;
+        user = urlString[0];
+        passwd = urlString[1];
+        endpt = urlString[2];
+        // to be continued: http://blog.strikeiron.com/bid/73189/Integrate-a-REST-API-into-Android-Application-in-less-than-15-minutes
+        new CallAPI().execute(urlString);
+    }
+
    
 }
