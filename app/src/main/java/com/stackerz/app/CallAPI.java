@@ -13,30 +13,32 @@ import java.net.URL;
 public class CallAPI extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... strings) {
-        String urlString=strings[0]; // URL to call
+        //String urlString=strings[0]; // URL to call
 
-        String resultToDisplay = "";
+        //String resultToDisplay = "";
 
-        InputStream in = null;
+        //InputStream in = null;
 
         // HTTP Get
-        try {
+        //try {
 
-            URL url = new URL(urlString);
+        //    URL url = new URL(urlString);
 
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        //    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-            in = new BufferedInputStream(urlConnection.getInputStream());
+        //    in = new BufferedInputStream(urlConnection.getInputStream());
 
-        } catch (Exception e ) {
+        //} catch (Exception e ) {
 
-            System.out.println(e.getMessage());
+        //    System.out.println(e.getMessage());
 
-            return e.getMessage();
+        //   return e.getMessage();
 
-        }
+        // }
 
-        return resultToDisplay;
+        //return resultToDisplay;
+        return null;
+
     }
 }
 
