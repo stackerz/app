@@ -15,8 +15,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.net.URL;
-import java.net.URLConnection;
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -136,5 +150,73 @@ public class Login extends Activity implements View.OnClickListener{
             return false;
     }
 
+    public void loginRequest (){
+        String[] credentials = getSharedPrefs();
+        final String user = credentials[0];
+        final String pass = credentials[1];
+        final String url = credentials[2];
 
-}
+        JSONObject login = new JSONObject();
+        JSONObject result = new JSONObject();
+        try {
+            JSONObject auth = login.getJSONObject("auth");
+            JSONObject tenantName = auth.getJSONObject("tenantName");
+            JSONObject passwordCredentials = auth.getJSONObject("passwordCredentials");
+            JSONObject username = passwordCredentials.getJSONObject("username");
+            JSONObject password = passwordCredentials.getJSONObject("password");
+            login.put("tenantName","");
+            login.put("username",user);
+            login.put("password",pass);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, login,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        // TO DO
+                        Toast toast = Toast.makeText(Login.this,response.toString(),Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,120);
+                        toast.show();
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Login.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("tenantName", "");
+                params.put("username", user);
+                params.put("password", pass);
+                return params;
+            }
+
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Accept", "application/json");
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+
+        };
+
+            RequestQueue queue = Volley.newRequestQueue(this);
+            queue.add(getRequest);
+        }
+    }
+
+
+
+
+
