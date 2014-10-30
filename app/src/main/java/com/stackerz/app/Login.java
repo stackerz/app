@@ -162,12 +162,12 @@ public class Login extends Activity implements View.OnClickListener{
         try {
             JSONObject auth = login.getJSONObject("auth");
             JSONObject tenantName = auth.getJSONObject("tenantName");
+            auth.put("tenantName","");
             JSONObject passwordCredentials = auth.getJSONObject("passwordCredentials");
             JSONObject username = passwordCredentials.getJSONObject("username");
+            passwordCredentials.put("username",user);
             JSONObject password = passwordCredentials.getJSONObject("password");
-            login.put("tenantName","");
-            login.put("username",user);
-            login.put("password",pass);
+            passwordCredentials.put("password",pass);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -180,8 +180,8 @@ public class Login extends Activity implements View.OnClickListener{
                     public void onResponse(JSONObject response) {
                         // display response
                         // TO DO
-                        TextView textView = (TextView)findViewById(R.id.overviewTV);
-                        textView.setText(response.toString());
+                        Toast.makeText(Login.this, response.toString(), Toast.LENGTH_LONG).show();
+
 
                     }
                 },
