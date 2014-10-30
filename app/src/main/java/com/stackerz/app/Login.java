@@ -123,6 +123,7 @@ public class Login extends Activity implements View.OnClickListener{
         }
         if (reachable) {
             setSharedPrefs();
+            loginRequest();
             Intent intent = new Intent(Login.this, Stackerz.class);
             startActivity(intent);
             finish();
@@ -150,7 +151,7 @@ public class Login extends Activity implements View.OnClickListener{
             return false;
     }
 
-    public void loginRequest (){
+    public void loginRequest(){
         String[] credentials = getSharedPrefs();
         final String user = credentials[0];
         final String pass = credentials[1];
@@ -193,14 +194,6 @@ public class Login extends Activity implements View.OnClickListener{
                     }
                 }
         ){
-
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("tenantName", "");
-                params.put("username", user);
-                params.put("password", pass);
-                return params;
-            }
 
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
