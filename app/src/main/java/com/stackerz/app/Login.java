@@ -10,9 +10,12 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -77,12 +80,11 @@ public class Login extends Activity implements View.OnClickListener{
     //    return shPref;
     //}
 
-    public String[] getSharedPrefs(){
+    public void getSharedPrefs(){
         String storedUser = "", storedPass = "", storedURL ="";
         shPref.getString("Username",storedUser);
         shPref.getString("Password",storedPass);
         shPref.getString("Endpoint",storedURL);
-        return new String[] {storedUser,storedPass,storedURL};
     }
 
     @Override
@@ -152,13 +154,11 @@ public class Login extends Activity implements View.OnClickListener{
     }
 
     public void loginRequest(){
-        String[] credentials = getSharedPrefs();
-        final String user = credentials[0];
-        final String pass = credentials[1];
-        final String url = credentials[2];
+        final String user = shPref.getString("Username",username);
+        final String pass = shPref.getString("Password",password);
+        final String url = shPref.getString("Endpoint", endpoint);
 
         JSONObject login = new JSONObject();
-        JSONObject result = new JSONObject();
         try {
             JSONObject auth = login.getJSONObject("auth");
             JSONObject tenantName = auth.getJSONObject("tenantName");
@@ -180,9 +180,8 @@ public class Login extends Activity implements View.OnClickListener{
                     public void onResponse(JSONObject response) {
                         // display response
                         // TO DO
-                        Toast toast = Toast.makeText(Login.this,response.toString(),Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,120);
-                        toast.show();
+                        TextView textView = (TextView)findViewById(R.id.overviewTV);
+                        textView.setText(response.toString());
 
                     }
                 },
@@ -194,9 +193,16 @@ public class Login extends Activity implements View.OnClickListener{
                     }
                 }
         ){
-
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("tenantName", "");
+                params.put("username", user);
+                params.put("password", pass);
+                return params;
+            }
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("User-Agent", "stackerz");
                 params.put("Accept", "application/json");
                 params.put("Content-Type", "application/json; charset=utf-8");
                 return params;

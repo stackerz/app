@@ -24,7 +24,5 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.+'
     //compile 'com.android.support:appcompat-v7:21.0.+'
     compile 'com.android.support:cardview-v7:21.0.+'
-    compile 'com.goebl:david-webb:1.1.0'
-    compile 'com.loopj.android:android-async-http:1.4.5'
     compile 'com.mcxiaoke.volley:library:1.0.7'
 }
