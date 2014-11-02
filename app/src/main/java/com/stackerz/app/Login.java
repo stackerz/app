@@ -194,7 +194,7 @@ public class Login extends Activity implements View.OnClickListener{
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 try {
-                    params.put(auth.getString("tenantName"),tnt;
+                    params.put(auth.getString("tenantName"),tnt);
                     params.put(auth.getJSONObject("passwordCredentials").getString("username"), user);
                     params.put(auth.getJSONObject("passwordCredentials").getString("password"), pass);
                 } catch (JSONException e) {
