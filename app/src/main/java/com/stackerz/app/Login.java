@@ -158,30 +158,23 @@ public class Login extends Activity implements View.OnClickListener{
         final String pass = shPref.getString("Password",password);
         final String url = shPref.getString("Endpoint", endpoint);
 
-        JSONObject login = new JSONObject();
+        final JSONObject auth = new JSONObject();
         try {
-            JSONObject auth = login.getJSONObject("auth");
-            JSONObject tenantName = auth.getJSONObject("tenantName");
-            auth.put("tenantName","");
+            auth.getString("tenantName");
             JSONObject passwordCredentials = auth.getJSONObject("passwordCredentials");
-            JSONObject username = passwordCredentials.getJSONObject("username");
-            passwordCredentials.put("username",user);
-            JSONObject password = passwordCredentials.getJSONObject("password");
-            passwordCredentials.put("password",pass);
+            passwordCredentials.getString("username");
+            passwordCredentials.getString("password");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, login,
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, auth,
                 new Response.Listener<JSONObject>()
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // display response
-                        // TO DO
-                        Toast.makeText(Login.this, response.toString(), Toast.LENGTH_LONG).show();
 
+                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
 
                     }
                 },
@@ -189,19 +182,24 @@ public class Login extends Activity implements View.OnClickListener{
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Login.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
         ){
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("tenantName", "");
-                params.put("username", user);
-                params.put("password", pass);
+                try {
+                    params.put(auth.getString("tenantName"),"");
+                    params.put(auth.getJSONObject("passwordCredentials").getString("username"), user);
+                    params.put(auth.getJSONObject("passwordCredentials").getString("password"), pass);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 return params;
             }
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("Vary", "X-Auth-Token");
                 params.put("User-Agent", "stackerz");
                 params.put("Accept", "application/json");
                 params.put("Content-Type", "application/json; charset=utf-8");
