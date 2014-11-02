@@ -44,8 +44,8 @@ import java.util.regex.Pattern;
 public class Login extends Activity implements View.OnClickListener{
 
     public Button connect;
-    public String username, password, endpoint;
-    public EditText userInput, passInput, serverInput;
+    public String username, password, tenant, endpoint;
+    public EditText userInput, passInput, tenantInput, serverInput;
     public SharedPreferences shPref ;
     public Editor toEdit;
 
@@ -61,6 +61,7 @@ public class Login extends Activity implements View.OnClickListener{
         userInput = (EditText)findViewById(R.id.userName);
         serverInput = (EditText)findViewById(R.id.server);
         passInput = (EditText)findViewById(R.id.password);
+        tenantInput = (EditText)findViewById(R.id.tenant);
         connect.setOnClickListener(this);
 
     }
@@ -72,6 +73,7 @@ public class Login extends Activity implements View.OnClickListener{
         toEdit.putString("Username", username);
         toEdit.putString("Password", password);
         toEdit.putString("Endpoint", endpoint);
+        toEdit.putString("Tenant", tenant);
         toEdit.commit();
 
     }
@@ -81,10 +83,11 @@ public class Login extends Activity implements View.OnClickListener{
     //}
 
     public void getSharedPrefs(){
-        String storedUser = "", storedPass = "", storedURL ="";
+        String storedUser = "", storedPass = "", storedURL ="", storedTenant="";
         shPref.getString("Username",storedUser);
         shPref.getString("Password",storedPass);
         shPref.getString("Endpoint",storedURL);
+        shPref.getString("Tenant",storedTenant);
     }
 
     @Override
@@ -96,6 +99,7 @@ public class Login extends Activity implements View.OnClickListener{
         username = userInput.getText().toString();
         password = passInput.getText().toString();
         endpoint = serverInput.getText().toString();
+        tenant = tenantInput.getText().toString();
         if (isNetworkAvailable()){
             if (isValidUrl(endpoint)){
                 reachable = true;
@@ -157,6 +161,7 @@ public class Login extends Activity implements View.OnClickListener{
         final String user = shPref.getString("Username",username);
         final String pass = shPref.getString("Password",password);
         final String url = shPref.getString("Endpoint", endpoint);
+        final String tnt = shPref.getString("Tenant", tenant);
 
         final JSONObject auth = new JSONObject();
         try {
@@ -189,7 +194,7 @@ public class Login extends Activity implements View.OnClickListener{
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 try {
-                    params.put(auth.getString("tenantName"),"");
+                    params.put(auth.getString("tenantName"),tnt;
                     params.put(auth.getJSONObject("passwordCredentials").getString("username"), user);
                     params.put(auth.getJSONObject("passwordCredentials").getString("password"), pass);
                 } catch (JSONException e) {

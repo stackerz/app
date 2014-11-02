@@ -14,6 +14,8 @@
     <string name="userLoginET">john.doe</string>
     <string name="userPasswordTV">Password:</string>
     <string name="userPasswordET">p@ssw0rd</string>
+    <string name="tenantNameTV">Tenant:</string>
+    <string name="tenantNameET">tenant</string>
     <string name="serverTV">Server:</string>
     <string name="serverET">http://keystone_server:5000/v2.0/tokens</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
