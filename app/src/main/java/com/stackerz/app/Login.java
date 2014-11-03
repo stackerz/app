@@ -165,29 +165,37 @@ public class Login extends Activity implements View.OnClickListener{
         final String tnt = shPref.getString("Tenant", tenant);
         String json = "{\"auth\": {\"tenantName\": \""+tnt+"\", \"passwordCredentials\": {\"username\": \""+user+"\", \"password\": \""+pass+"\"}}}";
 
-        JSONObject auth = null;
+        JSONObject login = new JSONObject();
         try {
-            auth = new JSONObject(json);
+            JSONObject auth = new JSONObject();
+            auth.put("tenantName",tnt);
+            JSONObject passwordCredentials = new JSONObject();
+            passwordCredentials.put("username",user);
+            passwordCredentials.put("password",pass);
+            JSONObject result = new JSONObject();
+            result.put("tenantName",auth);
+            result.put("passwordCredentials",passwordCredentials);
+            login.put("auth",result.toString());
         } catch (JSONException e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
 
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, auth,
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, login,
                 new Response.Listener<JSONObject>()
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-                        JSONObject access = null;
-                        try {
-                            access = response.getJSONObject("access");
-                            JSONObject token = access.getJSONObject("token");
-                            String id = token.getString("id");
-                            Toast.makeText(getApplicationContext(), id, Toast.LENGTH_LONG).show();
-                        } catch (JSONException e) {
-                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        }
+                        //JSONObject access = null;
+                        //try {
+                        //    access = response.getJSONObject("access");
+                        //    JSONObject token = access.getJSONObject("token");
+                        //    String id = token.getString("id");
+                        //    Toast.makeText(getApplicationContext(), id, Toast.LENGTH_LONG).show();
+                        //} catch (JSONException e) {
+                        //    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                        //    e.printStackTrace();
+                        //}
 
                         Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
 
@@ -201,16 +209,8 @@ public class Login extends Activity implements View.OnClickListener{
                     }
                 }
         ){
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("tenantName", tnt);
-                params.put("username", user);
-                params.put("password", pass);
-                return params;
-            }
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Vary", "X-Auth-Token");
                 params.put("User-Agent", "stackerz");
                 params.put("Accept", "application/json");
                 params.put("Content-Type", "application/json; charset=utf-8");
