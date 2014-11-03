@@ -9,6 +9,7 @@ import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
@@ -110,7 +111,7 @@ public class Login extends Activity implements View.OnClickListener{
             }else{
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "This is not a valid URL address, make sure there are no blank spaces at the end. Please try again.", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,120);
+                toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                 toast.show();
                 //serverInput.setText("");
                 reachable = false;
@@ -118,7 +119,7 @@ public class Login extends Activity implements View.OnClickListener{
         }else{
             Toast toast = Toast.makeText(getApplicationContext(),
                     "You don't seem to be connected to the network now. Please try again later.", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,120);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
             toast.show();
             //serverInput.setText("");
             reachable = false;
@@ -126,7 +127,7 @@ public class Login extends Activity implements View.OnClickListener{
         if (username.isEmpty()||password.isEmpty()||tenant.isEmpty()){
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Keystone needs to know who you are. Check your user name, tenant and password.", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,120);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
             toast.show();
             //serverInput.setText("");
             reachable = false;
@@ -170,6 +171,12 @@ public class Login extends Activity implements View.OnClickListener{
         pDialog.setMessage("Loading...");
         pDialog.show();
 
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                pDialog.dismiss();
+            }}, 3000);  // 3000 milliseconds
+
         JSONObject login = null;
         try {
             login = new JSONObject(json);
@@ -203,7 +210,10 @@ public class Login extends Activity implements View.OnClickListener{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d("App", "Error: " + error.getMessage());
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "Cannot connect. Check your credentials.", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                        toast.show();
                         pDialog.hide();
                     }
                 }
