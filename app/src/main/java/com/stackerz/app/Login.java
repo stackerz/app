@@ -8,6 +8,7 @@ import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -52,6 +53,7 @@ public class Login extends Activity implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SSLCerts.sslHandling();
         setContentView(R.layout.activity_login);
         getInit();
     }
@@ -130,9 +132,8 @@ public class Login extends Activity implements View.OnClickListener{
         if (reachable) {
             setSharedPrefs();
             loginRequest();
-            Intent intent = new Intent(Login.this, Stackerz.class);
-            startActivity(intent);
-            finish();
+            //Intent intent = new Intent(Login.this, Stackerz.class);
+            //startActivity(intent);
         }
     }
 
@@ -162,14 +163,13 @@ public class Login extends Activity implements View.OnClickListener{
         final String pass = shPref.getString("Password",password);
         final String url = shPref.getString("Endpoint", endpoint);
         final String tnt = shPref.getString("Tenant", tenant);
+        String json = "{\"auth\": {\"tenantName\": \""+tnt+"\", \"passwordCredentials\": {\"username\": \""+user+"\", \"password\": \""+pass+"\"}}}";
 
-        final JSONObject auth = new JSONObject();
+        JSONObject auth = null;
         try {
-            auth.getString("tenantName");
-            JSONObject passwordCredentials = auth.getJSONObject("passwordCredentials");
-            passwordCredentials.getString("username");
-            passwordCredentials.getString("password");
+            auth = new JSONObject(json);
         } catch (JSONException e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
 
@@ -178,6 +178,16 @@ public class Login extends Activity implements View.OnClickListener{
                 {
                     @Override
                     public void onResponse(JSONObject response) {
+                        JSONObject access = null;
+                        try {
+                            access = response.getJSONObject("access");
+                            JSONObject token = access.getJSONObject("token");
+                            String id = token.getString("id");
+                            Toast.makeText(getApplicationContext(), id, Toast.LENGTH_LONG).show();
+                        } catch (JSONException e) {
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        }
 
                         Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
 
@@ -193,13 +203,9 @@ public class Login extends Activity implements View.OnClickListener{
         ){
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                try {
-                    params.put(auth.getString("tenantName"),tnt);
-                    params.put(auth.getJSONObject("passwordCredentials").getString("username"), user);
-                    params.put(auth.getJSONObject("passwordCredentials").getString("password"), pass);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                params.put("tenantName", tnt);
+                params.put("username", user);
+                params.put("password", pass);
                 return params;
             }
             public Map<String, String> getHeaders() throws AuthFailureError {

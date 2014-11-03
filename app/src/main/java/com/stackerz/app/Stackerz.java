@@ -34,6 +34,7 @@ public class Stackerz extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
