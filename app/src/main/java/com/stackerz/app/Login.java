@@ -170,19 +170,10 @@ public class Login extends Activity implements View.OnClickListener{
         pDialog.setMessage("Loading...");
         pDialog.show();
 
-        JSONObject login = new JSONObject();
+        JSONObject login = null;
         try {
-            JSONObject auth = new JSONObject();
-            auth.put("tenantName",tnt);
-            JSONObject passwordCredentials = new JSONObject();
-            passwordCredentials.put("username",user);
-            passwordCredentials.put("password",pass);
-            JSONObject result = new JSONObject();
-            result.put("tenantName",auth);
-            result.put("passwordCredentials",passwordCredentials);
-            login.put("auth",result.toString());
+            login = new JSONObject(json);
         } catch (JSONException e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
 
@@ -191,16 +182,16 @@ public class Login extends Activity implements View.OnClickListener{
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //JSONObject access = null;
-                        //try {
-                        //    access = response.getJSONObject("access");
-                        //    JSONObject token = access.getJSONObject("token");
-                        //    String id = token.getString("id");
-                        //    Toast.makeText(getApplicationContext(), id, Toast.LENGTH_LONG).show();
-                        //} catch (JSONException e) {
-                        //    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                        //    e.printStackTrace();
-                        //}
+                        JSONObject access = null;
+                        try {
+                            access = response.getJSONObject("access");
+                            JSONObject token = access.getJSONObject("token");
+                            String id = token.getString("id");
+                            Toast.makeText(getApplicationContext(), id, Toast.LENGTH_LONG).show();
+                        } catch (JSONException e) {
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        }
 
                         Log.d("App", response.toString());
                         Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
