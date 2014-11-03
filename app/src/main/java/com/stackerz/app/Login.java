@@ -1,6 +1,7 @@
 package com.stackerz.app;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -163,7 +165,10 @@ public class Login extends Activity implements View.OnClickListener{
         final String pass = shPref.getString("Password",password);
         final String url = shPref.getString("Endpoint", endpoint);
         final String tnt = shPref.getString("Tenant", tenant);
-        String json = "{\"auth\": {\"tenantName\": \""+tnt+"\", \"passwordCredentials\": {\"username\": \""+user+"\", \"password\": \""+pass+"\"}}}";
+        final String json = "{\"auth\": {\"tenantName\": \""+tnt+"\", \"passwordCredentials\": {\"username\": \""+user+"\", \"password\": \""+pass+"\"}}}";
+        final ProgressDialog pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Loading...");
+        pDialog.show();
 
         JSONObject login = new JSONObject();
         try {
@@ -196,16 +201,18 @@ public class Login extends Activity implements View.OnClickListener{
                         //    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                         //    e.printStackTrace();
                         //}
-
+                        Log.d("App", response.toString());
                         Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
-
+                        pDialog.hide();
                     }
                 },
                 new Response.ErrorListener()
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d("App", "Error: " + error.getMessage());
                         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        pDialog.hide();
                     }
                 }
         ){
