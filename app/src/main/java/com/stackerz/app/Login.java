@@ -201,6 +201,7 @@ public class Login extends Activity implements View.OnClickListener{
                         //    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                         //    e.printStackTrace();
                         //}
+
                         Log.d("App", response.toString());
                         Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
                         pDialog.hide();
