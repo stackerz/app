@@ -6,6 +6,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.io.File;
 
 
 public class Stackerz extends Activity
@@ -148,6 +151,14 @@ public class Stackerz extends Activity
         Intent intent;
         if (id == R.id.action_connect) {
             intent = new Intent(this, Login.class);
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_logout) {
+            SharedPreferences.Editor sharedPreferences = getSharedPreferences("Login_Credentials", 0).edit();
+            sharedPreferences.clear();
+            sharedPreferences.commit();
+            intent = new Intent(this, Connect.class);
             startActivity(intent);
             return true;
         }

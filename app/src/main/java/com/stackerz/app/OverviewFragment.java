@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
-public class OverviewFragment extends ListFragment {
+public class OverviewFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -40,9 +40,10 @@ public class OverviewFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        //String endpoints = new Login().getEndpoints().toString();
+        //((Login)getActivity()).loginRequest();
+        //String endpoints = ((Login)getActivity()).getEndpoints().toString();
         //List<Endpoints> endpointsList;
-        //endpointsList = EndpointsParser.parseFeed(null);
+        //endpointsList = EndpointsParser.parseFeed(endpoints);
         //EndpointsAdapter adapter = new EndpointsAdapter(getActivity(), R.layout.endpoint_list, endpointsList);
         //setListAdapter(adapter);
 
