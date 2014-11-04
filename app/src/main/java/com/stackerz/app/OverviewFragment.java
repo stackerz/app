@@ -2,6 +2,7 @@ package com.stackerz.app;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ListFragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -12,7 +13,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
-public class OverviewFragment extends Fragment {
+public class OverviewFragment extends ListFragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -37,14 +38,20 @@ public class OverviewFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        //String endpoints = new Login().getEndpoints().toString();
+        //List<Endpoints> endpointsList;
+        //endpointsList = EndpointsParser.parseFeed(null);
+        //EndpointsAdapter adapter = new EndpointsAdapter(getActivity(), R.layout.endpoint_list, endpointsList);
+        //setListAdapter(adapter);
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
-        ListView listView = (ListView)rootView.findViewById(R.id.overviewLV);
-        List<Endpoints> endpointsList;
-        //String endpoints = new Login().getEndpoints().toString();
-        //endpointsList = EndpointsParser.parseFeed(endpoints);
-        //EndpointsAdapter adapter = new EndpointsAdapter(getActivity(), R.layout.endpoint_list, endpointsList);
         return rootView;
     }
 
