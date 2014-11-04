@@ -25,5 +25,6 @@ public class Connect extends Activity {
                 //finish();
             }
         });
+
     }
 }

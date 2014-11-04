@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.util.List;
 
 public class OverviewFragment extends Fragment {
     /**
@@ -15,7 +19,8 @@ public class OverviewFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     private OnFragmentInteractionListener mListener;
-    /**
+
+     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
@@ -35,6 +40,11 @@ public class OverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
+        ListView listView = (ListView)rootView.findViewById(R.id.overviewLV);
+        List<Endpoints> endpointsList;
+        //String endpoints = new Login().getEndpoints().toString();
+        //endpointsList = EndpointsParser.parseFeed(endpoints);
+        //EndpointsAdapter adapter = new EndpointsAdapter(getActivity(), R.layout.endpoint_list, endpointsList);
         return rootView;
     }
 

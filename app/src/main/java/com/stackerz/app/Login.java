@@ -52,6 +52,8 @@ public class Login extends Activity implements View.OnClickListener{
     public EditText userInput, passInput, tenantInput, serverInput;
     public SharedPreferences shPref ;
     public Editor toEdit;
+    public JSONObject endpoints;
+    public String authToken;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,23 @@ public class Login extends Activity implements View.OnClickListener{
         shPref.getString("Tenant",storedTenant);
     }
 
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+    public void setEndpoints(JSONObject endpoints) {
+        this.endpoints = endpoints;
+    }
+
+    public JSONObject getEndpoints() {
+        return endpoints;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
     @Override
     public void onClick(View v){
         boolean reachable = false;
@@ -135,8 +154,8 @@ public class Login extends Activity implements View.OnClickListener{
         if (reachable) {
             setSharedPrefs();
             loginRequest();
-            //Intent intent = new Intent(Login.this, Stackerz.class);
-            //startActivity(intent);
+            Intent intent = new Intent(Login.this, Stackerz.class);
+            startActivity(intent);
         }
     }
 
@@ -175,7 +194,7 @@ public class Login extends Activity implements View.OnClickListener{
         handler.postDelayed(new Runnable() {
             public void run() {
                 pDialog.dismiss();
-            }}, 3000);  // 3000 milliseconds
+            }}, 5000);  // 5000 milliseconds
 
         JSONObject login = null;
         try {
@@ -194,14 +213,16 @@ public class Login extends Activity implements View.OnClickListener{
                             access = response.getJSONObject("access");
                             JSONObject token = access.getJSONObject("token");
                             String id = token.getString("id");
-                            Toast.makeText(getApplicationContext(), id, Toast.LENGTH_LONG).show();
+                            setAuthToken(id);
+                            Toast.makeText(getApplicationContext(), authToken, Toast.LENGTH_LONG).show();
                         } catch (JSONException e) {
                             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                         }
 
                         Log.d("App", response.toString());
-                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                        setEndpoints(response);
+                        Toast.makeText(getApplicationContext(), endpoints.toString(), Toast.LENGTH_LONG).show();
                         pDialog.hide();
                     }
                 },
@@ -211,7 +232,7 @@ public class Login extends Activity implements View.OnClickListener{
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d("App", "Error: " + error.getMessage());
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                "Cannot connect. Check your credentials.", Toast.LENGTH_LONG);
+                                "Cannot connect. Check your credentials nad try to login again.", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
                         toast.show();
                         pDialog.hide();
