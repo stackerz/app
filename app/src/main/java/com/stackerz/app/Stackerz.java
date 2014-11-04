@@ -150,6 +150,7 @@ public class Stackerz extends Activity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         Intent intent;
+        Dialog dialog = new Dialog(Stackerz.this);
         if (id == R.id.action_connect) {
             intent = new Intent(this, Login.class);
             startActivity(intent);
@@ -168,15 +169,9 @@ public class Stackerz extends Activity
             return true;
         }
         if (id == R.id.action_about) {
-            Dialog dialog = new Dialog(getApplicationContext());
             dialog.setContentView(R.layout.about);
-            //Button dialogButton = (Button)findViewById(R.id.okAbout);
-            //dialogButton.setOnClickListener(new View.OnClickListener() {
-            //    @Override
-            //    public void onClick(View view) {
-            //        dialog.dismiss();
-            //    }
-            //});
+            dialog.setTitle("About");
+            dialog.show();
             //Toast.makeText(getApplicationContext(),"Visit http://stackerz.com", Toast.LENGTH_LONG).show();
             return true;
         }
