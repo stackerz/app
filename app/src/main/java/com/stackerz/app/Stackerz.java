@@ -3,6 +3,7 @@ package com.stackerz.app;
 import android.app.Activity;
 
 import android.app.ActionBar;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -167,7 +168,16 @@ public class Stackerz extends Activity
             return true;
         }
         if (id == R.id.action_about) {
-            Toast.makeText(getApplicationContext(),"Visit http://stackerz.com", Toast.LENGTH_LONG).show();
+            Dialog dialog = new Dialog(getApplicationContext());
+            dialog.setContentView(R.layout.about);
+            //Button dialogButton = (Button)findViewById(R.id.okAbout);
+            //dialogButton.setOnClickListener(new View.OnClickListener() {
+            //    @Override
+            //    public void onClick(View view) {
+            //        dialog.dismiss();
+            //    }
+            //});
+            //Toast.makeText(getApplicationContext(),"Visit http://stackerz.com", Toast.LENGTH_LONG).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
