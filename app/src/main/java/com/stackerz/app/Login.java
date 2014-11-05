@@ -1,6 +1,7 @@
 package com.stackerz.app;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -45,15 +46,17 @@ import java.util.regex.Pattern;
 /**
  * Created by ed on 17/10/2014.
  */
-public class Login extends Activity implements View.OnClickListener{
+public class Login extends Activity implements View.OnClickListener,OverviewFragment.Callbacks {
 
     public Button connect;
     public String username, password, tenant, endpoint;
     public EditText userInput, passInput, tenantInput, serverInput;
-    public SharedPreferences shPref ;
+    public SharedPreferences shPref;
     public Editor toEdit;
     public JSONObject endpoints;
     public String authToken;
+    public String endpointStr;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,19 +66,19 @@ public class Login extends Activity implements View.OnClickListener{
         getInit();
     }
 
-    public void getInit(){
-        connect = (Button)findViewById(R.id.connectButtonLogin);
-        userInput = (EditText)findViewById(R.id.userName);
-        serverInput = (EditText)findViewById(R.id.server);
-        passInput = (EditText)findViewById(R.id.password);
-        tenantInput = (EditText)findViewById(R.id.tenant);
+    public void getInit() {
+        connect = (Button) findViewById(R.id.connectButtonLogin);
+        userInput = (EditText) findViewById(R.id.userName);
+        serverInput = (EditText) findViewById(R.id.server);
+        passInput = (EditText) findViewById(R.id.password);
+        tenantInput = (EditText) findViewById(R.id.tenant);
         connect.setOnClickListener(this);
 
     }
 
     public void setSharedPrefs() {
         //shPref = getSharedPreferences("Login_Credentials", MODE_PRIVATE);
-        shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE) );
+        shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         toEdit = shPref.edit();
         toEdit.putString("Username", username);
         toEdit.putString("Password", password);
@@ -89,12 +92,12 @@ public class Login extends Activity implements View.OnClickListener{
     //    return shPref;
     //}
 
-    public void getSharedPrefs(){
-        String storedUser = "", storedPass = "", storedURL ="", storedTenant="";
-        shPref.getString("Username",storedUser);
-        shPref.getString("Password",storedPass);
-        shPref.getString("Endpoint",storedURL);
-        shPref.getString("Tenant",storedTenant);
+    public void getSharedPrefs() {
+        String storedUser = "", storedPass = "", storedURL = "", storedTenant = "";
+        shPref.getString("Username", storedUser);
+        shPref.getString("Password", storedPass);
+        shPref.getString("Endpoint", storedURL);
+        shPref.getString("Tenant", storedTenant);
     }
 
 
@@ -114,8 +117,16 @@ public class Login extends Activity implements View.OnClickListener{
         return authToken;
     }
 
+    public String getEndpointStr() {
+        return endpointStr;
+    }
+
+    public void setEndpointStr(String endpointStr) {
+        this.endpointStr = endpointStr;
+    }
+
     @Override
-    public void onClick(View v){
+    public void onClick(View v) {
         boolean reachable = false;
         v.getId();
         //v.setBackground(R.drawable.rounded_red);
@@ -124,29 +135,29 @@ public class Login extends Activity implements View.OnClickListener{
         password = passInput.getText().toString();
         endpoint = serverInput.getText().toString();
         tenant = tenantInput.getText().toString();
-        if (isNetworkAvailable()){
-            if (isValidUrl(endpoint)){
+        if (isNetworkAvailable()) {
+            if (isValidUrl(endpoint)) {
                 reachable = true;
-            }else{
+            } else {
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "This is not a valid URL address, make sure there are no blank spaces at the end. Please try again.", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast.show();
                 //serverInput.setText("");
                 reachable = false;
             }
-        }else{
+        } else {
             Toast toast = Toast.makeText(getApplicationContext(),
                     "You don't seem to be connected to the network now. Please try again later.", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
             //serverInput.setText("");
             reachable = false;
         }
-        if (username.isEmpty()||password.isEmpty()||tenant.isEmpty()){
+        if (username.isEmpty() || password.isEmpty() || tenant.isEmpty()) {
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Keystone needs to know who you are. Check your user name, tenant and password.", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+            toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
             //serverInput.setText("");
             reachable = false;
@@ -174,18 +185,18 @@ public class Login extends Activity implements View.OnClickListener{
     private boolean isValidUrl(String url) {
         Pattern p = Patterns.WEB_URL;
         Matcher m = p.matcher(url);
-        if(m.matches())
+        if (m.matches())
             return true;
         else
             return false;
     }
 
-    public void loginRequest(){
-        final String user = shPref.getString("Username",username);
-        final String pass = shPref.getString("Password",password);
+    public void loginRequest() {
+        final String user = shPref.getString("Username", username);
+        final String pass = shPref.getString("Password", password);
         final String url = shPref.getString("Endpoint", endpoint);
         final String tnt = shPref.getString("Tenant", tenant);
-        final String json = "{\"auth\": {\"tenantName\": \""+tnt+"\", \"passwordCredentials\": {\"username\": \""+user+"\", \"password\": \""+pass+"\"}}}";
+        final String json = "{\"auth\": {\"tenantName\": \"" + tnt + "\", \"passwordCredentials\": {\"username\": \"" + user + "\", \"password\": \"" + pass + "\"}}}";
         final ProgressDialog pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.show();
@@ -194,7 +205,8 @@ public class Login extends Activity implements View.OnClickListener{
         handler.postDelayed(new Runnable() {
             public void run() {
                 pDialog.dismiss();
-            }}, 5000);  // 5000 milliseconds
+            }
+        }, 5000);  // 5000 milliseconds
 
         JSONObject login = null;
         try {
@@ -204,8 +216,7 @@ public class Login extends Activity implements View.OnClickListener{
         }
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, login,
-                new Response.Listener<JSONObject>()
-                {
+                new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         JSONObject access = null;
@@ -222,23 +233,23 @@ public class Login extends Activity implements View.OnClickListener{
 
                         Log.d("App", response.toString());
                         setEndpoints(response);
+                        setEndpointStr(response.toString());
                         Toast.makeText(getApplicationContext(), endpoints.toString(), Toast.LENGTH_LONG).show();
                         pDialog.hide();
                     }
                 },
-                new Response.ErrorListener()
-                {
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d("App", "Error: " + error.getMessage());
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "Cannot connect. Check your credentials nad try to login again.", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
                         pDialog.hide();
                     }
                 }
-        ){
+        ) {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("User-Agent", "stackerz");
@@ -249,10 +260,20 @@ public class Login extends Activity implements View.OnClickListener{
 
         };
 
-            RequestQueue queue = Volley.newRequestQueue(this);
-            queue.add(getRequest);
-        }
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(getRequest);
+        Bundle b = new Bundle();
+        b.putString("authToken", this.authToken);
+        b.putString("endpointStr", this.endpointStr);
+        OverviewFragment overviewFragment = new OverviewFragment();
+        overviewFragment.setArguments(b);
+
     }
+
+
+}
+
+
 
 
 

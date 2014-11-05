@@ -1,15 +1,26 @@
 package com.stackerz.app;
 
+import android.os.Bundle;
+
 /**
  * Created by ed on 4/11/14.
  */
 public class Endpoints {
 
+    //constants for field references
+    public static final String PUBLICURL = "publicURL";
+    public static final String REGION = "region";
+    public static final String TYPE = "type";
+    public static final String NAME = "name";
+
+    //fields
     String publicURL;
     String region;
     String type;
     String name;
 
+
+    //getters and setters
     public String getPublicURL() {
         return publicURL;
     }
@@ -41,4 +52,7 @@ public class Endpoints {
     public void setName(String name) {
         this.name = name;
     }
+
 }
+
+

@@ -10,10 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
-public class OverviewFragment extends Fragment {
+public class OverviewFragment extends Fragment{
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -34,25 +35,34 @@ public class OverviewFragment extends Fragment {
     }
 
 
+    public interface Callbacks {
+        public void loginRequest();
+
+    }
+
     public OverviewFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        //((Login)getActivity()).loginRequest();
-        //String endpoints = ((Login)getActivity()).getEndpoints().toString();
+        //String endpoints = getArguments().getString("endpointStr");
         //List<Endpoints> endpointsList;
         //endpointsList = EndpointsParser.parseFeed(endpoints);
         //EndpointsAdapter adapter = new EndpointsAdapter(getActivity(), R.layout.endpoint_list, endpointsList);
         //setListAdapter(adapter);
+
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Bundle b = getArguments();
+        String endpoints = b.getString("endpointStr");
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
+        TextView textView = (TextView) rootView.findViewById(R.id.overviewTV);
+        textView.setText(endpoints);
         return rootView;
     }
 
