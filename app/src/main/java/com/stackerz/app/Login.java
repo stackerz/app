@@ -165,7 +165,13 @@ public class Login extends Activity implements View.OnClickListener,OverviewFrag
         if (reachable) {
             setSharedPrefs();
             loginRequest();
-            Intent intent = new Intent(Login.this, Stackerz.class);
+            //Intent intent = new Intent(Login.this, Stackerz.class);
+            //startActivity(intent);
+            Bundle b = new Bundle();
+            b.putString("authToken", this.authToken);
+            b.putString("endpointStr", this.endpointStr);
+            Intent intent = new Intent(Login.this,Stackerz.class);
+            intent.putExtra("endpointStr",endpointStr);
             startActivity(intent);
         }
     }
@@ -262,11 +268,6 @@ public class Login extends Activity implements View.OnClickListener,OverviewFrag
 
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(getRequest);
-        Bundle b = new Bundle();
-        b.putString("authToken", this.authToken);
-        b.putString("endpointStr", this.endpointStr);
-        OverviewFragment overviewFragment = new OverviewFragment();
-        overviewFragment.setArguments(b);
 
     }
 

@@ -58,8 +58,7 @@ public class OverviewFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Bundle b = getArguments();
-        String endpoints = b.getString("endpointStr");
+        String endpoints = getActivity().getIntent().getStringExtra("endpointStr");
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
         TextView textView = (TextView) rootView.findViewById(R.id.overviewTV);
         textView.setText(endpoints);

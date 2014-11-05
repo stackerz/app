@@ -61,6 +61,10 @@ public class Stackerz extends Activity
                 .commit();
         switch (position) {
             case 0:
+                //Bundle args = new Bundle();
+                //args.putString("endpointStr",getIntent().getExtras().getString("endpointStr"));
+                //OverviewFragment overviewFragment = new OverviewFragment();
+                //overviewFragment.setArguments(args);
                 fragmentManager.beginTransaction().replace(R.id.container, OverviewFragment.newInstance(position)).commit();
                 //fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position)).commit();
                 break;
