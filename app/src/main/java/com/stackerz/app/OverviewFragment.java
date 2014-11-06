@@ -3,6 +3,8 @@ package com.stackerz.app;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ListFragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -60,17 +62,20 @@ public class OverviewFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         String authToken = JSONData.shared().getAuthtoken();
-        String endpoints = JSONData.shared().getEndpoint();
+        SharedPreferences sharedPreferences = new ObscuredSharedPreferences(this.getActivity(),this.getActivity().getApplicationContext().getSharedPreferences("Login_Credentials",0));
+                this.getActivity().getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE);
+        String endpoints = "";
+        endpoints = sharedPreferences.getString("Keystone",endpoints);
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
         TextView textView = (TextView) rootView.findViewById(R.id.overviewTV);
         ListView listView = (ListView) rootView.findViewById(R.id.overviewLV);
         textView.setText(endpoints);
-       // if (endpoints != null) {
-       //     List<Endpoints> endpointsList;
-       //     endpointsList = EndpointsParser.parseFeed(endpoints);
-       //     EndpointsAdapter adapter = new EndpointsAdapter(getActivity(), R.layout.endpoint_list, endpointsList);
-       //     listView.setAdapter(adapter);
-       // }
+        //if (endpoints != null) {
+        //    List<Endpoints> endpointsList;
+        //    endpointsList = EndpointsParser.parseFeed(endpoints);
+        //    EndpointsAdapter adapter = new EndpointsAdapter(getActivity(), R.layout.endpoint_list, endpointsList);
+        //    listView.setAdapter(adapter);
+        //}
         return rootView;
     }
 
@@ -79,6 +84,7 @@ public class OverviewFragment extends Fragment{
         super.onAttach(activity);
         ((Stackerz) activity).onSectionAttached(
                 getArguments().getInt(ARG_SECTION_NUMBER));
+
         //try {
         //    mListener = (OnFragmentInteractionListener) activity;
         //} catch (ClassCastException e) {
