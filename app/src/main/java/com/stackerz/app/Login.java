@@ -1,7 +1,6 @@
 package com.stackerz.app;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,24 +13,18 @@ import android.os.Handler;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
@@ -57,6 +50,14 @@ public class Login extends Activity implements View.OnClickListener,OverviewFrag
     public String authToken;
     public String endpointStr;
 
+    public static Login login = null;
+
+    public static Login shared(){
+        if (login == null){
+            login = new Login();
+        }
+        return login;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,7 @@ public class Login extends Activity implements View.OnClickListener,OverviewFrag
     //}
 
     public void getSharedPrefs() {
-        String storedUser = "", storedPass = "", storedURL = "", storedTenant = "";
+        String storedUser = "", storedPass = "", storedURL = "", storedTenant = "", storedEndpoint ="";
         shPref.getString("Username", storedUser);
         shPref.getString("Password", storedPass);
         shPref.getString("Endpoint", storedURL);
@@ -123,6 +124,7 @@ public class Login extends Activity implements View.OnClickListener,OverviewFrag
 
     public void setEndpointStr(String endpointStr) {
         this.endpointStr = endpointStr;
+        shPref.edit().putString("KeystoneData",endpointStr);
     }
 
     @Override
@@ -165,14 +167,12 @@ public class Login extends Activity implements View.OnClickListener,OverviewFrag
         if (reachable) {
             setSharedPrefs();
             loginRequest();
-            //Intent intent = new Intent(Login.this, Stackerz.class);
-            //startActivity(intent);
-            Bundle b = new Bundle();
-            b.putString("authToken", this.authToken);
-            b.putString("endpointStr", this.endpointStr);
-            Intent intent = new Intent(Login.this,Stackerz.class);
-            intent.putExtra("endpointStr",endpointStr);
-            startActivity(intent);
+            JSONData.shared().setAuthtoken(authToken);
+            JSONData.shared().setEndpoint(endpointStr);
+            if (authToken != null){
+                Intent intent = new Intent(Login.this, Stackerz.class);
+                startActivity(intent);
+            }
         }
     }
 
@@ -249,7 +249,7 @@ public class Login extends Activity implements View.OnClickListener,OverviewFrag
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d("App", "Error: " + error.getMessage());
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                "Cannot connect. Check your credentials nad try to login again.", Toast.LENGTH_LONG);
+                                "Cannot connect. Check your credentials and try to login again.", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
                         pDialog.hide();

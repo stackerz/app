@@ -21,6 +21,7 @@ public class OverviewFragment extends Fragment{
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     private OnFragmentInteractionListener mListener;
+    private Activity activity;
 
      /**
      * Returns a new instance of this fragment for the given section
@@ -58,10 +59,18 @@ public class OverviewFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        String endpoints = getActivity().getIntent().getStringExtra("endpointStr");
+        String authToken = JSONData.shared().getAuthtoken();
+        String endpoints = JSONData.shared().getEndpoint();
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
         TextView textView = (TextView) rootView.findViewById(R.id.overviewTV);
+        ListView listView = (ListView) rootView.findViewById(R.id.overviewLV);
         textView.setText(endpoints);
+       // if (endpoints != null) {
+       //     List<Endpoints> endpointsList;
+       //     endpointsList = EndpointsParser.parseFeed(endpoints);
+       //     EndpointsAdapter adapter = new EndpointsAdapter(getActivity(), R.layout.endpoint_list, endpointsList);
+       //     listView.setAdapter(adapter);
+       // }
         return rootView;
     }
 
