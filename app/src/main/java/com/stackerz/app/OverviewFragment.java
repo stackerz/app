@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +66,7 @@ public class OverviewFragment extends Fragment{
         SharedPreferences sharedPreferences = new ObscuredSharedPreferences(this.getActivity(),this.getActivity().getApplicationContext().getSharedPreferences("Login_Credentials",0));
                 this.getActivity().getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE);
         String endpoints = "";
-        endpoints = sharedPreferences.getString("Keystone",endpoints);
+        endpoints = sharedPreferences.getString("KeystoneData",endpoints);
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
         TextView textView = (TextView) rootView.findViewById(R.id.overviewTV);
         ListView listView = (ListView) rootView.findViewById(R.id.overviewLV);

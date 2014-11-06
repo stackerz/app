@@ -49,6 +49,7 @@ public class Login extends Activity implements View.OnClickListener,OverviewFrag
     public JSONObject endpoints;
     public String authToken;
     public String endpointStr;
+    boolean reachable = false;
 
     public static Login login = null;
 
@@ -124,12 +125,11 @@ public class Login extends Activity implements View.OnClickListener,OverviewFrag
 
     public void setEndpointStr(String endpointStr) {
         this.endpointStr = endpointStr;
-        shPref.edit().putString("KeystoneData",endpointStr);
+        shPref.edit().putString("KeystoneData",endpointStr).commit();
     }
 
     @Override
     public void onClick(View v) {
-        boolean reachable = false;
         v.getId();
         //v.setBackground(R.drawable.rounded_red);
         //v.setBackgroundColor(Color.RED);
@@ -169,12 +169,11 @@ public class Login extends Activity implements View.OnClickListener,OverviewFrag
             loginRequest();
             JSONData.shared().setAuthtoken(authToken);
             JSONData.shared().setEndpoint(endpointStr);
-            if (authToken != null){
-                Intent intent = new Intent(Login.this, Stackerz.class);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(Login.this, Stackerz.class);
+            startActivity(intent);
         }
     }
+
 
     public boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager)
