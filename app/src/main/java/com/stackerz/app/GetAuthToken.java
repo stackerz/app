@@ -26,10 +26,7 @@ import java.util.Map;
  */
 public class GetAuthToken extends Activity{
 
-    public String username, password, tenant, endpoint;
-    public SharedPreferences shPref;
     public String authToken;
-
 
     public static GetAuthToken getAuthToken = null;
 
@@ -49,14 +46,18 @@ public class GetAuthToken extends Activity{
     }
 
 
-    public void AuthToken() {
+    public void setGetAuthToken() {
+        String username = "";
+        String password = "";
+        String tenant = "";
+        String endpoint= "";
         SSLCerts.sslHandling();
-        shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        final String user = shPref.getString("Username", username);
-        final String pass = shPref.getString("Password", password);
-        final String url = shPref.getString("Endpoint", endpoint);
-        final String tnt = shPref.getString("Tenant", tenant);
-        final String json = "{\"auth\": {\"tenantName\": \"" + tnt + "\", \"passwordCredentials\": {\"username\": \"" + user + "\", \"password\": \"" + pass + "\"}}}";
+        SharedPreferences shPref = new ObscuredSharedPreferences(getApplicationContext(),getApplicationContext().getSharedPreferences("Login_Credentials",0));
+        String user = shPref.getString("Username", username);
+        String pass = shPref.getString("Password", password);
+        String url = shPref.getString("Endpoint", endpoint);
+        String tnt = shPref.getString("Tenant", tenant);
+        String json = "{\"auth\": {\"tenantName\": \"" + tnt + "\", \"passwordCredentials\": {\"username\": \"" + user + "\", \"password\": \"" + pass + "\"}}}";
 
         JSONObject login = null;
         try {
@@ -75,6 +76,7 @@ public class GetAuthToken extends Activity{
                             JSONObject token = access.getJSONObject("token");
                             String id = token.getString("id");
                             setAuthToken(id);
+                            JSONData.shared().setAuthtoken(authToken);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

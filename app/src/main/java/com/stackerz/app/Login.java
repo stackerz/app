@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
 /**
  * Created by ed on 17/10/2014.
  */
-public class Login extends Activity implements View.OnClickListener,OverviewFragment.Callbacks {
+public class Login extends Activity implements View.OnClickListener{
 
     public Button connect;
     public String username, password, tenant, endpoint;

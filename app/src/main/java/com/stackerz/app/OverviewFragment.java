@@ -39,11 +39,6 @@ public class OverviewFragment extends Fragment{
     }
 
 
-    public interface Callbacks {
-        public void loginRequest();
-
-    }
-
     public OverviewFragment() {
     }
 
@@ -64,7 +59,7 @@ public class OverviewFragment extends Fragment{
                              Bundle savedInstanceState) {
         String authToken = JSONData.shared().getAuthtoken();
         SharedPreferences sharedPreferences = new ObscuredSharedPreferences(this.getActivity(),this.getActivity().getApplicationContext().getSharedPreferences("Login_Credentials",0));
-                this.getActivity().getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE);
+        //        this.getActivity().getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE);
         String endpoints = "";
         endpoints = sharedPreferences.getString("KeystoneData",endpoints);
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
