@@ -31,4 +31,5 @@ public class EndpointsAdapter extends ArrayAdapter<Endpoints> {
 
         return view;
     }
+
 }

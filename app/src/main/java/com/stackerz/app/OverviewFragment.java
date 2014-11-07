@@ -59,19 +59,16 @@ public class OverviewFragment extends Fragment{
                              Bundle savedInstanceState) {
         String authToken = JSONData.shared().getAuthtoken();
         SharedPreferences sharedPreferences = new ObscuredSharedPreferences(this.getActivity(),this.getActivity().getApplicationContext().getSharedPreferences("Login_Credentials",0));
-        //        this.getActivity().getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE);
         String endpoints = "";
         endpoints = sharedPreferences.getString("KeystoneData",endpoints);
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
         TextView textView = (TextView) rootView.findViewById(R.id.overviewTV);
         ListView listView = (ListView) rootView.findViewById(R.id.overviewLV);
         textView.setText(endpoints);
-        //if (endpoints != null) {
-        //    List<Endpoints> endpointsList;
-        //    endpointsList = EndpointsParser.parseFeed(endpoints);
-        //    EndpointsAdapter adapter = new EndpointsAdapter(getActivity(), R.layout.endpoint_list, endpointsList);
-        //    listView.setAdapter(adapter);
-        //}
+        //List<Endpoints> endpointsList;
+        //endpointsList = EndpointsParser.parseFeed(endpoints);
+        //EndpointsAdapter adapter = new EndpointsAdapter(getActivity(), R.layout.endpoint_list, endpointsList);
+        //listView.setAdapter(adapter);
         return rootView;
     }
 
