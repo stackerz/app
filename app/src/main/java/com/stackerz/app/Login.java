@@ -1,6 +1,7 @@
 package com.stackerz.app;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -230,6 +231,7 @@ public class Login extends Activity implements View.OnClickListener{
                             JSONObject token = access.getJSONObject("token");
                             String id = token.getString("id");
                             setAuthToken(id);
+                            JSONData.shared().setAuthtoken(id);
                             Toast.makeText(getApplicationContext(), authToken, Toast.LENGTH_LONG).show();
                         } catch (JSONException e) {
                             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
