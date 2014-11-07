@@ -3,6 +3,7 @@ package com.stackerz.app;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -27,13 +28,20 @@ import java.util.Map;
 public class GetAuthToken extends Activity{
 
     public String authToken;
-
+    public SharedPreferences shPref = new ObscuredSharedPreferences(this,getApplicationContext().getSharedPreferences("Login_Credentials",0));
     public static GetAuthToken getAuthToken = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     public static GetAuthToken shared(){
         if (getAuthToken == null){
             getAuthToken = new GetAuthToken();
         }
+
         return getAuthToken;
     }
 
@@ -52,7 +60,7 @@ public class GetAuthToken extends Activity{
         String tenant = "";
         String endpoint= "";
         SSLCerts.sslHandling();
-        SharedPreferences shPref = new ObscuredSharedPreferences(getApplicationContext(),getApplicationContext().getSharedPreferences("Login_Credentials",0));
+
         String user = shPref.getString("Username", username);
         String pass = shPref.getString("Password", password);
         String url = shPref.getString("Endpoint", endpoint);
