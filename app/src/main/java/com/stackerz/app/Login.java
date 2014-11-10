@@ -53,6 +53,7 @@ public class Login extends Activity implements View.OnClickListener{
     public String authToken;
     public String endpointStr;
     boolean reachable = false;
+    boolean prefSaved = false;
 
     public static Login login = null;
 
@@ -69,8 +70,7 @@ public class Login extends Activity implements View.OnClickListener{
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_login);
         getInit();
-        File f = new File("/data/data/" + getPackageName() +  "/shared_prefs/Login_Credentials");
-        if (f.exists()){
+        if (prefSaved) {
             serverInput.setText(shPref.getString("Endpoint", endpoint));
             tenantInput.setText(shPref.getString("Tenant", tenant));
             userInput.setText(shPref.getString("Username", username));
@@ -180,6 +180,7 @@ public class Login extends Activity implements View.OnClickListener{
         }
         if (reachable) {
             setSharedPrefs();
+            prefSaved = true;
             loginRequest();
             JSONData.shared().setAuthtoken(authToken);
             JSONData.shared().setEndpoint(endpointStr);
