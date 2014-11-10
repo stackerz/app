@@ -76,6 +76,18 @@ public class Login extends Activity implements View.OnClickListener{
         passInput = (EditText) findViewById(R.id.password);
         tenantInput = (EditText) findViewById(R.id.tenant);
         connect.setOnClickListener(this);
+        shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        if (!shPref.getString("Username", username).isEmpty()){
+            serverInput.setText(shPref.getString("Endpoint", endpoint));
+            tenantInput.setText(shPref.getString("Tenant", tenant));
+            userInput.setText(shPref.getString("Username", username));
+            passInput.requestFocus();
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Please confirm your password in order to get a new Authentication Token for your session", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 175);
+            toast.show();
+
+        }
 
     }
 
@@ -232,7 +244,7 @@ public class Login extends Activity implements View.OnClickListener{
                             String id = token.getString("id");
                             setAuthToken(id);
                             JSONData.shared().setAuthtoken(id);
-                            Toast.makeText(getApplicationContext(), authToken, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "New Authentication Token acquired", Toast.LENGTH_LONG).show();
                         } catch (JSONException e) {
                             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                             e.printStackTrace();
