@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -28,6 +29,9 @@ public class EndpointsAdapter extends ArrayAdapter<Endpoints> {
         LayoutInflater inflater =
                 (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.endpoint_list, parent, false);
+        Endpoints endpoints = endpointsList.get(position);
+        TextView tv = (TextView)view.findViewById(R.id.endpoint);
+        tv.setText(endpoints.getName());
 
         return view;
     }
