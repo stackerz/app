@@ -18,6 +18,7 @@ public class Splash extends Activity {
         String password="";
         SharedPreferences sharedPreferences = getSharedPreferences("Login_Credentials", 0);
         if (sharedPreferences.getString("Password",password).isEmpty()) {
+
             intent = new Intent(this, Connect.class);
         } else {
             intent = new Intent(this, Stackerz.class);

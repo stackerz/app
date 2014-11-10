@@ -162,6 +162,7 @@ public class Stackerz extends Activity
             sharedPreferences.clear();
             sharedPreferences.commit();
             SharedPreferences.Editor first = getSharedPreferences("First", 0).edit();
+            first.putBoolean("Token",false).commit();
             first.clear();
             first.commit();
             intent = new Intent(this, Connect.class);

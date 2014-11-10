@@ -71,18 +71,19 @@ public class Login extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_login);
         getInit();
         SharedPreferences first = getSharedPreferences("First",0);
-        String path = "//data//data//"+this.getPackageName()+"//shared_prefs//First.xml";
-        boolean exists = (new File(path)).exists();
-        if (exists) {
+        if (first.getBoolean("First",true)){
             shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
             serverInput.setText(shPref.getString("Endpoint", endpoint));
             tenantInput.setText(shPref.getString("Tenant", tenant));
             userInput.setText(shPref.getString("Username", username));
             passInput.requestFocus();
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Please confirm your password in order to get a new Authentication Token for your session", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 175);
-            toast.show();
+            if (first.getBoolean("Token",true)) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Please confirm your password in order to get a new Authentication Token for your session", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 175);
+                toast.show();
+                first.edit().putBoolean("Token",false).commit();
+            }
 
         }
     }
@@ -191,7 +192,8 @@ public class Login extends Activity implements View.OnClickListener{
             Intent intent = new Intent(Login.this, Stackerz.class);
             startActivity(intent);
             SharedPreferences first = getSharedPreferences("First",0);
-            first.edit().commit();
+            first.edit().putBoolean("First", true).commit();
+            first.edit().putBoolean("Token",true).commit();
         }
     }
 
