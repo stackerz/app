@@ -159,8 +159,11 @@ public class Stackerz extends Activity
         }
         if (id == R.id.action_logout) {
             SharedPreferences.Editor sharedPreferences = getSharedPreferences("Login_Credentials", 0).edit();
+            SharedPreferences.Editor first = getSharedPreferences("First", 0).edit();
             sharedPreferences.clear();
             sharedPreferences.commit();
+            first.clear();
+            first.commit();
             intent = new Intent(this, Connect.class);
             startActivity(intent);
             return true;

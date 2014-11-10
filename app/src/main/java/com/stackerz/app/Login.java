@@ -70,7 +70,11 @@ public class Login extends Activity implements View.OnClickListener{
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_login);
         getInit();
-        if (prefSaved) {
+        SharedPreferences first = getSharedPreferences("First",0);
+        String path = "//data//data//"+this.getPackageName()+"//shared_prefs//First.xml";
+        boolean exists = (new File(path)).exists();
+        if (exists) {
+            shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
             serverInput.setText(shPref.getString("Endpoint", endpoint));
             tenantInput.setText(shPref.getString("Tenant", tenant));
             userInput.setText(shPref.getString("Username", username));
@@ -186,6 +190,8 @@ public class Login extends Activity implements View.OnClickListener{
             JSONData.shared().setEndpoint(endpointStr);
             Intent intent = new Intent(Login.this, Stackerz.class);
             startActivity(intent);
+            SharedPreferences first = getSharedPreferences("First",0);
+            first.edit().commit();
         }
     }
 
