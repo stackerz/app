@@ -31,6 +31,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -76,8 +77,8 @@ public class Login extends Activity implements View.OnClickListener{
         passInput = (EditText) findViewById(R.id.password);
         tenantInput = (EditText) findViewById(R.id.tenant);
         connect.setOnClickListener(this);
-        shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        if (!shPref.getString("Username", username).isEmpty()){
+        File f = new File("/data/data/" + getPackageName() +  "/shared_prefs/" + "Login_Credentials" + ".xml");
+        if (f.exists()){
             serverInput.setText(shPref.getString("Endpoint", endpoint));
             tenantInput.setText(shPref.getString("Tenant", tenant));
             userInput.setText(shPref.getString("Username", username));
@@ -253,7 +254,8 @@ public class Login extends Activity implements View.OnClickListener{
                         Log.d("App", response.toString());
                         setEndpoints(response);
                         setEndpointStr(response.toString());
-                        Toast.makeText(getApplicationContext(), endpoints.toString(), Toast.LENGTH_LONG).show();
+                        //Test JSON
+                        //Toast.makeText(getApplicationContext(), endpoints.toString(), Toast.LENGTH_LONG).show();
                         pDialog.hide();
                     }
                 },
