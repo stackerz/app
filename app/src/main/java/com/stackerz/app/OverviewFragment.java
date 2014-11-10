@@ -12,12 +12,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class OverviewFragment extends Fragment{
+public class OverviewFragment extends ListFragment{
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -25,6 +34,7 @@ public class OverviewFragment extends Fragment{
     private static final String ARG_SECTION_NUMBER = "section_number";
     private OnFragmentInteractionListener mListener;
     private Activity activity;
+
 
      /**
      * Returns a new instance of this fragment for the given section
@@ -45,11 +55,6 @@ public class OverviewFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        //String endpoints = getArguments().getString("endpointStr");
-        //List<Endpoints> endpointsList;
-        //endpointsList = EndpointsParser.parseFeed(endpoints);
-        //EndpointsAdapter adapter = new EndpointsAdapter(getActivity(), R.layout.endpoint_list, endpointsList);
-        //setListAdapter(adapter);
 
 
     }
@@ -58,19 +63,29 @@ public class OverviewFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         String authToken = JSONData.shared().getAuthtoken();
-        SharedPreferences sharedPreferences = new ObscuredSharedPreferences(this.getActivity(),this.getActivity().getApplicationContext().getSharedPreferences("Login_Credentials",0));
+        SharedPreferences sharedPreferences = new ObscuredSharedPreferences(this.getActivity(), this.getActivity().getApplicationContext().getSharedPreferences("Login_Credentials", 0));
         String endpoints = "";
-        endpoints = sharedPreferences.getString("KeystoneData",endpoints);
+        endpoints = sharedPreferences.getString("KeystoneData", endpoints);
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
         TextView textView = (TextView) rootView.findViewById(R.id.overviewTV);
-        ListView listView = (ListView) rootView.findViewById(R.id.overviewLV);
+        //ListView listView = (ListView) rootView.findViewById(R.id.overviewLV);
         textView.setText(endpoints);
-        //List<Endpoints> endpointsList;
-        //endpointsList = EndpointsParser.parseFeed(endpoints);
-        //EndpointsAdapter adapter = new EndpointsAdapter(getActivity(), R.layout.endpoint_list, endpointsList);
-        //listView.setAdapter(adapter);
+        //ListAdapter adapter = EndpointsParser.shared().initJSON(endpoints);
+
+        try {
+            //setListAdapter(adapter);
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+            Log.d("ErrorListAdapter", e.toString());
+            e.printStackTrace();
+        }
         return rootView;
-    }
+
+
+        }
+
+
+
 
     @Override
     public void onAttach(Activity activity) {
