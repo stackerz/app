@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
@@ -68,16 +69,7 @@ public class Login extends Activity implements View.OnClickListener{
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_login);
         getInit();
-    }
-
-    public void getInit() {
-        connect = (Button) findViewById(R.id.connectButtonLogin);
-        userInput = (EditText) findViewById(R.id.userName);
-        serverInput = (EditText) findViewById(R.id.server);
-        passInput = (EditText) findViewById(R.id.password);
-        tenantInput = (EditText) findViewById(R.id.tenant);
-        connect.setOnClickListener(this);
-        File f = new File("/data/data/" + getPackageName() +  "/shared_prefs/" + "Login_Credentials" + ".xml");
+        File f = new File("/data/data/" + getPackageName() +  "/shared_prefs/Login_Credentials");
         if (f.exists()){
             serverInput.setText(shPref.getString("Endpoint", endpoint));
             tenantInput.setText(shPref.getString("Tenant", tenant));
@@ -89,7 +81,15 @@ public class Login extends Activity implements View.OnClickListener{
             toast.show();
 
         }
+    }
 
+    public void getInit() {
+        connect = (Button) findViewById(R.id.connectButtonLogin);
+        userInput = (EditText) findViewById(R.id.userName);
+        serverInput = (EditText) findViewById(R.id.server);
+        passInput = (EditText) findViewById(R.id.password);
+        tenantInput = (EditText) findViewById(R.id.tenant);
+        connect.setOnClickListener(this);
     }
 
     public void setSharedPrefs() {
