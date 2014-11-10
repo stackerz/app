@@ -79,10 +79,12 @@ public class Login extends Activity implements View.OnClickListener{
             tenantInput.setText(shPref.getString("Tenant", tenant));
             userInput.setText(shPref.getString("Username", username));
             passInput.requestFocus();
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Please confirm your password in order to get a new Authentication Token for your session", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 175);
-            toast.show();
+            if (shPref.getString("Password",password).isEmpty()) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Please confirm your password in order to get a new Authentication Token for your session", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 175);
+                toast.show();
+            }
 
         }
     }
