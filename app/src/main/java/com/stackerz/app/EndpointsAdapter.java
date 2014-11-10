@@ -30,7 +30,7 @@ public class EndpointsAdapter extends ArrayAdapter<Endpoints> {
                 (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.endpoint_list, parent, false);
         Endpoints endpoints = endpointsList.get(position);
-        TextView tv = (TextView)view.findViewById(R.id.endpoint);
+        TextView tv = (TextView)view.findViewById(R.id.name);
         tv.setText(endpoints.getName());
 
         return view;

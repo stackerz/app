@@ -34,6 +34,11 @@ public class OverviewFragment extends ListFragment{
     private static final String ARG_SECTION_NUMBER = "section_number";
     private OnFragmentInteractionListener mListener;
     private Activity activity;
+    public static final String PUBLICURL = "publicURL";
+    public static final String REGION = "region";
+    public static final String TYPE = "type";
+    public static final String NAME = "name";
+    ArrayList<HashMap<String, String>> jsonList = new ArrayList<HashMap<String, String>>();
 
 
      /**
@@ -67,13 +72,42 @@ public class OverviewFragment extends ListFragment{
         String endpoints = "";
         endpoints = sharedPreferences.getString("KeystoneData", endpoints);
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.overviewTV);
+        //TextView textView = (TextView) rootView.findViewById(R.id.overviewTV);
         //ListView listView = (ListView) rootView.findViewById(R.id.overviewLV);
-        textView.setText(endpoints);
+        //textView.setText(endpoints);
         //ListAdapter adapter = EndpointsParser.shared().initJSON(endpoints);
-
         try {
-            //setListAdapter(adapter);
+            Endpoints endpoint = new Endpoints();
+            JSONObject keystone = new JSONObject(endpoints);
+            JSONObject access = keystone.getJSONObject("access");
+            JSONArray serviceCatalog = access.getJSONArray("serviceCatalog");
+
+            for (int i = 0; i < serviceCatalog.length(); i++) {
+                JSONObject objsvc = serviceCatalog.getJSONObject(i);
+                JSONArray endpointsArray = objsvc.getJSONArray("endpoints");
+                endpoint.setName(objsvc.getString("name"));
+                endpoint.setType(objsvc.getString("type"));
+                for (int j = 0; j < endpoints.length(); j++) {
+                    JSONObject objept = endpointsArray.getJSONObject(j);
+                    endpoint.setRegion(objept.getString("region"));
+                    endpoint.setPublicURL(objept.getString("publicURL"));
+                }
+
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put(NAME, endpoint.getName());
+                map.put(TYPE, endpoint.getType());
+                map.put(REGION, endpoint.getRegion());
+                map.put(PUBLICURL, endpoint.getPublicURL());
+                jsonList.add(map);
+            }
+        } catch (JSONException e) {
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+            Log.d("ErrorInitJSON", e.toString());
+            e.printStackTrace();
+        }
+        ListAdapter adapter = new SimpleAdapter(getActivity(), jsonList, R.layout.endpoint_list, new String[]{NAME, TYPE, REGION, PUBLICURL}, new int[]{R.id.name, R.id.type, R.id.region, R.id.url});
+        try {
+            setListAdapter(adapter);
         } catch (Exception e) {
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
             Log.d("ErrorListAdapter", e.toString());
