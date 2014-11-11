@@ -94,6 +94,7 @@ public class Login extends Activity implements View.OnClickListener{
         serverInput = (EditText) findViewById(R.id.server);
         passInput = (EditText) findViewById(R.id.password);
         tenantInput = (EditText) findViewById(R.id.tenant);
+        serverInput.requestFocus();
         connect.setOnClickListener(this);
     }
 
@@ -192,7 +193,7 @@ public class Login extends Activity implements View.OnClickListener{
             Intent intent = new Intent(Login.this, Stackerz.class);
             startActivity(intent);
             SharedPreferences first = getSharedPreferences("First",0);
-            first.edit().putBoolean("First", true).commit();
+            first.edit().putBoolean("First",true).commit();
             first.edit().putBoolean("Token",true).commit();
         }
     }
