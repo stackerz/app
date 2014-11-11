@@ -224,6 +224,7 @@ public class Stackerz extends Activity
                 }
             });
             return rootView;
+
         }
 
         @Override
