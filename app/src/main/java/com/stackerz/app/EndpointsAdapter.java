@@ -41,11 +41,12 @@ public class EndpointsAdapter extends RecyclerView.Adapter<EndpointListRowHolder
     @Override
     public void onBindViewHolder(EndpointListRowHolder endpointListRowHolder, int i) {
 
-        endpointListRowHolder.name.setText(endpointsList.get(i).get(NAME));
-        endpointListRowHolder.type.setText(endpointsList.get(i).get(TYPE));
-        endpointListRowHolder.region.setText(endpointsList.get(i).get(REGION));
-        endpointListRowHolder.url.setText(endpointsList.get(i).get(PUBLICURL));
-        Log.d("RV", endpointsList.get(i).get(NAME));
+        HashMap<String, String> e = endpointsList.get(i);
+        endpointListRowHolder.name.setText(e.get(NAME));
+        endpointListRowHolder.type.setText(e.get(TYPE));
+        endpointListRowHolder.region.setText(e.get(REGION));
+        endpointListRowHolder.url.setText(e.get(PUBLICURL));
+        Log.d("RV", e.get(NAME));
 
     }
 
@@ -55,19 +56,3 @@ public class EndpointsAdapter extends RecyclerView.Adapter<EndpointListRowHolder
     }
 }
 
-class EndpointListRowHolder extends RecyclerView.ViewHolder {
-    protected TextView name;
-    protected TextView type;
-    protected TextView region;
-    protected TextView url;
-
-
-    public EndpointListRowHolder(View view) {
-        super(view);
-        this.name = (TextView) view.findViewById(R.id.name);
-        this.type = (TextView) view.findViewById(R.id.type);
-        this.region = (TextView) view.findViewById(R.id.region);
-        this.url = (TextView) view.findViewById(R.id.url);
-    }
-
-}

@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/arrow"
+        android:src="@drawable/arrow"
+        android:padding="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/region" />
     <TextView
         android:id="@+id/name"
         android:layout_width="fill_parent"
@@ -8,7 +17,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/black"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignLeft="@+id/type"
+        android:layout_alignStart="@+id/type" />
     <TextView
         android:id="@+id/type"
         android:layout_width="fill_parent"
@@ -17,7 +27,8 @@
         android:layout_centerVertical="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/black"
-        android:layout_below="@+id/name"/>
+        android:layout_below="@+id/name"
+        android:layout_toRightOf="@+id/arrow"/>
 
     <TextView
         android:id="@+id/region"
@@ -27,7 +38,8 @@
         android:layout_centerVertical="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/black"
-        android:layout_below="@+id/type"/>
+        android:layout_below="@+id/type"
+        android:layout_toRightOf="@+id/arrow"/>
 
     <TextView
         android:id="@+id/url"
@@ -37,6 +49,7 @@
         android:layout_centerVertical="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/black"
-        android:layout_below="@+id/region"/>
+        android:layout_below="@+id/region"
+        android:layout_toRightOf="@+id/arrow"/>
 
 </RelativeLayout>
