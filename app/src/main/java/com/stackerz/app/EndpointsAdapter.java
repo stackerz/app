@@ -40,11 +40,12 @@ public class EndpointsAdapter extends RecyclerView.Adapter<EndpointListRowHolder
 
     @Override
     public void onBindViewHolder(EndpointListRowHolder endpointListRowHolder, int i) {
-        Log.d("RV", "OnBindViewHolder");
+
         endpointListRowHolder.name.setText(endpointsList.get(i).get(NAME));
         endpointListRowHolder.type.setText(endpointsList.get(i).get(TYPE));
         endpointListRowHolder.region.setText(endpointsList.get(i).get(REGION));
         endpointListRowHolder.url.setText(endpointsList.get(i).get(PUBLICURL));
+        Log.d("RV", endpointsList.get(i).get(NAME));
 
     }
 

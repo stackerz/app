@@ -23,11 +23,11 @@ tools:context="com.stackerz.app.OverviewFragment">
     android:gravity="center_horizontal"/>
 
 <android.support.v7.widget.RecyclerView
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    class="android.support.v7.widget.RecyclerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:id="@+id/overviewRV"
-    android:layout_alignParentStart="true" />
+    android:textSize="20sp"
+    android:layout_below="@+id/overviewTV"/>
 
 <ImageView
     android:layout_width="wrap_content"
