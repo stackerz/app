@@ -4,12 +4,8 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
     <style name="AppTheme" parent="android:Theme.Material"> -->
 
-    <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowBackground">@color/window_bg</item>
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:clipToPadding">false</item>
+    <style name="AppTheme" parent="android:Theme.Material">
+
         <!--   your app's branding color (for the app bar)-->
         <item name="android:colorPrimary">@color/primary</item>
 
