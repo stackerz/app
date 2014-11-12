@@ -29,11 +29,7 @@ public class OverviewFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     private OnFragmentInteractionListener mListener;
-    private Activity activity;
-    public static final String PUBLICURL = "publicURL";
-    public static final String REGION = "region";
-    public static final String TYPE = "type";
-    public static final String NAME = "name";
+
 
 
      /**

@@ -18,7 +18,10 @@ import java.util.List;
 public class EndpointsAdapter extends RecyclerView.Adapter<EndpointListRowHolder> {
 
     ArrayList<HashMap<String, String>> endpointsList = new ArrayList<HashMap<String, String>>();
-    //private List<Endpoints> endpointsList;
+    public static final String PUBLICURL = "publicURL";
+    public static final String REGION = "region";
+    public static final String TYPE = "type";
+    public static final String NAME = "name";
     private Context mContext;
 
     public EndpointsAdapter(Context context, ArrayList<HashMap<String, String>> endpointsList) {
@@ -35,13 +38,12 @@ public class EndpointsAdapter extends RecyclerView.Adapter<EndpointListRowHolder
 
     @Override
     public void onBindViewHolder(EndpointListRowHolder endpointListRowHolder, int i) {
-        Endpoints endpoints = new Endpoints();
-        endpointsList.get(i);
 
-            endpointListRowHolder.name.setText(endpoints.getName());
-            endpointListRowHolder.type.setText(endpoints.getType());
-            endpointListRowHolder.region.setText(endpoints.getRegion());
-            endpointListRowHolder.url.setText(endpoints.getPublicURL());
+            endpointListRowHolder.name.setText(endpointsList.get(i).get(NAME));
+            endpointListRowHolder.type.setText(endpointsList.get(i).get(TYPE));
+            endpointListRowHolder.region.setText(endpointsList.get(i).get(REGION));
+            endpointListRowHolder.url.setText(endpointsList.get(i).get(PUBLICURL));
+
     }
 
     @Override
