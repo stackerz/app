@@ -22,11 +22,12 @@ tools:context="com.stackerz.app.OverviewFragment">
     android:id="@+id/overviewTV"
     android:gravity="center_horizontal"/>
 
-<ListView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@android:id/list">
-    </ListView>
+<android.support.v7.widget.RecyclerView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    class="android.support.v7.widget.RecyclerView"
+    android:id="@+id/overviewRV"
+    android:layout_alignParentStart="true" />
 
 <ImageView
     android:layout_width="wrap_content"

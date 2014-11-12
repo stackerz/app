@@ -20,7 +20,7 @@ public class EndpointsParser extends Activity{
     public static final String REGION = "region";
     public static final String TYPE = "type";
     public static final String NAME = "name";
-    ArrayList<HashMap<String, String>> jsonList = new ArrayList<HashMap<String, String>>();
+
 
 
     public static EndpointsParser parser = null;
@@ -32,7 +32,8 @@ public class EndpointsParser extends Activity{
         return parser ;
     }
 
-    public SimpleAdapter initJSON(String endpoints){
+    public static ArrayList<HashMap<String, String>> parseJSON(String endpoints){
+        ArrayList<HashMap<String, String>> jsonList = new ArrayList<HashMap<String, String>>();
         try {
             Endpoints endpoint = new Endpoints();
             JSONObject keystone = new JSONObject(endpoints);
@@ -44,7 +45,7 @@ public class EndpointsParser extends Activity{
                 JSONArray endpointsArray = objsvc.getJSONArray("endpoints");
                 endpoint.setName(objsvc.getString("name"));
                 endpoint.setType(objsvc.getString("type"));
-                for (int j = 0; j < endpoints.length(); j++) {
+                for (int j = 0; j < 1; j++) {
                     JSONObject objept = endpointsArray.getJSONObject(j);
                     endpoint.setRegion(objept.getString("region"));
                     endpoint.setPublicURL(objept.getString("publicURL"));
@@ -61,8 +62,7 @@ public class EndpointsParser extends Activity{
             Log.d("ErrorInitJSON", e.toString());
             e.printStackTrace();
         }
-        SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), jsonList, R.layout.endpoint_list, new String[]{NAME, TYPE, REGION, PUBLICURL}, new int[]{R.id.name, R.id.type, R.id.region, R.id.url});
-        return adapter;
+        return jsonList;
     }
 }
 
