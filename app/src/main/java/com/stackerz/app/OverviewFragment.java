@@ -49,6 +49,11 @@ public class OverviewFragment extends Fragment {
     public OverviewFragment() {
     }
 
+    private ArrayList<HashMap<String, String>> jsonList;
+    private RecyclerView recyclerView;
+    String endpoints = "{\"access\": {\"token\": {\"issued_at\": \"2014-11-12T02:42:16.728871\", \"expires\": \"2014-11-12T03:42:16Z\", \"id\": \"f412556ed5864e818cce14cec2a30774\", \"tenant\": {\"description\": \"Admin\", \"enabled\": true, \"id\": \"8c5cb915f5b94614a77261678ec96fb3\", \"name\": \"admin\"}, \"audit_ids\": [\"HyzB4lcwSOWbFJfVqW_S0Q\"]}, \"serviceCatalog\": [{\"endpoints\": [{\"adminURL\": \"http://stack1:8774/v2/8c5cb915f5b94614a77261678ec96fb3\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:8774/v2/8c5cb915f5b94614a77261678ec96fb3\", \"id\": \"1af616c72a784f6ebb53bc09277990d7\", \"publicURL\": \"http://stack1:8774/v2/8c5cb915f5b94614a77261678ec96fb3\"}], \"endpoints_links\": [], \"type\": \"compute\", \"name\": \"nova\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:9696\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:9696\", \"id\": \"8e08ef5ad87d433f9f6d9e2772c87b1a\", \"publicURL\": \"http://stack1:9696\"}], \"endpoints_links\": [], \"type\": \"network\", \"name\": \"neutron\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:8776/v2/8c5cb915f5b94614a77261678ec96fb3\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:8776/v2/8c5cb915f5b94614a77261678ec96fb3\", \"id\": \"7f178d0575b24de4bb733baf399cac30\", \"publicURL\": \"http://stack1:8776/v2/8c5cb915f5b94614a77261678ec96fb3\"}], \"endpoints_links\": [], \"type\": \"volumev2\", \"name\": \"cinderv2\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:8779/v1.0/8c5cb915f5b94614a77261678ec96fb3\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:8779/v1.0/8c5cb915f5b94614a77261678ec96fb3\", \"id\": \"3fed164601394eb089badf19fd87878f\", \"publicURL\": \"http://stack1:8779/v1.0/8c5cb915f5b94614a77261678ec96fb3\"}], \"endpoints_links\": [], \"type\": \"database\", \"name\": \"trove\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:9292\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:9292\", \"id\": \"92607c050dfe4887aeaf3bcb29f4d713\", \"publicURL\": \"http://stack1:9292\"}], \"endpoints_links\": [], \"type\": \"image\", \"name\": \"glance\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:8000/v1\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:8000/v1\", \"id\": \"0924abbced324f83932bb80560513aaf\", \"publicURL\": \"http://stack1:8000/v1\"}], \"endpoints_links\": [], \"type\": \"cloudformation\", \"name\": \"heat-cfn\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:8776/v1/8c5cb915f5b94614a77261678ec96fb3\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:8776/v1/8c5cb915f5b94614a77261678ec96fb3\", \"id\": \"3e82f8320da64c9887d5e41ef776f4c4\", \"publicURL\": \"http://stack1:8776/v1/8c5cb915f5b94614a77261678ec96fb3\"}], \"endpoints_links\": [], \"type\": \"volume\", \"name\": \"cinder\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:8004/v1/8c5cb915f5b94614a77261678ec96fb3\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:8004/v1/8c5cb915f5b94614a77261678ec96fb3\", \"id\": \"bbfab906f3b84574ba7c6af09051bfe8\", \"publicURL\": \"http://stack1:8004/v1/8c5cb915f5b94614a77261678ec96fb3\"}], \"endpoints_links\": [], \"type\": \"orchestration\", \"name\": \"heat\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:35357/v2.0\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:5000/v2.0\", \"id\": \"6df8444747e14e8fab8050681bed9319\", \"publicURL\": \"http://stack1:5000/v2.0\"}], \"endpoints_links\": [], \"type\": \"identity\", \"name\": \"keystone\"}], \"user\": {\"username\": \"admin\", \"roles_links\": [], \"id\": \"fa92eb3a32b34d5c9f8ccb1acdf3a87a\", \"roles\": [{\"name\": \"_member_\"}, {\"name\": \"admin\"}], \"name\": \"admin\"}, \"metadata\": {\"is_admin\": 0, \"roles\": [\"9fe2ff9ee4384b1894a90878d3e92bab\", \"4f4f26e53a894daa94da1c6f9d7f0dc3\"]}}}";
+
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -56,30 +61,33 @@ public class OverviewFragment extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //String authToken = JSONData.shared().getAuthtoken();
         //SharedPreferences sharedPreferences = new ObscuredSharedPreferences(this.getActivity(), this.getActivity().getApplicationContext().getSharedPreferences("Login_Credentials", 0));
-        String endpoints = "{\"access\": {\"token\": {\"issued_at\": \"2014-11-12T02:42:16.728871\", \"expires\": \"2014-11-12T03:42:16Z\", \"id\": \"f412556ed5864e818cce14cec2a30774\", \"tenant\": {\"description\": \"Admin\", \"enabled\": true, \"id\": \"8c5cb915f5b94614a77261678ec96fb3\", \"name\": \"admin\"}, \"audit_ids\": [\"HyzB4lcwSOWbFJfVqW_S0Q\"]}, \"serviceCatalog\": [{\"endpoints\": [{\"adminURL\": \"http://stack1:8774/v2/8c5cb915f5b94614a77261678ec96fb3\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:8774/v2/8c5cb915f5b94614a77261678ec96fb3\", \"id\": \"1af616c72a784f6ebb53bc09277990d7\", \"publicURL\": \"http://stack1:8774/v2/8c5cb915f5b94614a77261678ec96fb3\"}], \"endpoints_links\": [], \"type\": \"compute\", \"name\": \"nova\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:9696\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:9696\", \"id\": \"8e08ef5ad87d433f9f6d9e2772c87b1a\", \"publicURL\": \"http://stack1:9696\"}], \"endpoints_links\": [], \"type\": \"network\", \"name\": \"neutron\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:8776/v2/8c5cb915f5b94614a77261678ec96fb3\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:8776/v2/8c5cb915f5b94614a77261678ec96fb3\", \"id\": \"7f178d0575b24de4bb733baf399cac30\", \"publicURL\": \"http://stack1:8776/v2/8c5cb915f5b94614a77261678ec96fb3\"}], \"endpoints_links\": [], \"type\": \"volumev2\", \"name\": \"cinderv2\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:8779/v1.0/8c5cb915f5b94614a77261678ec96fb3\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:8779/v1.0/8c5cb915f5b94614a77261678ec96fb3\", \"id\": \"3fed164601394eb089badf19fd87878f\", \"publicURL\": \"http://stack1:8779/v1.0/8c5cb915f5b94614a77261678ec96fb3\"}], \"endpoints_links\": [], \"type\": \"database\", \"name\": \"trove\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:9292\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:9292\", \"id\": \"92607c050dfe4887aeaf3bcb29f4d713\", \"publicURL\": \"http://stack1:9292\"}], \"endpoints_links\": [], \"type\": \"image\", \"name\": \"glance\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:8000/v1\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:8000/v1\", \"id\": \"0924abbced324f83932bb80560513aaf\", \"publicURL\": \"http://stack1:8000/v1\"}], \"endpoints_links\": [], \"type\": \"cloudformation\", \"name\": \"heat-cfn\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:8776/v1/8c5cb915f5b94614a77261678ec96fb3\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:8776/v1/8c5cb915f5b94614a77261678ec96fb3\", \"id\": \"3e82f8320da64c9887d5e41ef776f4c4\", \"publicURL\": \"http://stack1:8776/v1/8c5cb915f5b94614a77261678ec96fb3\"}], \"endpoints_links\": [], \"type\": \"volume\", \"name\": \"cinder\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:8004/v1/8c5cb915f5b94614a77261678ec96fb3\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:8004/v1/8c5cb915f5b94614a77261678ec96fb3\", \"id\": \"bbfab906f3b84574ba7c6af09051bfe8\", \"publicURL\": \"http://stack1:8004/v1/8c5cb915f5b94614a77261678ec96fb3\"}], \"endpoints_links\": [], \"type\": \"orchestration\", \"name\": \"heat\"}, {\"endpoints\": [{\"adminURL\": \"http://stack1:35357/v2.0\", \"region\": \"regionOne\", \"internalURL\": \"http://stack1:5000/v2.0\", \"id\": \"6df8444747e14e8fab8050681bed9319\", \"publicURL\": \"http://stack1:5000/v2.0\"}], \"endpoints_links\": [], \"type\": \"identity\", \"name\": \"keystone\"}], \"user\": {\"username\": \"admin\", \"roles_links\": [], \"id\": \"fa92eb3a32b34d5c9f8ccb1acdf3a87a\", \"roles\": [{\"name\": \"_member_\"}, {\"name\": \"admin\"}], \"name\": \"admin\"}, \"metadata\": {\"is_admin\": 0, \"roles\": [\"9fe2ff9ee4384b1894a90878d3e92bab\", \"4f4f26e53a894daa94da1c6f9d7f0dc3\"]}}}";
         //endpoints = sharedPreferences.getString("KeystoneData", endpoints);
-        ArrayList<HashMap<String, String>> jsonList;
+
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
-        jsonList = EndpointsParser.parseJSON(endpoints);
-        RecyclerView recyclerView = (RecyclerView)rootView.findViewById(R.id.overviewRV);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        EndpointsAdapter endpointsAdapter = new EndpointsAdapter(getActivity(),jsonList);
-        recyclerView.setAdapter(endpointsAdapter);
+
+        recyclerView = (RecyclerView)rootView.findViewById(R.id.overviewRV);
+
         return rootView;
-
-
-
         }
 
-
-
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+        jsonList = EndpointsParser.parseJSON(endpoints);
+        EndpointsAdapter endpointsAdapter = new EndpointsAdapter(getActivity(),jsonList);
+        recyclerView.setAdapter(endpointsAdapter);
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     @Override
     public void onAttach(Activity activity) {
