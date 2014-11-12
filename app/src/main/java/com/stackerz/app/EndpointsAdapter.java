@@ -2,6 +2,7 @@ package com.stackerz.app;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,16 +34,17 @@ public class EndpointsAdapter extends RecyclerView.Adapter<EndpointListRowHolder
     public EndpointListRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.endpoint_list, null);
         EndpointListRowHolder mh = new EndpointListRowHolder(v);
+        Log.d("RV", "OnCreateViewHolder");
         return mh;
     }
 
     @Override
     public void onBindViewHolder(EndpointListRowHolder endpointListRowHolder, int i) {
-
-            endpointListRowHolder.name.setText(endpointsList.get(i).get(NAME));
-            endpointListRowHolder.type.setText(endpointsList.get(i).get(TYPE));
-            endpointListRowHolder.region.setText(endpointsList.get(i).get(REGION));
-            endpointListRowHolder.url.setText(endpointsList.get(i).get(PUBLICURL));
+        Log.d("RV", "OnBindViewHolder");
+        endpointListRowHolder.name.setText(endpointsList.get(i).get(NAME));
+        endpointListRowHolder.type.setText(endpointsList.get(i).get(TYPE));
+        endpointListRowHolder.region.setText(endpointsList.get(i).get(REGION));
+        endpointListRowHolder.url.setText(endpointsList.get(i).get(PUBLICURL));
 
     }
 

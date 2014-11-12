@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -66,7 +67,9 @@ public class OverviewFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
         jsonList = EndpointsParser.parseJSON(endpoints);
         RecyclerView recyclerView = (RecyclerView)rootView.findViewById(R.id.overviewRV);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         EndpointsAdapter endpointsAdapter = new EndpointsAdapter(getActivity(),jsonList);
         recyclerView.setAdapter(endpointsAdapter);
         return rootView;
