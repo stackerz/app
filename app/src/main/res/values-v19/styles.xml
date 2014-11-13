@@ -6,6 +6,9 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowBackground">@color/window_bg</item>
+        <item name="android:listChoiceBackgroundIndicator">@color/accent</item>
+        <item name="android:listSelector">@color/accent</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/background_selector</item>
         <!-- <item name="android:fitsSystemWindows">true</item> -->
         <!-- <item name="android:clipToPadding">false</item> -->
     </style>
