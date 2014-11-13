@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -82,12 +83,14 @@ public class OverviewFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setClickable(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
+                    @Override
+                    public void onItemClick(View view, int position) {
                         recyclerView.getChildItemId(view);
-                        Toast.makeText(getActivity(),"Test"+position,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Test" + position, Toast.LENGTH_SHORT).show();
                     }
                 })
         );
