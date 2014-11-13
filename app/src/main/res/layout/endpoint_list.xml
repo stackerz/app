@@ -5,7 +5,10 @@
     android:layout_gravity="center"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    app:cardBackgroundColor="#878787">
+    app:cardBackgroundColor="#878787"
+    android:elevation="100dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
