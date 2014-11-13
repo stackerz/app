@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Stackerz</string>
-    <string name="overviewSection">Services</string>
+    <string name="overviewSection">Overview</string>
     <string name="instancesSection">Instances</string>
     <string name="volumesSection">Volumes</string>
     <string name="imagesSection">Images</string>
