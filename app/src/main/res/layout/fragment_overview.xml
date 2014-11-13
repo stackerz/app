@@ -13,6 +13,7 @@ tools:context="com.stackerz.app.OverviewFragment">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Services"
+        android:textColor="@android:color/black"
         android:textSize="@dimen/abc_text_size_large_material"
         android:textAlignment="center"
         android:id="@+id/overviewTV"

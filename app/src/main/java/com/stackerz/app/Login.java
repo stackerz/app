@@ -188,13 +188,17 @@ public class Login extends Activity implements View.OnClickListener{
             setSharedPrefs();
             prefSaved = true;
             loginRequest();
-            JSONData.shared().setAuthtoken(authToken);
-            JSONData.shared().setEndpoint(endpointStr);
-            Intent intent = new Intent(Login.this, Stackerz.class);
-            startActivity(intent);
-            SharedPreferences first = getSharedPreferences("First",0);
-            first.edit().putBoolean("First",true).commit();
-            first.edit().putBoolean("Token",true).commit();
+            if (!reachable) {
+                loginRequest();
+            }else{
+                JSONData.shared().setAuthtoken(authToken);
+                JSONData.shared().setEndpoint(endpointStr);
+                Intent intent = new Intent(Login.this, Stackerz.class);
+                startActivity(intent);
+                SharedPreferences first = getSharedPreferences("First", 0);
+                first.edit().putBoolean("First", true).commit();
+                first.edit().putBoolean("Token", true).commit();
+            }
         }
     }
 
@@ -259,13 +263,19 @@ public class Login extends Activity implements View.OnClickListener{
                         } catch (JSONException e) {
                             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                             e.printStackTrace();
-                        }
+                         }
 
                         Log.d("App", response.toString());
                         setEndpoints(response);
                         setEndpointStr(response.toString());
                         //Test JSON
                         //Toast.makeText(getApplicationContext(), endpoints.toString(), Toast.LENGTH_LONG).show();
+                        while (response == null){
+                            endpoints = getEndpoints();
+                            if (endpoints != null){
+                                break;
+                            }
+                        }
                         pDialog.hide();
                     }
                 },
@@ -278,6 +288,7 @@ public class Login extends Activity implements View.OnClickListener{
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
                         pDialog.hide();
+                        reachable = false;
                     }
                 }
         ) {
