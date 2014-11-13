@@ -83,7 +83,15 @@ public class OverviewFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        recyclerView.setHasFixedSize(true);
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        recyclerView.getChildItemId(view);
+                        Toast.makeText(getActivity(),"Test"+position,Toast.LENGTH_SHORT).show();
+                    }
+                })
+        );
+
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsAdapter endpointsAdapter = new EndpointsAdapter(getActivity(),jsonList);
         recyclerView.setAdapter(endpointsAdapter);

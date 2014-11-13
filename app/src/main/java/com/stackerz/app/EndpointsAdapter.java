@@ -1,12 +1,15 @@
 package com.stackerz.app;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -34,7 +37,6 @@ public class EndpointsAdapter extends RecyclerView.Adapter<EndpointListRowHolder
     public EndpointListRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.endpoint_list, null);
         EndpointListRowHolder mh = new EndpointListRowHolder(v);
-        Log.d("RV", "OnCreateViewHolder");
         return mh;
     }
 
@@ -46,13 +48,29 @@ public class EndpointsAdapter extends RecyclerView.Adapter<EndpointListRowHolder
         endpointListRowHolder.type.setText(e.get(TYPE));
         endpointListRowHolder.region.setText(e.get(REGION));
         endpointListRowHolder.url.setText(e.get(PUBLICURL));
-        Log.d("RV", e.get(NAME));
-
     }
+
 
     @Override
     public int getItemCount() {
         return (null != endpointsList ? endpointsList.size() : 0);
     }
+}
+
+class EndpointListRowHolder extends RecyclerView.ViewHolder {
+    protected TextView name;
+    protected TextView type;
+    protected TextView region;
+    protected TextView url;
+
+
+    public EndpointListRowHolder(View view) {
+        super(view);
+        this.name = (TextView) view.findViewById(R.id.name);
+        this.type = (TextView) view.findViewById(R.id.type);
+        this.region = (TextView) view.findViewById(R.id.region);
+        this.url = (TextView) view.findViewById(R.id.url);
+    }
+
 }
 
