@@ -8,7 +8,15 @@ android:paddingRight="@dimen/activity_horizontal_margin"
 android:paddingTop="@dimen/activity_vertical_margin"
 android:paddingBottom="@dimen/activity_vertical_margin"
 tools:context="com.stackerz.app.OverviewFragment">
-
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/overviewCV"
+        android:layout_gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/accent"
+        android:elevation="100dp"
+>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,13 +25,17 @@ tools:context="com.stackerz.app.OverviewFragment">
         android:textSize="@dimen/abc_text_size_large_material"
         android:textAlignment="center"
         android:id="@+id/overviewTV"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textStyle="bold" />
+    </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.RecyclerView
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:id="@+id/overviewRV"
-    android:layout_below="@+id/overviewTV"
+    android:layout_below="@+id/overviewCV"
     android:clickable="true"
     android:scrollbars="vertical"
     />
