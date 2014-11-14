@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 
 public class Stackerz extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OverviewFragment.OverviewCallbacks{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -31,6 +31,7 @@ public class Stackerz extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,10 @@ public class Stackerz extends Activity
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
 
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            String authToken = extras.getString("AuthToken");
+        }
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -47,6 +52,7 @@ public class Stackerz extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
     }
 
     @Override
@@ -62,6 +68,8 @@ public class Stackerz extends Activity
                 //args.putString("endpointStr",getIntent().getExtras().getString("endpointStr"));
                 //OverviewFragment overviewFragment = new OverviewFragment();
                 //overviewFragment.setArguments(args);
+                OverviewFragment overviewFragment = new OverviewFragment();
+                overviewFragment.setArguments(extras);
                 fragmentManager.beginTransaction().replace(R.id.container, OverviewFragment.newInstance(position)).commit();
                 //fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position)).commit();
                 break;
@@ -182,6 +190,11 @@ public class Stackerz extends Activity
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemSelected(Endpoints endpoints) {
+        Bundle bEndpoints = endpoints.toBundle();
     }
 
     /**

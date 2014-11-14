@@ -53,6 +53,15 @@ public class Endpoints {
         this.name = name;
     }
 
+    public Bundle toBundle(){
+        Bundle b = new Bundle();
+        b.putString(NAME, this.name);
+        b.putString(TYPE, this.type);
+        b.putString(REGION, this.region);
+        b.putString(PUBLICURL, this.publicURL);
+        return b;
+    }
+
 }
 
 

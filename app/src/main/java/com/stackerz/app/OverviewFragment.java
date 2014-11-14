@@ -58,7 +58,10 @@ public class OverviewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
+        Bundle b = getArguments();
+        if (b != null && b.containsKey("AuthToken")){
+            String authToken = b.getString("AuthToken");
+        }
 
     }
 
@@ -92,7 +95,6 @@ public class OverviewFragment extends Fragment {
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        recyclerView.getChildItemId(view);
                         Toast.makeText(getActivity(), "Test" + position, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -102,6 +104,10 @@ public class OverviewFragment extends Fragment {
         EndpointsAdapter endpointsAdapter = new EndpointsAdapter(getActivity(),jsonList);
         recyclerView.setAdapter(endpointsAdapter);
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    public interface OverviewCallbacks{
+        public void onItemSelected(Endpoints endpoints);
     }
 
     @Override

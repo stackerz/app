@@ -188,17 +188,14 @@ public class Login extends Activity implements View.OnClickListener{
             setSharedPrefs();
             prefSaved = true;
             loginRequest();
-            if (!reachable) {
-                loginRequest();
-            }else{
-                JSONData.shared().setAuthtoken(authToken);
-                JSONData.shared().setEndpoint(endpointStr);
-                Intent intent = new Intent(Login.this, Stackerz.class);
-                startActivity(intent);
-                SharedPreferences first = getSharedPreferences("First", 0);
-                first.edit().putBoolean("First", true).commit();
-                first.edit().putBoolean("Token", true).commit();
-            }
+            //JSONData.shared().setAuthtoken(authToken);
+            //JSONData.shared().setEndpoint(endpointStr);
+            Intent intent = new Intent(Login.this, Stackerz.class);
+            intent.putExtra("AuthToken", authToken);
+            startActivity(intent);
+            SharedPreferences first = getSharedPreferences("First", 0);
+            first.edit().putBoolean("First", true).commit();
+            first.edit().putBoolean("Token", true).commit();
         }
     }
 
@@ -258,7 +255,7 @@ public class Login extends Activity implements View.OnClickListener{
                             JSONObject token = access.getJSONObject("token");
                             String id = token.getString("id");
                             setAuthToken(id);
-                            JSONData.shared().setAuthtoken(id);
+                            //JSONData.shared().setAuthtoken(id);
                             Toast.makeText(getApplicationContext(), "New Authentication Token acquired", Toast.LENGTH_LONG).show();
                         } catch (JSONException e) {
                             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
