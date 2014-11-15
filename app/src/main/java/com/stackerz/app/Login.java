@@ -269,12 +269,6 @@ public class Login extends Activity implements View.OnClickListener{
                         setEndpointStr(response.toString());
                         //Test JSON
                         //Toast.makeText(getApplicationContext(), endpoints.toString(), Toast.LENGTH_LONG).show();
-                        while (response == null){
-                            endpoints = getEndpoints();
-                            if (endpoints != null){
-                                break;
-                            }
-                        }
                         pDialog.hide();
                     }
                 },
