@@ -1,6 +1,7 @@
 package com.stackerz.app;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 
 import android.content.SharedPreferences;
@@ -95,7 +96,11 @@ public class OverviewFragment extends Fragment {
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Toast.makeText(getActivity(), "Test" + position, Toast.LENGTH_SHORT).show();
+                        Dialog dialog = new Dialog(getActivity());
+                        dialog.setContentView(R.layout.endpoint_list);
+                        dialog.setTitle("Details " + recyclerView.getChildItemId(view) + " " + position);
+                        dialog.show();
+                        //Toast.makeText(getActivity(), "Test" + position, Toast.LENGTH_SHORT).show();
                     }
                 })
         );
