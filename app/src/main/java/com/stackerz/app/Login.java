@@ -190,12 +190,14 @@ public class Login extends Activity implements View.OnClickListener{
             loginRequest();
             //JSONData.shared().setAuthtoken(authToken);
             //JSONData.shared().setEndpoint(endpointStr);
-            Intent intent = new Intent(Login.this, Stackerz.class);
-            intent.putExtra("AuthToken", authToken);
-            startActivity(intent);
-            SharedPreferences first = getSharedPreferences("First", 0);
-            first.edit().putBoolean("First", true).commit();
-            first.edit().putBoolean("Token", true).commit();
+            if (reachable) {
+                Intent intent = new Intent(Login.this, Stackerz.class);
+                intent.putExtra("AuthToken", authToken);
+                startActivity(intent);
+                SharedPreferences first = getSharedPreferences("First", 0);
+                first.edit().putBoolean("First", true).commit();
+                first.edit().putBoolean("Token", true).commit();
+            }
         }
     }
 
@@ -281,11 +283,13 @@ public class Login extends Activity implements View.OnClickListener{
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d("App", "Error: " + error.getMessage());
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                "Cannot connect. Check your credentials and try to login again - Data from your last successful session will be available for read-only access", Toast.LENGTH_LONG);
+                                "Cannot connect. Check your credentials and try to login again - Data from your last successful connection will be loaded for offline access", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
                         pDialog.hide();
                         reachable = false;
+                        Intent intent = new Intent(Login.this, Connect.class);
+                        startActivity(intent);
                     }
                 }
         ) {
