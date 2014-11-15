@@ -1,5 +1,6 @@
 package com.stackerz.app;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
@@ -70,6 +71,7 @@ public class EndpointsParser extends Activity{
         String neutronURL = "neutron";
         String glanceURL = "glance";
         String keystoneURL = "keystone";
+        String cinderURL = "cinder";
         for (Map<String,String> map : jsonList) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 if (map.containsValue(novaURL)) {
@@ -81,10 +83,14 @@ public class EndpointsParser extends Activity{
                 if (map.containsValue(glanceURL)) {
                     glanceURL = map.get(PUBLICURL);
                 }
+                if (map.containsValue(keystoneURL)) {
+                    keystoneURL = map.get(PUBLICURL);
+                }
+                if (map.containsValue(cinderURL)) {
+                    cinderURL = map.get(PUBLICURL);
+                }
             }
         }
-
-
         return jsonList;
     }
 }
