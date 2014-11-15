@@ -6,8 +6,11 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,6 +65,26 @@ public class EndpointsParser extends Activity{
             Log.d("ErrorInitJSON", e.toString());
             e.printStackTrace();
         }
+
+        String novaURL = "nova";
+        String neutronURL = "neutron";
+        String glanceURL = "glance";
+        String keystoneURL = "keystone";
+        for (Map<String,String> map : jsonList) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                if (map.containsValue(novaURL)) {
+                    novaURL = map.get(PUBLICURL);
+                }
+                if (map.containsValue(neutronURL)) {
+                    neutronURL = map.get(PUBLICURL);
+                }
+                if (map.containsValue(glanceURL)) {
+                    glanceURL = map.get(PUBLICURL);
+                }
+            }
+        }
+
+
         return jsonList;
     }
 }
