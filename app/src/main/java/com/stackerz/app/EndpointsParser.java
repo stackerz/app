@@ -1,6 +1,7 @@
 package com.stackerz.app;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
@@ -20,10 +21,15 @@ import org.json.JSONObject;
  * Created by ed on 4/11/14.
  */
 public class EndpointsParser extends Activity{
+    public static final String NAME = "name";
     public static final String PUBLICURL = "publicURL";
     public static final String REGION = "region";
     public static final String TYPE = "type";
-    public static final String NAME = "name";
+    public static String novaURL = "nova";
+    public static String neutronURL = "neutron";
+    public static String glanceURL = "glance";
+    public static String keystoneURL = "keystone";
+    public static String cinderURL = "cinder";
 
 
 
@@ -67,11 +73,7 @@ public class EndpointsParser extends Activity{
             e.printStackTrace();
         }
 
-        String novaURL = "nova";
-        String neutronURL = "neutron";
-        String glanceURL = "glance";
-        String keystoneURL = "keystone";
-        String cinderURL = "cinder";
+
         for (Map<String,String> map : jsonList) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 if (map.containsValue(novaURL)) {
@@ -92,6 +94,16 @@ public class EndpointsParser extends Activity{
             }
         }
         return jsonList;
+    }
+
+    //	Package data for transfer between activities
+    public Bundle toBundle() {
+        Bundle b = new Bundle();
+        b.putString("NovaURL", novaURL);
+        b.putString("NeutronURL", neutronURL);
+        b.putString("KeystoneURL", keystoneURL);
+        b.putString("CinderURL", cinderURL);
+        return b;
     }
 }
 
