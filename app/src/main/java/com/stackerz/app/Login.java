@@ -282,8 +282,9 @@ public class Login extends Activity implements View.OnClickListener{
                         toast.show();
                         pDialog.hide();
                         reachable = false;
-                        //Intent intent = new Intent(Login.this, Connect.class);
-                        //startActivity(intent);
+                        Intent intent = new Intent(Login.this, Connect.class);
+                        startActivity(intent);
+
                     }
                 }
         ) {
