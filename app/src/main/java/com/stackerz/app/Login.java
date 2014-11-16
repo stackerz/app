@@ -277,13 +277,13 @@ public class Login extends Activity implements View.OnClickListener{
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d("App", "Error: " + error.getMessage());
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                "Cannot connect. Check your credentials and try to login again - Data from your last successful connection was loaded for offline access, press the back button to access", Toast.LENGTH_LONG);
+                                "Cannot connect. Check your credentials and try to login again - Data from your last successful connection was loaded for offline access", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
                         pDialog.hide();
                         reachable = false;
-                        Intent intent = new Intent(Login.this, Connect.class);
-                        startActivity(intent);
+                        //Intent intent = new Intent(Login.this, Connect.class);
+                        //startActivity(intent);
                     }
                 }
         ) {
