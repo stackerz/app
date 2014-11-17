@@ -22,7 +22,7 @@ public class Connect extends Activity {
                 //connect.setBackgroundColor(Color.RED);
                 Intent intent = new Intent(Connect.this, Login.class);
                 startActivity(intent);
-                //finish();
+                finish();
             }
         });
 

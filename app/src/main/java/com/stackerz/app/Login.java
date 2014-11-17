@@ -190,10 +190,16 @@ public class Login extends Activity implements View.OnClickListener{
             loginRequest();
             //JSONData.shared().setAuthtoken(authToken);
             //JSONData.shared().setEndpoint(endpointStr);
+            //Time to get Volley error response
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             if (reachable) {
                 Intent intent = new Intent(Login.this, Stackerz.class);
                 intent.putExtra("AuthToken", authToken);
-                startActivity(intent);
+                startActivityForResult(intent,1);
                 SharedPreferences first = getSharedPreferences("First", 0);
                 first.edit().putBoolean("First", true).commit();
                 first.edit().putBoolean("Token", true).commit();
@@ -277,13 +283,14 @@ public class Login extends Activity implements View.OnClickListener{
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d("App", "Error: " + error.getMessage());
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                "Cannot connect. Check your credentials and try to login again - Data from your last successful connection was loaded for offline access", Toast.LENGTH_LONG);
+                                "Cannot connect. Check your credentials and try to login again", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
                         pDialog.hide();
                         reachable = false;
                         Intent intent = new Intent(Login.this, Connect.class);
                         startActivity(intent);
+                        finishActivity(1);
 
                     }
                 }
