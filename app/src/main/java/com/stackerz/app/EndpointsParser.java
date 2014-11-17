@@ -135,12 +135,15 @@ public class EndpointsParser extends Activity{
                     setCinderURL(cinderURL);
                 }
             }
+            Bundle b = EndpointsParser.toBundle();
+            Intent intent = new Intent();
+            intent.putExtra("URLs",b);
         }
         return jsonList;
     }
 
     //	Package data for transfer between activities
-    public Bundle toBundle() {
+    public static Bundle toBundle() {
         Bundle b = new Bundle();
         b.putString("NovaURL", novaURL);
         b.putString("NeutronURL", neutronURL);

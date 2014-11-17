@@ -32,6 +32,7 @@ public class Stackerz extends Activity
      */
     private CharSequence mTitle;
     private Bundle extras;
+    private Bundle extrasEndpoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class Stackerz extends Activity
         if (extras != null) {
             String authToken = extras.getString("AuthToken");
         }
+        extrasEndpoints = getIntent().getBundleExtra("URLs");
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
