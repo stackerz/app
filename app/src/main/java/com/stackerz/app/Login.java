@@ -190,7 +190,6 @@ public class Login extends Activity implements View.OnClickListener{
             loginRequest();
             //JSONData.shared().setAuthtoken(authToken);
             //JSONData.shared().setEndpoint(endpointStr);
-            //Time to get Volley error response
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -283,14 +282,14 @@ public class Login extends Activity implements View.OnClickListener{
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d("App", "Error: " + error.getMessage());
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                "Cannot connect. Check your credentials and try to login again", Toast.LENGTH_LONG);
+                                "Cannot connect - Check your credentials and try to login again", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
                         pDialog.hide();
                         reachable = false;
+                        finishActivity(1);
                         Intent intent = new Intent(Login.this, Connect.class);
                         startActivity(intent);
-                        finishActivity(1);
 
                     }
                 }
