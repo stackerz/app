@@ -191,7 +191,7 @@ public class Login extends Activity implements View.OnClickListener{
             //JSONData.shared().setAuthtoken(authToken);
             //JSONData.shared().setEndpoint(endpointStr);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -282,7 +282,7 @@ public class Login extends Activity implements View.OnClickListener{
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d("App", "Error: " + error.getMessage());
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                "Cannot connect! Check your login details/password and try to login again", Toast.LENGTH_LONG);
+                                "Cannot connect, wrong user name or password. Please try to login again", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
                         pDialog.hide();
