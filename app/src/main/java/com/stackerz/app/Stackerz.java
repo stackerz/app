@@ -35,8 +35,10 @@ public class Stackerz extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    private Bundle extras;
-    private ArrayList<HashMap<String, String>> jsonList;
+    public Bundle extras;
+    public ArrayList<HashMap<String, String>> jsonList;
+    public String endpoints="";
+    public String authToken="";
 
 
 
@@ -46,8 +48,6 @@ public class Stackerz extends Activity
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        String endpoints="";
-        String authToken="";
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken",authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -78,15 +78,10 @@ public class Stackerz extends Activity
                 .commit();
         switch (position) {
             case 0:
-                //Bundle args = new Bundle();
-                //args.putString("endpointStr",getIntent().getExtras().getString("endpointStr"));
-                //OverviewFragment overviewFragment = new OverviewFragment();
-                //overviewFragment.setArguments(args);
                 OverviewFragment overviewFragment = new OverviewFragment();
                 overviewFragment.setArguments(extras);
                 fragmentManager.beginTransaction().replace(R.id.container, OverviewFragment.newInstance(position)).commit();
-                //fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position)).commit();
-                break;
+                 break;
             case 1:
                 fragmentManager.beginTransaction().replace(R.id.container, InstancesFragment.newInstance(position)).commit();
                 break;

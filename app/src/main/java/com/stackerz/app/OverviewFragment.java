@@ -60,12 +60,6 @@ public class OverviewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        Bundle b = getArguments();
-        if (b != null){
-            String authToken = b.getString("AuthToken");
-            String endpoints = b.getString("Endpoints");
-            Serializable jsonList = b.getSerializable("ParsedJSON");
-       }
 
     }
 
@@ -74,6 +68,10 @@ public class OverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //String authToken = JSONData.shared().getAuthtoken();
+
+        String authToken = getArguments().getString("AuthToken");
+        String endpoints = getArguments().getString("Endpoints");
+        Serializable jsonList = getArguments().getSerializable("ParsedJSON");
 
 
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
