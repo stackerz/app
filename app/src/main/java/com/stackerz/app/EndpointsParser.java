@@ -112,8 +112,12 @@ public class EndpointsParser extends Activity{
         }
 
 
-        for (Map<String,String> map : jsonList) {
-            for (Map.Entry<String, String> entry : map.entrySet()) {
+        return jsonList;
+    }
+
+    public void getURLs(ArrayList<HashMap<String, String>> endpoints){
+        for (Map<String,String> map : endpoints) {
+            //for (Map.Entry<String, String> entry : map.entrySet()) {
                 if (map.containsValue(novaURL)) {
                     novaURL = map.get(PUBLICURL);
                     setNovaURL(novaURL);
@@ -135,11 +139,7 @@ public class EndpointsParser extends Activity{
                     setCinderURL(cinderURL);
                 }
             }
-            Bundle b = EndpointsParser.toBundle();
-            Intent intent = new Intent();
-            intent.putExtra("URLs",b);
-        }
-        return jsonList;
+
     }
 
     //	Package data for transfer between activities

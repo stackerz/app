@@ -105,6 +105,8 @@ public class OverviewFragment extends Fragment {
                 })
         );
         jsonList = EndpointsParser.parseJSON(endpoints);
+        EndpointsParser.shared().getURLs(jsonList);
+        String novaURL = EndpointsParser.getNovaURL();
         EndpointsAdapter endpointsAdapter = new EndpointsAdapter(getActivity(),jsonList);
         recyclerView.setAdapter(endpointsAdapter);
         super.onViewCreated(view, savedInstanceState);
