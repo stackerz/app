@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -17,6 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Stackerz extends Activity
@@ -32,19 +36,27 @@ public class Stackerz extends Activity
      */
     private CharSequence mTitle;
     private Bundle extras;
-    private Bundle extrasEndpoints;
+    private ArrayList<HashMap<String, String>> jsonList;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
+        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        String endpoints="";
+        String authToken="";
+        endpoints = shPref.getString("KeystoneData", endpoints);
+        authToken = shPref.getString("AuthToken",authToken);
+        jsonList = EndpointsParser.parseJSON(endpoints);
+        extras = new Bundle();
+        extras.putString("Endpoints",endpoints);
+        extras.putString("AuthToken",authToken);
+        extras.putSerializable("ParsedList", jsonList);
 
-        extras = getIntent().getExtras();
-        if (extras != null) {
-            String authToken = extras.getString("AuthToken");
-        }
-        extrasEndpoints = getIntent().getBundleExtra("URLs");
+
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);

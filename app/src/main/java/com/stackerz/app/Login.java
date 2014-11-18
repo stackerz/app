@@ -125,6 +125,7 @@ public class Login extends Activity implements View.OnClickListener{
 
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
+        shPref.edit().putString("AuthToken",authToken).commit();
     }
 
     public void setEndpoints(JSONObject endpoints) {

@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,9 +61,11 @@ public class OverviewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         Bundle b = getArguments();
-        if (b != null && b.containsKey("AuthToken")){
+        if (b != null){
             String authToken = b.getString("AuthToken");
-        }
+            String endpoints = b.getString("Endpoints");
+            Serializable jsonList = b.getSerializable("ParsedJSON");
+       }
 
     }
 
