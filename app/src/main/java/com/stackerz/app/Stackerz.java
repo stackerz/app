@@ -80,8 +80,8 @@ public class Stackerz extends Activity
             case 0:
                 OverviewFragment overviewFragment = new OverviewFragment();
                 overviewFragment.setArguments(extras);
-                //fragmentManager.beginTransaction().add(R.id.container,overviewFragment).commit();
                 fragmentManager.beginTransaction().add(R.id.container, OverviewFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container,overviewFragment).commit();
                 break;
             case 1:
                 fragmentManager.beginTransaction().replace(R.id.container, InstancesFragment.newInstance(position)).commit();

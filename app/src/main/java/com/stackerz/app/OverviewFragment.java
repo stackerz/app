@@ -69,7 +69,7 @@ public class OverviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         Bundle extras = getArguments();
         Serializable parsedList = extras.getSerializable("ParsedList");
-        //jsonList = (ArrayList<HashMap<String, String>>)parsedList;
+        jsonList = (ArrayList<HashMap<String, String>>)parsedList;
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
 
         recyclerView = (RecyclerView)rootView.findViewById(R.id.overviewRV);
@@ -79,10 +79,10 @@ public class OverviewFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        SharedPreferences sharedPreferences = new ObscuredSharedPreferences(this.getActivity(), this.getActivity().getApplicationContext().getSharedPreferences("Login_Credentials", 0));
-        String endpoints = "";
-        endpoints = sharedPreferences.getString("KeystoneData", endpoints);
-        jsonList = EndpointsParser.parseJSON(endpoints);
+        //SharedPreferences sharedPreferences = new ObscuredSharedPreferences(this.getActivity(), this.getActivity().getApplicationContext().getSharedPreferences("Login_Credentials", 0));
+        //String endpoints = "";
+        //endpoints = sharedPreferences.getString("KeystoneData", endpoints);
+        //jsonList = EndpointsParser.parseJSON(endpoints);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
