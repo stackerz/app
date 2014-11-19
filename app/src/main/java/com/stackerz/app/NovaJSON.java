@@ -78,6 +78,7 @@ public class NovaJSON extends Activity {
         String novaURL = getNova();
         novaURL = novaURL+"/servers";
 
+
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, novaURL, null,
                 new Response.Listener<JSONObject>() {
                     @Override

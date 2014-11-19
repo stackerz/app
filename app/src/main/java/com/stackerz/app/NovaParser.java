@@ -87,14 +87,12 @@ public class NovaParser extends Activity{
             for (int i = 0; i < servers.length(); i++) {
                 JSONObject objsrv = servers.getJSONObject(i);
                 novaInstance.setName(objsrv.getString("name"));
-                novaInstance.setId(objsrv.getString("type"));
-                }
-
+                novaInstance.setId(objsrv.getString("id"));
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NAME, novaInstance.getName());
                 map.put(ID, novaInstance.getId());
                 jsonList.add(map);
-
+            }
         } catch (JSONException e) {
             Log.d("ErrorInitJSON", e.toString());
             e.printStackTrace();
