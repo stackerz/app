@@ -45,7 +45,8 @@ public class Stackerz extends Activity
         super.onCreate(savedInstanceState);
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
-
+        EndpointsParser.shared().getURLs(jsonList);
+        String novaURL = EndpointsParser.getNovaURL();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -66,7 +67,6 @@ public class Stackerz extends Activity
         return extras;
     }
 
-    String novaURL = EndpointsParser.getNovaURL();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -80,6 +80,7 @@ public class Stackerz extends Activity
             case 0:
                 OverviewFragment overviewFragment = new OverviewFragment();
                 overviewFragment.setArguments(extras);
+                //fragmentManager.beginTransaction().add(R.id.container,overviewFragment).commit();
                 fragmentManager.beginTransaction().replace(R.id.container, OverviewFragment.newInstance(position)).commit();
                 break;
             case 1:
