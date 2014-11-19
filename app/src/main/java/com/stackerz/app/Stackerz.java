@@ -81,7 +81,7 @@ public class Stackerz extends Activity
                 OverviewFragment overviewFragment = new OverviewFragment();
                 overviewFragment.setArguments(extras);
                 //fragmentManager.beginTransaction().add(R.id.container,overviewFragment).commit();
-                fragmentManager.beginTransaction().replace(R.id.container, OverviewFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().add(R.id.container, OverviewFragment.newInstance(position)).commit();
                 break;
             case 1:
                 fragmentManager.beginTransaction().replace(R.id.container, InstancesFragment.newInstance(position)).commit();
@@ -231,18 +231,7 @@ public class Stackerz extends Activity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.activity_connect, container, false);
-            //WebView webView = (WebView) rootView.findViewById(R.id.webView);
-            //webView.loadUrl("https://stack.limagic.com/horizon");
-            final Button connect = (Button)rootView.findViewById(R.id.connectButtonMain);
-            connect.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    connect.setBackgroundColor(Color.RED);
-                    Intent intent = new Intent(getActivity(),Login.class);
-                    startActivity(intent);
-                }
-            });
+            View rootView = inflater.inflate(R.layout.activity_splash, container, false);
             return rootView;
 
         }
