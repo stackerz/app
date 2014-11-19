@@ -1,5 +1,6 @@
 package com.stackerz.app;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.Activity;
 
 
 import java.util.ArrayList;
@@ -57,7 +59,7 @@ public class EndpointsAdapter extends RecyclerView.Adapter<EndpointListRowHolder
     }
 }
 
-class EndpointListRowHolder extends RecyclerView.ViewHolder {
+class EndpointListRowHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     protected TextView name;
     protected TextView type;
     protected TextView region;
@@ -66,10 +68,18 @@ class EndpointListRowHolder extends RecyclerView.ViewHolder {
 
     public EndpointListRowHolder(View view) {
         super(view);
+        view.setOnClickListener(this);
         this.name = (TextView) view.findViewById(R.id.name);
         this.type = (TextView) view.findViewById(R.id.type);
         //this.region = (TextView) view.findViewById(R.id.region);
         //this.url = (TextView) view.findViewById(R.id.url);
+    }
+
+    public void onClick(View view){
+        Dialog dialog = new Dialog(view.getContext());
+        dialog.setContentView(R.layout.endpoint_list);
+        dialog.setTitle("Details " + name.getText() + "" + getPosition());
+        dialog.show();
     }
 
 }

@@ -96,10 +96,10 @@ public class OverviewFragment extends Fragment {
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Dialog dialog = new Dialog(getActivity());
-                        dialog.setContentView(R.layout.endpoint_list);
-                        dialog.setTitle("Details " + recyclerView.getChildItemId(view) + " " + position);
-                        dialog.show();
+                        //Dialog dialog = new Dialog(getActivity());
+                        //dialog.setContentView(R.layout.endpoint_list);
+                        //dialog.setTitle("Details " + recyclerView.getChildItemId(view) + " " + position);
+                        //dialog.show();
                         //Toast.makeText(getActivity(), "Test" + position, Toast.LENGTH_SHORT).show();
                     }
                 })
