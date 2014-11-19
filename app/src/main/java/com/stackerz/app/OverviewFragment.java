@@ -67,13 +67,9 @@ public class OverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //String authToken = JSONData.shared().getAuthtoken();
-
-        String authToken = getArguments().getString("AuthToken");
-        String endpoints = getArguments().getString("Endpoints");
-        Serializable jsonList = getArguments().getSerializable("ParsedJSON");
-
-
+        //Bundle extras = getArguments();
+        //Serializable parsedList = extras.getSerializable("ParsedList");
+        //jsonList = (ArrayList<HashMap<String, String>>)parsedList;
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
 
         recyclerView = (RecyclerView)rootView.findViewById(R.id.overviewRV);
@@ -86,6 +82,9 @@ public class OverviewFragment extends Fragment {
         SharedPreferences sharedPreferences = new ObscuredSharedPreferences(this.getActivity(), this.getActivity().getApplicationContext().getSharedPreferences("Login_Credentials", 0));
         String endpoints = "";
         endpoints = sharedPreferences.getString("KeystoneData", endpoints);
+        jsonList = EndpointsParser.parseJSON(endpoints);
+        //EndpointsParser.shared().getURLs(jsonList);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -105,17 +104,12 @@ public class OverviewFragment extends Fragment {
                     }
                 })
         );
-        jsonList = EndpointsParser.parseJSON(endpoints);
-        EndpointsParser.shared().getURLs(jsonList);
-        String novaURL = EndpointsParser.getNovaURL();
+
         EndpointsAdapter endpointsAdapter = new EndpointsAdapter(getActivity(),jsonList);
         recyclerView.setAdapter(endpointsAdapter);
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public interface OverviewCallbacks{
-        public void onItemSelected(Endpoints endpoints);
-    }
 
     @Override
     public void onAttach(Activity activity) {

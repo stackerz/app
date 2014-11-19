@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 
 public class Stackerz extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OverviewFragment.OverviewCallbacks{
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -40,23 +40,11 @@ public class Stackerz extends Activity
     public String endpoints="";
     public String authToken="";
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        endpoints = shPref.getString("KeystoneData", endpoints);
-        authToken = shPref.getString("AuthToken",authToken);
-        jsonList = EndpointsParser.parseJSON(endpoints);
-        extras = new Bundle();
-        extras.putString("Endpoints",endpoints);
-        extras.putString("AuthToken",authToken);
-        extras.putSerializable("ParsedList", jsonList);
-
-
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -66,8 +54,19 @@ public class Stackerz extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
     }
+
+    public Bundle authBundle(){
+        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        endpoints = shPref.getString("KeystoneData", endpoints);
+        authToken = shPref.getString("AuthToken",authToken);
+        jsonList = EndpointsParser.parseJSON(endpoints);
+        extras = new Bundle();
+        extras.putSerializable("ParsedList", jsonList);
+        return extras;
+    }
+
+    String novaURL = EndpointsParser.getNovaURL();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -76,12 +75,13 @@ public class Stackerz extends Activity
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position))
                 .commit();
+        extras = authBundle();
         switch (position) {
             case 0:
                 OverviewFragment overviewFragment = new OverviewFragment();
                 overviewFragment.setArguments(extras);
                 fragmentManager.beginTransaction().replace(R.id.container, OverviewFragment.newInstance(position)).commit();
-                 break;
+                break;
             case 1:
                 fragmentManager.beginTransaction().replace(R.id.container, InstancesFragment.newInstance(position)).commit();
                 break;
@@ -201,10 +201,7 @@ public class Stackerz extends Activity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onItemSelected(Endpoints endpoints) {
-        Bundle bEndpoints = endpoints.toBundle();
-    }
+
 
     /**
      * A placeholder fragment containing a simple view.
