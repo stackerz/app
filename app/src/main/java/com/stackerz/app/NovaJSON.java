@@ -10,6 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -79,29 +80,20 @@ public class NovaJSON extends Activity {
         novaURL = novaURL+"/servers";
 
 
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, novaURL, null,
-                new Response.Listener<JSONObject>() {
+        JsonArrayRequest getRequest = new JsonArrayRequest(novaURL,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray servers = response.getJSONArray("servers");
-                        } catch (JSONException e) {
-                            Toast.makeText(getApplicationContext(), "Error to get Instances", Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        }
-
+                    public void onResponse(JSONArray response) {
                         Log.d("Nova", response.toString());
                         setNovaJSON(response.toString());
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d("Nova", "Error: " + error.getMessage());
-
-                    }
+                }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Nova", "Error: " + error.getMessage());
                 }
-        ) {
+        }
+        ){
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("X-Auth-Token", authToken);
@@ -110,8 +102,8 @@ public class NovaJSON extends Activity {
                 params.put("Content-Type", "application/json; charset=utf-8");
                 return params;
             }
-
         };
+
 
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(getRequest);
