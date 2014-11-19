@@ -47,6 +47,10 @@ public class Stackerz extends Activity
         setContentView(R.layout.activity_stackerz);
         EndpointsParser.shared().getURLs(jsonList);
         String novaURL = EndpointsParser.getNovaURL();
+        String neutronURL = EndpointsParser.getNeutronURL();
+        String glanceURL = EndpointsParser.getGlanceURL();
+        String cinderURL = EndpointsParser.getCinderURL();
+        String keystoneURL = EndpointsParser.getKeystoneURL();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
