@@ -38,7 +38,7 @@ public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
 
         HashMap<String, String> e = novaList.get(i);
         novaListRowHolder.name.setText(e.get(NAME));
-        novaListRowHolder.id.setText(e.get(ID));
+        //novaListRowHolder.id.setText(e.get(ID));
 
 
     }
@@ -60,7 +60,7 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         super(view);
         view.setOnClickListener(this);
         this.name = (TextView) view.findViewById(R.id.nameInstance);
-        this.id = (TextView) view.findViewById(R.id.idInstance);
+        //this.id = (TextView) view.findViewById(R.id.idInstance);
 
     }
 
