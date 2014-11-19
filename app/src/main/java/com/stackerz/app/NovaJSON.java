@@ -79,6 +79,7 @@ public class NovaJSON extends Activity {
         String novaURL = getNova();
         novaURL = novaURL+"/servers";
 
+        try{
 
         JsonArrayRequest getRequest = new JsonArrayRequest(novaURL,
                 new Response.Listener<JSONArray>() {
@@ -107,6 +108,10 @@ public class NovaJSON extends Activity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(getRequest);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
 
     }
 }
