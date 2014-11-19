@@ -270,7 +270,7 @@ public class Login extends Activity implements View.OnClickListener{
                             e.printStackTrace();
                          }
 
-                        Log.d("App", response.toString());
+                        //Log.d("App", response.toString());
                         setEndpoints(response);
                         setEndpointStr(response.toString());
                         //Test JSON

@@ -75,21 +75,22 @@ public class Stackerz extends Activity
         return extras;
     }
 
-    public void novaAuth(){
-        EndpointsParser.shared().getURLs(jsonList);
-        String novaURL = EndpointsParser.getNovaURL();
-        Intent novaIntent = new Intent(Stackerz.this, NovaParser.class);
-        Bundle novaBundle = new Bundle();
-        novaBundle.putString("AuthToken", authToken);
-        novaBundle.putString("NovaURL", novaURL);
-        novaIntent.putExtra(NOVABUNDLE,novaBundle);
+    //public void novaAuth(){
+
+        //Intent novaIntent = new Intent(Stackerz.this, NovaParser.class);
+        //Bundle novaBundle = new Bundle();
+        //novaBundle.putString("AuthToken", authToken);
+        //novaBundle.putString("NovaURL", novaURL);
+        //novaIntent.putExtra(NOVABUNDLE,novaBundle);
         //PROBLEM IS HERE - BUNDLE NOT GETTING ACROSS!!
-    }
+    //}
 
     public Bundle novaBundle(){
-        novaAuth();
-        NovaParser.shared().getJSON();
-        instances = NovaParser.shared().getNovaJSON();
+        //SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        EndpointsParser.shared().getURLs(jsonList);
+        String novaURL = EndpointsParser.getNovaURL();
+        //shPref.edit().putString("NovaURL",novaURL).commit();
+        instances = NovaJSON.shared().receiveData(novaURL, authToken);
         novaList = NovaParser.parseJSON(instances);
         novaExtras = new Bundle();
         novaExtras.putSerializable("NovaParsed",novaList);
