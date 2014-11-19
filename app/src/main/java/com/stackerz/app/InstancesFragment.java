@@ -4,9 +4,16 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class InstancesFragment extends Fragment {
     /**
@@ -31,11 +38,33 @@ public class InstancesFragment extends Fragment {
     public InstancesFragment() {
     }
 
+    public ArrayList<HashMap<String, String>> jsonList;
+    public RecyclerView recyclerView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Bundle extras = getArguments();
+        Serializable parsedList = extras.getSerializable("NovaParsed");
+        jsonList = (ArrayList<HashMap<String, String>>)parsedList;
         View rootView = inflater.inflate(R.layout.fragment_instances, container, false);
+        recyclerView = (RecyclerView)rootView.findViewById(R.id.instancesRV);
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setClickable(true);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        NovaAdapter novaAdapter = new NovaAdapter(getActivity(),jsonList);
+        recyclerView.setAdapter(novaAdapter);
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override

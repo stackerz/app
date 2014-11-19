@@ -35,10 +35,14 @@ public class Stackerz extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    public Bundle extras;
+    public Bundle extras, novaExtras;
     public ArrayList<HashMap<String, String>> jsonList;
+    public ArrayList<HashMap<String, String>> novaList;
     public String endpoints="";
     public String authToken="";
+    public String instances="";
+    public static final String NOVABUNDLE = "NOVABUNDLE";
+    public static final String NEUTRONBUNDLE = "NEUTRONBUNDLE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,6 @@ public class Stackerz extends Activity
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
         EndpointsParser.shared().getURLs(jsonList);
-        String novaURL = EndpointsParser.getNovaURL();
         String neutronURL = EndpointsParser.getNeutronURL();
         String glanceURL = EndpointsParser.getGlanceURL();
         String cinderURL = EndpointsParser.getCinderURL();
@@ -61,6 +64,7 @@ public class Stackerz extends Activity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
+
     public Bundle authBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         endpoints = shPref.getString("KeystoneData", endpoints);
@@ -69,6 +73,27 @@ public class Stackerz extends Activity
         extras = new Bundle();
         extras.putSerializable("ParsedList", jsonList);
         return extras;
+    }
+
+    public void novaAuth(){
+        EndpointsParser.shared().getURLs(jsonList);
+        String novaURL = EndpointsParser.getNovaURL();
+        Intent novaIntent = new Intent(Stackerz.this, NovaParser.class);
+        Bundle novaBundle = new Bundle();
+        novaBundle.putString("AuthToken", authToken);
+        novaBundle.putString("NovaURL", novaURL);
+        novaIntent.putExtra(NOVABUNDLE,novaBundle);
+        //PROBLEM IS HERE - BUNDLE NOT GETTING ACROSS!!
+    }
+
+    public Bundle novaBundle(){
+        novaAuth();
+        NovaParser.shared().getJSON();
+        instances = NovaParser.shared().getNovaJSON();
+        novaList = NovaParser.parseJSON(instances);
+        novaExtras = new Bundle();
+        novaExtras.putSerializable("NovaParsed",novaList);
+        return novaExtras;
     }
 
 
@@ -88,7 +113,11 @@ public class Stackerz extends Activity
                 fragmentManager.beginTransaction().replace(R.id.container,overviewFragment).commit();
                 break;
             case 1:
-                fragmentManager.beginTransaction().replace(R.id.container, InstancesFragment.newInstance(position)).commit();
+                novaExtras = novaBundle();
+                InstancesFragment instancesFragment = new InstancesFragment();
+                instancesFragment.setArguments(novaExtras);
+                fragmentManager.beginTransaction().add(R.id.container, InstancesFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, instancesFragment).commit();
                 break;
             case 2:
                 fragmentManager.beginTransaction().replace(R.id.container, VolumesFragment.newInstance(position)).commit();
