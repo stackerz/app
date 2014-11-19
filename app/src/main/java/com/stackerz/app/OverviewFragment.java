@@ -67,8 +67,8 @@ public class OverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //Bundle extras = getArguments();
-        //Serializable parsedList = extras.getSerializable("ParsedList");
+        Bundle extras = getArguments();
+        Serializable parsedList = extras.getSerializable("ParsedList");
         //jsonList = (ArrayList<HashMap<String, String>>)parsedList;
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
 
