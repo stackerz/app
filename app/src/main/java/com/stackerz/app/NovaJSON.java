@@ -30,6 +30,7 @@ public class NovaJSON extends Activity {
     String novaJSON;
     String nova;
     String auth;
+    RequestQueue queue = null;
 
     public static NovaJSON parser = null;
 
@@ -79,6 +80,7 @@ public class NovaJSON extends Activity {
         final String authToken = getAuth();
         String novaURL = getNova();
         novaURL = novaURL+"/servers";
+        queue = Volley.newRequestQueue(this);
 
 
         /**
@@ -173,7 +175,7 @@ public class NovaJSON extends Activity {
             }
         };
 
-        RequestQueue queue = Volley.newRequestQueue(this);
+
         queue.add(getRequest);
 
     }
