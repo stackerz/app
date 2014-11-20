@@ -97,7 +97,7 @@ public class NovaJSON extends Activity {
                 VolleyLog.d("Nova", "Error: " + error.getMessage());
                 }
         }
-        );{
+        ){
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("X-Auth-Token", authToken);
