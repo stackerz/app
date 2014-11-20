@@ -77,7 +77,6 @@ public class NovaJSON extends Activity {
         //authToken = shPref.getString("AuthToken",authToken);
         //novaURL = shPref.getString("NovaURL",novaURL);
         final String authToken = getAuth();
-        String tag_json = "json_req";
         String novaURL = getNova();
         novaURL = novaURL+"/servers";
 

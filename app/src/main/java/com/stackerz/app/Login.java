@@ -236,7 +236,6 @@ public class Login extends Activity implements View.OnClickListener{
         final String tnt = shPref.getString("Tenant", tenant);
         final String json = "{\"auth\": {\"tenantName\": \"" + tnt + "\", \"passwordCredentials\": {\"username\": \"" + user + "\", \"password\": \"" + pass + "\"}}}";
         final ProgressDialog pDialog = new ProgressDialog(this);
-        String tag_json_obj = "json_obj_req";
         pDialog.setMessage("Loading...");
         pDialog.show();
 
