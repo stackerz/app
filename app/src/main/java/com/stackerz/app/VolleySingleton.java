@@ -20,6 +20,15 @@ public class VolleySingleton extends Application {
     private ImageLoader mImageLoader;
     private static Context mCtx;
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        mRequestQueue = Volley.newRequestQueue(this);
+
+        mInstance = this;
+    }
+
     private VolleySingleton(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
