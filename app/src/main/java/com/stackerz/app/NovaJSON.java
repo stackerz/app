@@ -176,7 +176,7 @@ public class NovaJSON extends Activity {
                 return params;
             }
         };
-        queue = VolleySingleton.getInstance().getRequestQueue();
+        queue = VolleySingleton.getInstance(this).getRequestQueue();
         //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
         queue.add(getRequest);
 

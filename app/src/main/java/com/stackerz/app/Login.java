@@ -308,7 +308,7 @@ public class Login extends Activity implements View.OnClickListener{
         //RequestQueue queue = Volley.newRequestQueue(this);
         //queue.add(getRequest);
 
-        RequestQueue queue = VolleySingleton.getInstance().getRequestQueue();
+        RequestQueue queue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
         queue.add(getRequest);
     }
