@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -76,11 +77,12 @@ public class NovaJSON extends Activity {
         //authToken = shPref.getString("AuthToken",authToken);
         //novaURL = shPref.getString("NovaURL",novaURL);
         final String authToken = getAuth();
+        String tag_json = "json_req";
         String novaURL = getNova();
         novaURL = novaURL+"/servers";
 
 
-
+        /**
         JsonArrayRequest getRequest = new JsonArrayRequest(novaURL,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -109,5 +111,71 @@ public class NovaJSON extends Activity {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(getRequest);
 
+    }
+
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, novaURL, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray servers = response.getJSONArray("servers");
+                        } catch (JSONException e) {
+                            Toast.makeText(getApplicationContext(), "Error to get Instances", Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        }
+
+                        Log.d("Nova", response.toString());
+                        setNovaJSON(response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d("Nova", "Error: " + error.getMessage());
+
+                    }
+                }
+        ) {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("X-Auth-Token", authToken);
+                params.put("User-Agent", "stackerz");
+                params.put("Accept", "application/json");
+                params.put("Content-Type", "application/json; charset=utf-8");
+                return params;
+            }
+
+        };**/
+
+        StringRequest getRequest = new StringRequest(Request.Method.GET,
+                novaURL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d("Nova", response.toString());
+                setNovaJSON(response.toString());
+
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Nova", "Error: " + error.getMessage());
+            }
+        }) {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("X-Auth-Token", authToken);
+                params.put("User-Agent", "stackerz");
+                params.put("Accept", "application/json");
+                params.put("Content-Type", "application/json; charset=utf-8");
+                return params;
+            }
+        };
+
+        //RequestQueue queue = Volley.newRequestQueue(this);
+        //queue.add(getRequest);
+        AppController.getInstance().addToRequestQueue(getRequest, tag_json);
     }
 }
