@@ -80,7 +80,7 @@ public class NovaJSON extends Activity {
         final String authToken = getAuth();
         String novaURL = getNova();
         novaURL = novaURL+"/servers";
-        queue = VolleySingleton.getInstance().getRequestQueue();
+
 
 
         /**
@@ -176,7 +176,7 @@ public class NovaJSON extends Activity {
                 return params;
             }
         };
-
+        queue = VolleySingleton.getInstance().getRequestQueue();
         //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
         queue.add(getRequest);
 
