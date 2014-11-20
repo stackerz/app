@@ -174,8 +174,8 @@ public class NovaJSON extends Activity {
             }
         };
 
-        //RequestQueue queue = Volley.newRequestQueue(this);
-        //queue.add(getRequest);
-        AppController.getInstance().addToRequestQueue(getRequest, tag_json);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(getRequest);
+
     }
 }

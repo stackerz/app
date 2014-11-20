@@ -236,7 +236,7 @@ public class Login extends Activity implements View.OnClickListener{
         final String tnt = shPref.getString("Tenant", tenant);
         final String json = "{\"auth\": {\"tenantName\": \"" + tnt + "\", \"passwordCredentials\": {\"username\": \"" + user + "\", \"password\": \"" + pass + "\"}}}";
         final ProgressDialog pDialog = new ProgressDialog(this);
-        String tag_json = "json_req";
+        String tag_json_obj = "json_obj_req";
         pDialog.setMessage("Loading...");
         pDialog.show();
 
@@ -306,9 +306,9 @@ public class Login extends Activity implements View.OnClickListener{
 
         };
 
-        //RequestQueue queue = Volley.newRequestQueue(this);
-        //queue.add(getRequest);
-        AppController.getInstance().addToRequestQueue(getRequest, tag_json);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(getRequest);
+
 
     }
 
