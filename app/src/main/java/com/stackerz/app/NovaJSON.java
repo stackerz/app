@@ -82,40 +82,6 @@ public class NovaJSON extends Activity {
         novaURL = novaURL+"/servers";
 
 
-
-
-        JsonArrayRequest getRequest = new JsonArrayRequest(novaURL,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("Nova", response.toString());
-                        setNovaJSON(response.toString());
-                    }
-                }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Nova", "Error: " + error.getMessage());
-                }
-        }
-        ){
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("X-Auth-Token", authToken);
-                params.put("User-Agent", "stackerz");
-                params.put("Accept", "application/json");
-                params.put("Content-Type", "application/json; charset=utf-8");
-                return params;
-            }
-        };
-
-/**
-        //RequestQueue queue = Volley.newRequestQueue(this);
-        //queue.add(getRequest);
-        RequestQueue queue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
-        //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
-        queue.add(getRequest);
-    }
-
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, novaURL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -150,32 +116,6 @@ public class NovaJSON extends Activity {
 
         };
 
-        StringRequest getRequest = new StringRequest(Request.Method.GET,
-                novaURL, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.d("Nova", response.toString());
-                setNovaJSON(response.toString());
-
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Nova", "Error: " + error.getMessage());
-            }
-        }) {
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("X-Auth-Token", authToken);
-                params.put("User-Agent", "stackerz");
-                params.put("Accept", "application/json");
-                params.put("Content-Type", "application/json; charset=utf-8");
-                return params;
-            }
-        };**/
         queue = VolleySingleton.getInstance(this).getRequestQueue();
         //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
         queue.add(getRequest);
