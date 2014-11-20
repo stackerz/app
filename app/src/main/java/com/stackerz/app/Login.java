@@ -309,7 +309,6 @@ public class Login extends Activity implements View.OnClickListener{
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(getRequest);
 
-
     }
 
 
