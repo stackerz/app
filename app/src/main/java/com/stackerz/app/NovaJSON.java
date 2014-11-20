@@ -83,7 +83,7 @@ public class NovaJSON extends Activity {
 
 
 
-        /**
+
         JsonArrayRequest getRequest = new JsonArrayRequest(novaURL,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -108,7 +108,7 @@ public class NovaJSON extends Activity {
             }
         };
 
-
+/**
         //RequestQueue queue = Volley.newRequestQueue(this);
         //queue.add(getRequest);
         RequestQueue queue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
@@ -148,7 +148,7 @@ public class NovaJSON extends Activity {
                 return params;
             }
 
-        };**/
+        };
 
         StringRequest getRequest = new StringRequest(Request.Method.GET,
                 novaURL, new Response.Listener<String>() {
@@ -175,7 +175,7 @@ public class NovaJSON extends Activity {
                 params.put("Content-Type", "application/json; charset=utf-8");
                 return params;
             }
-        };
+        };**/
         queue = VolleySingleton.getInstance(this).getRequestQueue();
         //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
         queue.add(getRequest);
