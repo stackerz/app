@@ -42,6 +42,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="name"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="@dimen/abc_text_size_large_material"
         android:layout_alignParentTop="true"

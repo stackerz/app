@@ -1,7 +1,11 @@
 package com.stackerz.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,6 +51,27 @@ public class InstancesFragment extends Fragment {
                              Bundle savedInstanceState) {
         Bundle extras = getArguments();
         Serializable parsedList = extras.getSerializable("NovaParsed");
+        if (parsedList == null){
+            //Dialog dialog = new Dialog(getActivity());
+            //dialog.setContentView(R.layout.token_expired);
+            //dialog.setTitle("Token Expired");
+            //dialog.show();
+            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+            alert.setTitle("Token Expired");
+            alert.setMessage("Authentication Token expired! Please login again.")
+                    .setNeutralButton("Connect", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(getActivity(), Login.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                            getFragmentManager().beginTransaction().remove(InstancesFragment.this).commit();
+                        }
+                    });
+            AlertDialog alertDialog = alert.create();
+            alertDialog.show();
+
+        }
         jsonList = (ArrayList<HashMap<String, String>>)parsedList;
         View rootView = inflater.inflate(R.layout.fragment_instances, container, false);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.instancesRV);
