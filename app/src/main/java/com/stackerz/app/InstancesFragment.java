@@ -52,10 +52,6 @@ public class InstancesFragment extends Fragment {
         Bundle extras = getArguments();
         Serializable parsedList = extras.getSerializable("NovaParsed");
         if (parsedList == null){
-            //Dialog dialog = new Dialog(getActivity());
-            //dialog.setContentView(R.layout.token_expired);
-            //dialog.setTitle("Token Expired");
-            //dialog.show();
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             alert.setTitle("Token Expired");
             alert.setMessage("Authentication Token expired! Please login again.")
