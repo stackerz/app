@@ -1,6 +1,8 @@
 package com.stackerz.app;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -47,6 +49,8 @@ public class NovaJSON extends Activity {
 
     public void setNovaJSON(String novaJSON) {
         this.novaJSON = novaJSON;
+        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        shPref.edit().putString("NovaData",getNovaJSON()).commit();
     }
 
     public String getNova() {
@@ -74,13 +78,9 @@ public class NovaJSON extends Activity {
     }
 
     public void getJSON() {
-        //SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        //authToken = shPref.getString("AuthToken",authToken);
-        //novaURL = shPref.getString("NovaURL",novaURL);
         final String authToken = getAuth();
         String novaURL = getNova();
         novaURL = novaURL+"/servers";
-
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, novaURL, null,
                 new Response.Listener<JSONObject>() {
@@ -88,6 +88,7 @@ public class NovaJSON extends Activity {
                     public void onResponse(JSONObject response) {
                         Log.d("Nova on Response", response.toString());
                         setNovaJSON(response.toString());
+
                     }
                 },
                 new Response.ErrorListener() {
