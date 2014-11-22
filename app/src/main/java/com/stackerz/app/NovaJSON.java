@@ -93,6 +93,7 @@ public class NovaJSON extends Activity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                 VolleyLog.d("Nova", "Error: " + error.getMessage());
+                Log.d("Nova", error.toString());
                 }
         }
         ){
