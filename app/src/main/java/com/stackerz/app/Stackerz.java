@@ -92,9 +92,11 @@ public class Stackerz extends Activity
         //shPref.edit().putString("NovaURL",novaURL).commit();
         instances = NovaJSON.shared().receiveData(novaURL, authToken);
         //instances="{\"servers\": [{\"id\": \"b4387c6a-2066-482c-a23a-9b767b45fdcc\", \"links\": [{\"href\": \"http://stack1:8774/v2/8c5cb915f5b94614a77261678ec96fb3/servers/b4387c6a-2066-482c-a23a-9b767b45fdcc\", \"rel\": \"self\"}, {\"href\": \"http://stack1:8774/8c5cb915f5b94614a77261678ec96fb3/servers/b4387c6a-2066-482c-a23a-9b767b45fdcc\", \"rel\": \"bookmark\"}], \"name\": \"wintest\"}, {\"id\": \"58e1d564-6d93-4368-b591-af2a4b511306\", \"links\": [{\"href\": \"http://stack1:8774/v2/8c5cb915f5b94614a77261678ec96fb3/servers/58e1d564-6d93-4368-b591-af2a4b511306\", \"rel\": \"self\"}, {\"href\": \"http://stack1:8774/8c5cb915f5b94614a77261678ec96fb3/servers/58e1d564-6d93-4368-b591-af2a4b511306\", \"rel\": \"bookmark\"}], \"name\": \"Observium\"}, {\"id\": \"ac0f5f7b-9950-4917-95df-5751bf045175\", \"links\": [{\"href\": \"http://stack1:8774/v2/8c5cb915f5b94614a77261678ec96fb3/servers/ac0f5f7b-9950-4917-95df-5751bf045175\", \"rel\": \"self\"}, {\"href\": \"http://stack1:8774/8c5cb915f5b94614a77261678ec96fb3/servers/ac0f5f7b-9950-4917-95df-5751bf045175\", \"rel\": \"bookmark\"}], \"name\": \"Puppet\"}, {\"id\": \"c18a95ae-1ccb-4760-9a93-cbe16f43499c\", \"links\": [{\"href\": \"http://stack1:8774/v2/8c5cb915f5b94614a77261678ec96fb3/servers/c18a95ae-1ccb-4760-9a93-cbe16f43499c\", \"rel\": \"self\"}, {\"href\": \"http://stack1:8774/8c5cb915f5b94614a77261678ec96fb3/servers/c18a95ae-1ccb-4760-9a93-cbe16f43499c\", \"rel\": \"bookmark\"}], \"name\": \"Search\"}, {\"id\": \"27abc04b-65e4-4fe8-9ca6-9d5ab25a4941\", \"links\": [{\"href\": \"http://stack1:8774/v2/8c5cb915f5b94614a77261678ec96fb3/servers/27abc04b-65e4-4fe8-9ca6-9d5ab25a4941\", \"rel\": \"self\"}, {\"href\": \"http://stack1:8774/8c5cb915f5b94614a77261678ec96fb3/servers/27abc04b-65e4-4fe8-9ca6-9d5ab25a4941\", \"rel\": \"bookmark\"}], \"name\": \"NX\"}]}";
-        novaList = NovaParser.parseJSON(instances);
         novaExtras = new Bundle();
-        novaExtras.putSerializable("NovaParsed",novaList);
+        if (instances != null) {
+            novaList = NovaParser.parseJSON(instances);
+            novaExtras.putSerializable("NovaParsed", novaList);
+        }
         return novaExtras;
     }
 
