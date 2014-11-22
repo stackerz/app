@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:text="type"
-        android:textSize="@dimen/abc_text_size_medium_material"
+        android:textSize="@dimen/abc_text_size_small_material"
         android:layout_alignStart="@+id/name"
         android:layout_below="@+id/name"
         android:layout_alignParentRight="true"
