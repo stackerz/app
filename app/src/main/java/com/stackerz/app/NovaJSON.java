@@ -1,8 +1,6 @@
 package com.stackerz.app;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -49,8 +47,6 @@ public class NovaJSON extends Activity {
 
     public void setNovaJSON(String novaJSON) {
         this.novaJSON = novaJSON;
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        shPref.edit().putString("NovaData",getNovaJSON()).commit();
     }
 
     public String getNova() {
@@ -82,13 +78,13 @@ public class NovaJSON extends Activity {
         String novaURL = getNova();
         novaURL = novaURL+"/servers";
 
+
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, novaURL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("Nova on Response", response.toString());
                         setNovaJSON(response.toString());
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -118,64 +114,5 @@ public class NovaJSON extends Activity {
 }
 
 
-/**
-        //RequestQueue queue = Volley.newRequestQueue(this);
-        //queue.add(getRequest);
-        RequestQueue queue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
-        //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
-        queue.add(getRequest);
-    }
-
- JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(novaURL,
- new Response.Listener<JSONArray>(){
-@Override
-public void onResponse(JSONArray response) {
-Log.d("Nova", response.toString());
-setNovaJSON(response.toString());
-}
-}, new Response.ErrorListener() {
-@Override
-public void onErrorResponse(VolleyError error) {
-VolleyLog.d("Nova", "Error: " + error.getMessage());
-Log.d("Nova", error.toString());
-}
-}
- ){
- public Map<String, String> getHeaders() throws AuthFailureError {
- Map<String, String> params = new HashMap<String, String>();
- params.put("X-Auth-Token", authToken);
- params.put("User-Agent", "stackerz");
- params.put("Accept", "application/json");
- params.put("Content-Type", "application/json; charset=utf-8");
- return params;
- }
- };
-
-        StringRequest getRequest = new StringRequest(Request.Method.GET,
-                novaURL, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.d("Nova", response.toString());
-                setNovaJSON(response.toString());
-
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Nova", "Error: " + error.getMessage());
-            }
-        }) {
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("X-Auth-Token", authToken);
-                params.put("User-Agent", "stackerz");
-                params.put("Accept", "application/json");
-                params.put("Content-Type", "application/json; charset=utf-8");
-                return params;
-            }
-        };**/
 
 

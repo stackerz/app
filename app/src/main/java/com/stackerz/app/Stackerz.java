@@ -54,6 +54,7 @@ public class Stackerz extends Activity
         String glanceURL = EndpointsParser.getGlanceURL();
         String cinderURL = EndpointsParser.getCinderURL();
         String keystoneURL = EndpointsParser.getKeystoneURL();
+        novaBundle();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -75,21 +76,9 @@ public class Stackerz extends Activity
         return extras;
     }
 
-    //public void novaAuth(){
-
-        //Intent novaIntent = new Intent(Stackerz.this, NovaParser.class);
-        //Bundle novaBundle = new Bundle();
-        //novaBundle.putString("AuthToken", authToken);
-        //novaBundle.putString("NovaURL", novaURL);
-        //novaIntent.putExtra(NOVABUNDLE,novaBundle);
-        //PROBLEM IS HERE - BUNDLE NOT GETTING ACROSS!!
-    //}
-
     public Bundle novaBundle(){
-        //SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         EndpointsParser.shared().getURLs(jsonList);
         String novaURL = EndpointsParser.getNovaURL();
-        //shPref.edit().putString("NovaURL",novaURL).commit();
         instances = NovaJSON.shared().receiveData(novaURL, authToken);
         novaExtras = new Bundle();
         if (instances != null) {
