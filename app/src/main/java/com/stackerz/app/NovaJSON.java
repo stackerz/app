@@ -86,22 +86,15 @@ public class NovaJSON extends Activity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray servers = response.getJSONArray("servers");
-                        } catch (JSONException e) {
-                            Toast.makeText(getApplicationContext(), "Error to get Instances", Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        }
-
-                        Log.d("Nova", response.toString());
+                        Log.d("Nova on Response", response.toString());
                         setNovaJSON(response.toString());
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d("Nova", "Error: " + error.getMessage());
-
+                        VolleyLog.d("Nova on Error", "Error: " + error.getMessage());
+                        setNovaJSON(error.toString());
                     }
                 }
         ) {
