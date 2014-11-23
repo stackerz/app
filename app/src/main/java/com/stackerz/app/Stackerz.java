@@ -146,7 +146,7 @@ public class Stackerz extends Activity
                 mTitle = getString(R.string.instancesSection);
                 break;
             case 2:
-                mTitle = getString(R.string.volumesSection);
+                mTitle = getString(R.string.flavoursSection);
                 break;
             case 3:
                 mTitle = getString(R.string.imagesSection);
