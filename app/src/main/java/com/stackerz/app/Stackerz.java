@@ -112,7 +112,7 @@ public class Stackerz extends Activity
                 fragmentManager.beginTransaction().replace(R.id.container, instancesFragment).commit();
                 break;
             case 2:
-                fragmentManager.beginTransaction().replace(R.id.container, VolumesFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, FlavoursFragment.newInstance(position)).commit();
                 break;
             case 3:
                 fragmentManager.beginTransaction().replace(R.id.container, ImagesFragment.newInstance(position)).commit();
@@ -168,7 +168,7 @@ public class Stackerz extends Activity
 
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
