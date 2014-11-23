@@ -1,7 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <!--  <item android:id="@+id/action_example"
         android:title="@string/action_example"
-        android:showAsAction="withText|ifRoom" /> -->
+        android:showAsAction="withText|ifRoom" />
+        -->
     <item android:id="@+id/action_connect"
         android:title="@string/action_connect"
         android:orderInCategory="90"
