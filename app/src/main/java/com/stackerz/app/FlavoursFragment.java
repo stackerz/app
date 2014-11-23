@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class VolumesFragment extends Fragment {
+public class FlavoursFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -19,8 +19,8 @@ public class VolumesFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static VolumesFragment newInstance(int sectionNumber) {
-        VolumesFragment fragment = new VolumesFragment();
+    public static FlavoursFragment newInstance(int sectionNumber) {
+        FlavoursFragment fragment = new FlavoursFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -28,7 +28,7 @@ public class VolumesFragment extends Fragment {
     }
 
 
-    public VolumesFragment() {
+    public FlavoursFragment() {
     }
 
     @Override
