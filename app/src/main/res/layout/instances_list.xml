@@ -59,8 +59,11 @@
         android:textColor="@android:color/white"
         android:text="status"
         android:textSize="@dimen/abc_text_size_small_material"
+        android:paddingRight="5dp"
+        android:layout_alignBottom="@+id/nameInstance"
         android:layout_alignRight="@+id/nameInstance"
-        android:paddingRight="5dp"/>
+        android:layout_alignEnd="@+id/nameInstance"
+        android:paddingBottom="5dp"/>
 
     <!--<TextView
         android:id="@+id/idInstance"
