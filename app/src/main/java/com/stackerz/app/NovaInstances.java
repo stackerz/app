@@ -14,9 +14,17 @@ public class NovaInstances {
     //fields
     String id;
     String name;
+    String status;
 
+    public String getStatus() {
+        return status;
+    }
 
-    //getters and setters
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+//getters and setters
 
 
     public String getId() {

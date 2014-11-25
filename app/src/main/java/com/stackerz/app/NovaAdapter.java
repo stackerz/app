@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
 
     ArrayList<HashMap<String, String>> novaList = new ArrayList<HashMap<String, String>>();
-    public static final String ID = "id";
+    public static final String STATUS = "status";
     public static final String NAME = "name";
     private Context mContext;
 
@@ -38,7 +38,7 @@ public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
 
         HashMap<String, String> e = novaList.get(i);
         novaListRowHolder.name.setText(e.get(NAME));
-        //novaListRowHolder.id.setText(e.get(ID));
+        novaListRowHolder.status.setText(e.get(STATUS));
 
 
     }
@@ -52,7 +52,7 @@ public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
 
 class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     protected TextView name;
-    protected TextView id;
+    protected TextView status;
 
 
 
@@ -60,7 +60,7 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         super(view);
         view.setOnClickListener(this);
         this.name = (TextView) view.findViewById(R.id.nameInstance);
-        //this.id = (TextView) view.findViewById(R.id.idInstance);
+        this.status = (TextView) view.findViewById(R.id.statusInstance);
 
     }
 

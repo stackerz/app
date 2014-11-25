@@ -32,6 +32,7 @@ import java.util.Map;
 public class NovaParser extends Activity{
     public static final String NAME = "name";
     public static final String ID = "id";
+    public static final String STATUS = "status";
 
     public String authToken;
     public String novaURL;
@@ -88,9 +89,11 @@ public class NovaParser extends Activity{
                 JSONObject objsrv = servers.getJSONObject(i);
                 novaInstance.setName(objsrv.getString("name"));
                 novaInstance.setId(objsrv.getString("id"));
+                novaInstance.setStatus(objsrv.getString("OS-EXT-STS:vm_state"));
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NAME, novaInstance.getName());
                 map.put(ID, novaInstance.getId());
+                map.put(STATUS, novaInstance.getStatus());
                 jsonList.add(map);
             }
         } catch (JSONException e) {
