@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:text="region"
-        android:textSize="@dimen/abc_text_size_menu_material"
+        android:textSize="@dimen/abc_text_size_small_material"
         android:layout_alignRight="@+id/type"
         android:layout_alignTop="@+id/type"
         android:paddingRight="5dp"
