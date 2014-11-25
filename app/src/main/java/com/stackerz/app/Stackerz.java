@@ -39,6 +39,7 @@ public class Stackerz extends Activity
     public String endpoints="";
     public String authToken="";
     public String instances="";
+    public String instancesCached="";
     public static final String NOVABUNDLE = "NOVABUNDLE";
     public static final String NEUTRONBUNDLE = "NEUTRONBUNDLE";
 
@@ -75,12 +76,18 @@ public class Stackerz extends Activity
     }
 
     public Bundle novaBundle(){
+        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         EndpointsParser.shared().getURLs(jsonList);
         String novaURL = EndpointsParser.getNovaURL();
         instances = NovaJSON.shared().receiveData(novaURL, authToken);
         novaExtras = new Bundle();
         if (instances != null) {
+            shPref.edit().putString("Instances",instances).commit();
             novaList = NovaParser.parseJSON(instances);
+            novaExtras.putSerializable("NovaParsed", novaList);
+        } else {
+            instancesCached = shPref.getString("Instances",instancesCached);
+            novaList = NovaParser.parseJSON(instancesCached);
             novaExtras.putSerializable("NovaParsed", novaList);
         }
         return novaExtras;
