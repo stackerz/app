@@ -103,7 +103,7 @@ public class NavigationDrawerFragment extends Fragment {
                 new String[]{
                         getString(R.string.overviewSection),
                         getString(R.string.instancesSection),
-                        getString(R.string.flavoursSection),
+                        getString(R.string.flavorsSection),
                         getString(R.string.imagesSection),
                         getString(R.string.networksSection),
                         getString(R.string.routersSection),
