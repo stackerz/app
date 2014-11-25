@@ -4,7 +4,7 @@
     <string name="app_name">Stackerz</string>
     <string name="overviewSection">Overview</string>
     <string name="instancesSection">Instances</string>
-    <string name="flavoursSection">Flavours</string>
+    <string name="flavorsSection">Flavors</string>
     <string name="imagesSection">Images</string>
     <string name="networksSection">Networks</string>
     <string name="routersSection">Routers</string>

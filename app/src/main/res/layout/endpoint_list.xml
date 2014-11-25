@@ -21,7 +21,8 @@
         android:layout_height="@dimen/abc_action_button_min_height_material"
         android:background="@color/accent"
         android:layout_alignParentTop="true"
-        android:layout_alignBottom="@+id/type">
+        android:layout_alignBottom="@+id/type"
+        android:id="@+id/linearLayout">
         <!--android:layout_alignBottom="@+id/url"-->
 
 
@@ -65,32 +66,33 @@
         android:paddingLeft="5dp"
         android:paddingBottom="5dp"/>
 
-    <!-- <TextView
+     <TextView
         android:id="@+id/region"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:text="region"
         android:textSize="@dimen/abc_text_size_menu_material"
-        android:layout_below="@+id/type"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/name"
-        android:paddingLeft="5dp"/>
+        android:layout_alignRight="@+id/type"
+        android:layout_alignTop="@+id/type"
+        android:paddingRight="5dp"/>
 
-    <TextView
-        android:id="@+id/url"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:text="url"
-        android:textSize="@dimen/abc_text_size_menu_material"
-        android:layout_below="@+id/region"
-        android:layout_alignStart="@+id/name"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:paddingBottom="5dp"
-        android:paddingLeft="5dp"/> -->
+
+    <!--
+     <TextView
+
+          android:id="@+id/url"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:textColor="@android:color/white"
+          android:text="url"
+          android:textSize="@dimen/abc_text_size_menu_material"
+          android:layout_below="@+id/region"
+          android:layout_alignStart="@+id/name"
+          android:layout_alignParentRight="true"
+          android:layout_alignParentEnd="true"
+          android:paddingBottom="5dp"
+          android:paddingLeft="5dp"/> -->
 
 </RelativeLayout>
 </android.support.v7.widget.CardView>

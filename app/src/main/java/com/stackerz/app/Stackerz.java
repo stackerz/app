@@ -8,7 +8,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -112,7 +110,7 @@ public class Stackerz extends Activity
                 fragmentManager.beginTransaction().replace(R.id.container, instancesFragment).commit();
                 break;
             case 2:
-                fragmentManager.beginTransaction().replace(R.id.container, FlavoursFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, FlavorsFragment.newInstance(position)).commit();
                 break;
             case 3:
                 fragmentManager.beginTransaction().replace(R.id.container, ImagesFragment.newInstance(position)).commit();
@@ -146,7 +144,7 @@ public class Stackerz extends Activity
                 mTitle = getString(R.string.instancesSection);
                 break;
             case 2:
-                mTitle = getString(R.string.flavoursSection);
+                mTitle = getString(R.string.flavorsSection);
                 break;
             case 3:
                 mTitle = getString(R.string.imagesSection);

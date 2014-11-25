@@ -48,7 +48,7 @@ public class EndpointsAdapter extends RecyclerView.Adapter<EndpointListRowHolder
         HashMap<String, String> e = endpointsList.get(i);
         endpointListRowHolder.name.setText(e.get(NAME));
         endpointListRowHolder.type.setText(e.get(TYPE));
-        //endpointListRowHolder.region.setText(e.get(REGION));
+        endpointListRowHolder.region.setText(e.get(REGION));
         //endpointListRowHolder.url.setText(e.get(PUBLICURL));
     }
 
@@ -71,7 +71,7 @@ class EndpointListRowHolder extends RecyclerView.ViewHolder implements View.OnCl
         view.setOnClickListener(this);
         this.name = (TextView) view.findViewById(R.id.name);
         this.type = (TextView) view.findViewById(R.id.type);
-        //this.region = (TextView) view.findViewById(R.id.region);
+        this.region = (TextView) view.findViewById(R.id.region);
         //this.url = (TextView) view.findViewById(R.id.url);
     }
 
