@@ -55,7 +55,7 @@ public class ImagesParser extends Activity{
                 image.setName(objsrv.getString("name"));
                 image.setStatus(objsrv.getString("status"));
                 image.setVisibility(objsrv.getString("visibility"));
-                image.setFormat(objsrv.getString("format"));
+                image.setFormat(objsrv.getString("disk_format"));
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NAME, image.getName());
                 map.put(STATUS, image.getStatus());

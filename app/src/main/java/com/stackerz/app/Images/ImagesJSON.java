@@ -71,7 +71,7 @@ public class ImagesJSON extends Activity {
     public void getJSON() {
         final String authToken = getAuth();
         String glanceURL = getGlance();
-        glanceURL = glanceURL+"/v2.0/images";
+        glanceURL = glanceURL+"/v2/images";
 
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, glanceURL, null,
