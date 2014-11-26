@@ -72,8 +72,8 @@ public class FlavorsFragment extends Fragment {
 
         }
         jsonList = (ArrayList<HashMap<String, String>>)parsedList;
-        View rootView = inflater.inflate(R.layout.fragment_instances, container, false);
-        recyclerView = (RecyclerView)rootView.findViewById(R.id.instancesRV);
+        View rootView = inflater.inflate(R.layout.fragment_flavors, container, false);
+        recyclerView = (RecyclerView)rootView.findViewById(R.id.flavorsRV);
         return rootView;
     }
 
