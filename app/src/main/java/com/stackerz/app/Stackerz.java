@@ -22,6 +22,9 @@ import com.stackerz.app.Endpoints.OverviewFragment;
 import com.stackerz.app.Flavors.FlavorsFragment;
 import com.stackerz.app.Flavors.FlavorsJSON;
 import com.stackerz.app.Flavors.FlavorsParser;
+import com.stackerz.app.Images.ImagesFragment;
+import com.stackerz.app.Images.ImagesJSON;
+import com.stackerz.app.Images.ImagesParser;
 import com.stackerz.app.Instances.InstancesFragment;
 import com.stackerz.app.Instances.NovaJSON;
 import com.stackerz.app.Instances.NovaParser;
@@ -44,18 +47,20 @@ public class Stackerz extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    public Bundle extras, novaExtras, flavorsExtras;
+    public Bundle extras, novaExtras, flavorsExtras, glanceExtras;
     public ArrayList<HashMap<String, String>> jsonList;
     public ArrayList<HashMap<String, String>> novaList;
     public ArrayList<HashMap<String, String>> flavorsList;
+    public ArrayList<HashMap<String, String>> imagesList;
     public String endpoints="";
     public String authToken="";
     public String instances="";
     public String instancesCached="";
     public String flavors="";
     public String flavorsCached="";
-    public static final String NOVABUNDLE = "NOVABUNDLE";
-    public static final String FLAVORSBUNDLE = "FLAVORSBUNDLE";
+    public String images="";
+    public String imagesCached="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,7 @@ public class Stackerz extends Activity
         String keystoneURL = EndpointsParser.getKeystoneURL();
         novaBundle();
         flavorsBundle();
+        glanceBundle();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -118,12 +124,30 @@ public class Stackerz extends Activity
             shPref.edit().putString("Flavors",flavors).commit();
             flavorsList = FlavorsParser.parseJSON(flavors);
             flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
-        } else {
-            shPref.edit().putString("Flavors",flavors).commit();
+        } else if (shPref.getString("Flavors",flavors)!= null){
+            flavorsCached = shPref.getString("Flavors",flavors);
             flavorsList = FlavorsParser.parseJSON(flavorsCached);
             flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
         }
         return flavorsExtras;
+    }
+
+    public Bundle glanceBundle(){
+        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        EndpointsParser.shared().getURLs(jsonList);
+        String glanceURL = EndpointsParser.getGlanceURL();
+        images = ImagesJSON.shared().receiveData(glanceURL, authToken);
+        glanceExtras = new Bundle();
+        if (images != null) {
+            shPref.edit().putString("Images",images).commit();
+            imagesList = ImagesParser.parseJSON(images);
+            glanceExtras.putSerializable("ImagesParsed", imagesList);
+        } else if (shPref.getString("Images",images)!= null){
+            imagesCached = shPref.getString("Images",images);
+            imagesList = ImagesParser.parseJSON(imagesCached);
+            glanceExtras.putSerializable("ImagesParsed", imagesList);
+        }
+        return glanceExtras;
     }
 
     @Override
@@ -156,7 +180,11 @@ public class Stackerz extends Activity
                 fragmentManager.beginTransaction().replace(R.id.container, flavorsFragment).commit();
                 break;
             case 3:
-                fragmentManager.beginTransaction().replace(R.id.container, ImagesFragment.newInstance(position)).commit();
+                glanceExtras = glanceBundle();
+                ImagesFragment imagesFragment = new ImagesFragment();
+                imagesFragment.setArguments(glanceExtras);
+                fragmentManager.beginTransaction().add(R.id.container, ImagesFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, imagesFragment).commit();
                 break;
             case 4:
                 fragmentManager.beginTransaction().replace(R.id.container, NetworksFragment.newInstance(position)).commit();
