@@ -93,6 +93,9 @@ public class Stackerz extends Activity
 
     public Bundle novaBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        endpoints = shPref.getString("KeystoneData", endpoints);
+        authToken = shPref.getString("AuthToken",authToken);
+        jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String novaURL = EndpointsParser.getNovaURL();
         instances = NovaJSON.shared().receiveData(novaURL, authToken);
@@ -111,6 +114,9 @@ public class Stackerz extends Activity
 
     public Bundle flavorsBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        endpoints = shPref.getString("KeystoneData", endpoints);
+        authToken = shPref.getString("AuthToken",authToken);
+        jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String novaURL = EndpointsParser.getNovaURL();
         flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
@@ -129,6 +135,9 @@ public class Stackerz extends Activity
 
     public Bundle glanceBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        endpoints = shPref.getString("KeystoneData", endpoints);
+        authToken = shPref.getString("AuthToken",authToken);
+        jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String glanceURL = EndpointsParser.getGlanceURL();
         images = ImagesJSON.shared().receiveData(glanceURL, authToken);
