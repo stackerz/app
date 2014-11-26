@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/nameImage"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="name"
             android:textColor="@android:color/white"
@@ -73,10 +73,11 @@
             android:textColor="@android:color/white"
             android:text="public"
             android:textSize="@dimen/abc_text_size_small_material"
-            android:layout_alignRight="@+id/nameImage"
-            android:layout_alignTop="@+id/nameImage"
             android:paddingRight="5dp"
-            android:paddingBottom="5dp"/>
+            android:paddingBottom="5dp"
+            android:layout_above="@+id/statusImage"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
         <TextView
             android:id="@+id/formatImage"
