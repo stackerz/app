@@ -1,22 +1,18 @@
-package com.stackerz.app;
+package com.stackerz.app.Endpoints;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.app.Activity;
 
+
+import com.stackerz.app.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by ed on 4/11/14.

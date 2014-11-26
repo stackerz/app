@@ -1,4 +1,4 @@
-package com.stackerz.app;
+package com.stackerz.app.System;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

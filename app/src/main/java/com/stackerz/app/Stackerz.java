@@ -17,6 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.stackerz.app.Endpoints.EndpointsParser;
+import com.stackerz.app.Endpoints.OverviewFragment;
+import com.stackerz.app.Flavors.FlavorsFragment;
+import com.stackerz.app.Flavors.FlavorsJSON;
+import com.stackerz.app.Flavors.FlavorsParser;
+import com.stackerz.app.Instances.InstancesFragment;
+import com.stackerz.app.Instances.NovaJSON;
+import com.stackerz.app.Instances.NovaParser;
+import com.stackerz.app.System.ObscuredSharedPreferences;
+import com.stackerz.app.System.SSLCerts;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,15 +44,18 @@ public class Stackerz extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    public Bundle extras, novaExtras;
+    public Bundle extras, novaExtras, flavorsExtras;
     public ArrayList<HashMap<String, String>> jsonList;
     public ArrayList<HashMap<String, String>> novaList;
+    public ArrayList<HashMap<String, String>> flavorsList;
     public String endpoints="";
     public String authToken="";
     public String instances="";
     public String instancesCached="";
+    public String flavors="";
+    public String flavorsCached="";
     public static final String NOVABUNDLE = "NOVABUNDLE";
-    public static final String NEUTRONBUNDLE = "NEUTRONBUNDLE";
+    public static final String FLAVORSBUNDLE = "FLAVORSBUNDLE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +68,7 @@ public class Stackerz extends Activity
         String cinderURL = EndpointsParser.getCinderURL();
         String keystoneURL = EndpointsParser.getKeystoneURL();
         novaBundle();
+        flavorsBundle();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -93,6 +108,23 @@ public class Stackerz extends Activity
         return novaExtras;
     }
 
+    public Bundle flavorsBundle(){
+        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        EndpointsParser.shared().getURLs(jsonList);
+        String novaURL = EndpointsParser.getNovaURL();
+        flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
+        flavorsExtras = new Bundle();
+        if (instances != null) {
+            shPref.edit().putString("Flavors",flavors).commit();
+            flavorsList = FlavorsParser.parseJSON(flavors);
+            flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
+        } else {
+            shPref.edit().putString("Flavors",flavors).commit();
+            flavorsList = FlavorsParser.parseJSON(flavorsCached);
+            flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
+        }
+        return flavorsExtras;
+    }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -117,7 +149,11 @@ public class Stackerz extends Activity
                 fragmentManager.beginTransaction().replace(R.id.container, instancesFragment).commit();
                 break;
             case 2:
-                fragmentManager.beginTransaction().replace(R.id.container, FlavorsFragment.newInstance(position)).commit();
+                flavorsExtras = flavorsBundle();
+                FlavorsFragment flavorsFragment = new FlavorsFragment();
+                flavorsFragment.setArguments(flavorsExtras);
+                fragmentManager.beginTransaction().add(R.id.container, FlavorsFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, flavorsFragment).commit();
                 break;
             case 3:
                 fragmentManager.beginTransaction().replace(R.id.container, ImagesFragment.newInstance(position)).commit();

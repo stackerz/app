@@ -1,30 +1,25 @@
-package com.stackerz.app;
+package com.stackerz.app.Endpoints;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.Fragment;
 
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.stackerz.app.System.DividerItemDecoration;
+import com.stackerz.app.R;
+import com.stackerz.app.System.RecyclerItemClickListener;
+import com.stackerz.app.Stackerz;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class OverviewFragment extends Fragment {
     /**

@@ -1,8 +1,7 @@
-package com.stackerz.app;
+package com.stackerz.app.Flavors;
 
 import android.app.Activity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -10,13 +9,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.stackerz.app.System.VolleySingleton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -25,18 +20,18 @@ import java.util.Map;
 /**
  * Created by ed on 19/11/14.
  */
-public class NovaJSON extends Activity {
+public class FlavorsJSON extends Activity {
 
     String novaJSON;
     String nova;
     String auth;
     RequestQueue queue = null;
 
-    public static NovaJSON parser = null;
+    public static FlavorsJSON parser = null;
 
-    public static NovaJSON shared(){
+    public static FlavorsJSON shared(){
         if (parser  == null){
-            parser  = new NovaJSON();
+            parser  = new FlavorsJSON();
         }
         return parser ;
     }
@@ -76,21 +71,21 @@ public class NovaJSON extends Activity {
     public void getJSON() {
         final String authToken = getAuth();
         String novaURL = getNova();
-        novaURL = novaURL+"/servers/detail";
+        novaURL = novaURL+"/flavors/detail";
 
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, novaURL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Nova on Response", response.toString());
+                        Log.d("Flavors on Response", response.toString());
                         setNovaJSON(response.toString());
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d("Nova on Error", "Error: " + error.getMessage());
+                        VolleyLog.d("Flavors on Error", "Error: " + error.getMessage());
                         setNovaJSON(error.toString());
                     }
                 }

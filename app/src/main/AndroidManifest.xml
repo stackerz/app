@@ -27,7 +27,7 @@
             android:label="@string/app_name" >
         </activity>
         <application
-            android:name="com.stackerz.app.VolleySingleton"></application>
+            android:name="com.stackerz.app.System.VolleySingleton"></application>
     </application>
 
 </manifest>

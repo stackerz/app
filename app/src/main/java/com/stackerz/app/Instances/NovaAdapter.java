@@ -1,4 +1,4 @@
-package com.stackerz.app;
+package com.stackerz.app.Instances;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.stackerz.app.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

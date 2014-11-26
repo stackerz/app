@@ -1,4 +1,4 @@
-package com.stackerz.app;
+package com.stackerz.app.Endpoints;
 
 import android.os.Bundle;
 

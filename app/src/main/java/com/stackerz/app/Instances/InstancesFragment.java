@@ -1,8 +1,7 @@
-package com.stackerz.app;
+package com.stackerz.app.Instances;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +13,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
+import com.stackerz.app.System.DividerItemDecoration;
+import com.stackerz.app.Login;
+import com.stackerz.app.R;
+import com.stackerz.app.Stackerz;
 
 import java.io.Serializable;
 import java.util.ArrayList;

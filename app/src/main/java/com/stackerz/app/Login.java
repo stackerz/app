@@ -1,7 +1,6 @@
 package com.stackerz.app;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +10,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
@@ -27,12 +24,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.stackerz.app.System.ObscuredSharedPreferences;
+import com.stackerz.app.System.SSLCerts;
+import com.stackerz.app.System.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -191,11 +189,11 @@ public class Login extends Activity implements View.OnClickListener{
             loginRequest();
             //JSONData.shared().setAuthtoken(authToken);
             //JSONData.shared().setEndpoint(endpointStr);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            //try {
+            //    Thread.sleep(1000);
+            //} catch (InterruptedException e) {
+            //    e.printStackTrace();
+            //}
             if (reachable) {
                 Intent intent = new Intent(Login.this, Stackerz.class);
                 intent.putExtra("AuthToken", authToken);
