@@ -102,7 +102,7 @@ public class Stackerz extends Activity
             shPref.edit().putString("Instances",instances).commit();
             novaList = NovaParser.parseJSON(instances);
             novaExtras.putSerializable("NovaParsed", novaList);
-        } else {
+        } else if (shPref.getString("Instances",instances)!= null){
             instancesCached = shPref.getString("Instances",instancesCached);
             novaList = NovaParser.parseJSON(instancesCached);
             novaExtras.putSerializable("NovaParsed", novaList);
@@ -116,7 +116,7 @@ public class Stackerz extends Activity
         String novaURL = EndpointsParser.getNovaURL();
         flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
         flavorsExtras = new Bundle();
-        if (instances != null) {
+        if (flavors != null) {
             shPref.edit().putString("Flavors",flavors).commit();
             flavorsList = FlavorsParser.parseJSON(flavors);
             flavorsExtras.putSerializable("FlavorsParsed", flavorsList);

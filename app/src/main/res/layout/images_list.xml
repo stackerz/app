@@ -47,6 +47,7 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/abc_text_size_large_material"
             android:scrollHorizontally="true"
+            android:overScrollMode="always"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:layout_weight="0.7"
