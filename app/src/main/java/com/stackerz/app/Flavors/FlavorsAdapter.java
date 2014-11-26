@@ -43,7 +43,7 @@ public class FlavorsAdapter extends RecyclerView.Adapter<FlavorsListRowHolder> {
         HashMap<String, String> e = flavorList.get(i);
         flavorListRowHolder.name.setText(e.get(NAME));
         flavorListRowHolder.vcpus.setText(e.get(VCPUS)+" "+"vCPUs");
-        flavorListRowHolder.ram.setText(e.get(RAM) + "Mb" + " " + "memory");
+        flavorListRowHolder.ram.setText(e.get(RAM) + "Mb" + " " + "RAM");
         flavorListRowHolder.disk.setText(e.get(DISK) + "Gb" + " " + "disk");
 
 
