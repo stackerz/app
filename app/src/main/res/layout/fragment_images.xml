@@ -66,8 +66,10 @@
         android:layout_marginEnd="@dimen/activity_vertical_margin"
         android:src="@android:drawable/ic_input_add"
         android:tint="@android:color/white"
-        android:elevation="100dp"
+        android:elevation="10dp"
+        android:padding="10dp"
         android:clickable="true"
+        android:background="@drawable/fab_selector"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
