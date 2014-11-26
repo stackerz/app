@@ -9,7 +9,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.SortedMap;
 
 /**
  * Created by ed on 4/11/14.
@@ -62,6 +66,13 @@ public class NovaParser extends Activity{
             Log.d("ErrorInitJSON", e.toString());
             e.printStackTrace();
         }
+
+        Collections.sort(jsonList, new Comparator<HashMap<String, String>>() {
+        @Override
+        public int compare(HashMap<String, String> lhs, HashMap<String, String> rhs) {
+                return (lhs.get("name")).compareToIgnoreCase(rhs.get("name"));
+            }
+        });
 
 
         return jsonList;
