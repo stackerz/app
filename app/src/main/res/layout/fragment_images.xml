@@ -14,7 +14,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/accent"
-        android:elevation="100dp">
+        android:elevation="100dp"
+        android:layout_marginBottom="1dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -58,20 +59,25 @@
         android:layout_alignParentRight="true"
         android:layout_alignWithParentIfMissing="false"
         android:alpha="0.1"/>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ImageButton
-        android:id="@+id/add_button"
-        android:layout_width="@dimen/abc_action_button_min_width_overflow_material"
-        android:layout_height="@dimen/abc_action_button_min_width_overflow_material"
+        android:id="@+id/add_buttonImages"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="@dimen/activity_vertical_margin"
         android:src="@android:drawable/ic_input_add"
         android:tint="@android:color/white"
-        android:elevation="10dp"
-        android:padding="10dp"
+        android:elevation="100dp"
+        android:padding="20dp"
+        android:layout_margin="20dp"
         android:clickable="true"
         android:background="@drawable/fab_selector"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
+    </FrameLayout>
 
 </RelativeLayout>

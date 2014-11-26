@@ -236,6 +236,8 @@ public class Stackerz extends Activity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
+        actionBar.setIcon(R.drawable.logo);
+        actionBar.setTitle("Stackerz");
     }
 
 
