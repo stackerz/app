@@ -55,7 +55,10 @@ public class ImagesFragment extends Fragment {
                              Bundle savedInstanceState) {
         Bundle extras = getArguments();
         Serializable parsedList = extras.getSerializable("ImagesParsed");
-        if (extras == null){
+        jsonList = (ArrayList<HashMap<String, String>>)parsedList;
+        View rootView = inflater.inflate(R.layout.fragment_images, container, false);
+        recyclerView = (RecyclerView)rootView.findViewById(R.id.imagesRV);
+        if (recyclerView == null){
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             alert.setTitle("Token Expired");
             alert.setMessage("Authentication Token expired! Please login again.")
@@ -70,11 +73,7 @@ public class ImagesFragment extends Fragment {
                     });
             AlertDialog alertDialog = alert.create();
             alertDialog.show();
-
         }
-        jsonList = (ArrayList<HashMap<String, String>>)parsedList;
-        View rootView = inflater.inflate(R.layout.fragment_images, container, false);
-        recyclerView = (RecyclerView)rootView.findViewById(R.id.imagesRV);
         return rootView;
     }
 

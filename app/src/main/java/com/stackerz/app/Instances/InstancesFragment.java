@@ -54,7 +54,10 @@ public class InstancesFragment extends Fragment {
                              Bundle savedInstanceState) {
         Bundle extras = getArguments();
         Serializable parsedList = extras.getSerializable("NovaParsed");
-        if (extras == null){
+        jsonList = (ArrayList<HashMap<String, String>>)parsedList;
+        View rootView = inflater.inflate(R.layout.fragment_instances, container, false);
+        recyclerView = (RecyclerView)rootView.findViewById(R.id.instancesRV);
+        if (recyclerView == null){
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             alert.setTitle("Token Expired");
             alert.setMessage("Authentication Token expired! Please login again.")
@@ -69,11 +72,7 @@ public class InstancesFragment extends Fragment {
                     });
             AlertDialog alertDialog = alert.create();
             alertDialog.show();
-
         }
-        jsonList = (ArrayList<HashMap<String, String>>)parsedList;
-        View rootView = inflater.inflate(R.layout.fragment_instances, container, false);
-        recyclerView = (RecyclerView)rootView.findViewById(R.id.instancesRV);
         return rootView;
     }
 
