@@ -75,7 +75,7 @@
             android:textSize="@dimen/abc_text_size_small_material"
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
-            android:layout_above="@+id/statusImage"
+            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
@@ -90,7 +90,8 @@
             android:paddingBottom="5dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/statusImage" />
+            android:layout_alignTop="@+id/statusImage"
+            />
 
 
     </RelativeLayout>
