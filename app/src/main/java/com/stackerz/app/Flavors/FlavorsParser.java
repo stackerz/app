@@ -71,7 +71,7 @@ public class FlavorsParser extends Activity{
         Collections.sort(jsonList, new Comparator<HashMap<String, String>>() {
             @Override
             public int compare(HashMap<String, String> lhs, HashMap<String, String> rhs) {
-                return (lhs.get("name")).compareToIgnoreCase(rhs.get("name"));
+                return (lhs.get("vcpus")).compareToIgnoreCase(rhs.get("vcpus"));
             }
         });
 
