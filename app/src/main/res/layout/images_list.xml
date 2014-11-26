@@ -38,6 +38,7 @@
                 android:layout_alignParentStart="true" />
         </LinearLayout>
 
+
         <TextView
             android:id="@+id/nameImage"
             android:layout_width="wrap_content"
@@ -45,6 +46,11 @@
             android:text="name"
             android:textColor="@android:color/white"
             android:textSize="@dimen/abc_text_size_large_material"
+            android:scrollHorizontally="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:layout_weight="0.7"
+            android:singleLine="false"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
