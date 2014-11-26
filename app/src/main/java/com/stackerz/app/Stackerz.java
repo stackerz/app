@@ -133,9 +133,9 @@ public class Stackerz extends Activity
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position))
                 .commit();
-        extras = authBundle();
         switch (position) {
             case 0:
+                extras = authBundle();
                 OverviewFragment overviewFragment = new OverviewFragment();
                 overviewFragment.setArguments(extras);
                 fragmentManager.beginTransaction().add(R.id.container, OverviewFragment.newInstance(position)).commit();
