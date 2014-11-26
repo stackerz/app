@@ -68,10 +68,6 @@ public class Stackerz extends Activity
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
         EndpointsParser.shared().getURLs(jsonList);
-        String neutronURL = EndpointsParser.getNeutronURL();
-        String glanceURL = EndpointsParser.getGlanceURL();
-        String cinderURL = EndpointsParser.getCinderURL();
-        String keystoneURL = EndpointsParser.getKeystoneURL();
         novaBundle();
         flavorsBundle();
         glanceBundle();
