@@ -142,6 +142,7 @@ public class EndpointsParser extends Activity{
         b.putString("NeutronURL", neutronURL);
         b.putString("KeystoneURL", keystoneURL);
         b.putString("CinderURL", cinderURL);
+        b.putString("GlanceURL", glanceURL);
         return b;
     }
 }
