@@ -67,7 +67,6 @@ public class Stackerz extends Activity
         super.onCreate(savedInstanceState);
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
-        EndpointsParser.shared().getURLs(jsonList);
         novaBundle();
         flavorsBundle();
         glanceBundle();
