@@ -47,12 +47,12 @@ public class NetworksParser extends Activity{
 
 
 
-    public static ArrayList<HashMap<String, String>> parseJSON(String flavorsJSON){
+    public static ArrayList<HashMap<String, String>> parseJSON(String networksJSON){
         ArrayList<HashMap<String, String>> jsonList = new ArrayList<HashMap<String, String>>();
         try {
             Networks networks = new Networks();
-            JSONObject flavor = new JSONObject(flavorsJSON);
-            JSONArray array = flavor.getJSONArray("networks");
+            JSONObject nets = new JSONObject(networksJSON);
+            JSONArray array = nets.getJSONArray("networks");
 
             for (int i = 0; i < array.length(); i++) {
                 JSONObject objsrv = array.getJSONObject(i);
