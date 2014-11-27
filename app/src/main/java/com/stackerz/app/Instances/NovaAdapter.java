@@ -21,6 +21,7 @@ public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
     ArrayList<HashMap<String, String>> novaList = new ArrayList<HashMap<String, String>>();
     public static final String STATUS = "status";
     public static final String NAME = "name";
+    public static final String ID = "id";
     private Context mContext;
 
     public NovaAdapter(Context context, ArrayList<HashMap<String, String>> novaList) {
@@ -41,6 +42,7 @@ public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
         HashMap<String, String> e = novaList.get(i);
         novaListRowHolder.name.setText(e.get(NAME));
         novaListRowHolder.status.setText(e.get(STATUS));
+        novaListRowHolder.setId(e.get(ID));
 
 
     }
@@ -55,8 +57,15 @@ public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
 class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     protected TextView name;
     protected TextView status;
+    protected String id;
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public NovaListRowHolder(View view) {
         super(view);

@@ -13,16 +13,26 @@ public class Flavors {
     public static final String RAM = "ram";
     public static final String VCPUS = "vcpus";
     public static final String DISK = "disk";
+    public static final String ID = "id";
 
     //fields
     String name;
     String ram;
     String vcpus;
     String disk;
+    String id;
 
 
 //getters and setters
 
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

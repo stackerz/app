@@ -21,6 +21,7 @@ public class FlavorsParser extends Activity{
     public static final String RAM = "ram";
     public static final String VCPUS = "vcpus";
     public static final String DISK = "disk";
+    public static final String ID = "id";
 
     public String authToken;
     public String novaURL;
@@ -56,11 +57,13 @@ public class FlavorsParser extends Activity{
                 flavors.setVcpus(objsrv.getString("vcpus"));
                 flavors.setDisk(objsrv.getString("disk"));
                 flavors.setRam(objsrv.getString("ram"));
+                flavors.setId(objsrv.getString("id"));
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NAME, flavors.getName());
                 map.put(VCPUS, flavors.getVcpus());
                 map.put(DISK, flavors.getDisk());
                 map.put(RAM, flavors.getRam());
+                map.put(ID, flavors.getId());
                 jsonList.add(map);
             }
         } catch (JSONException e) {

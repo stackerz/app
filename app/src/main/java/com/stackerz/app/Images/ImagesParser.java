@@ -23,6 +23,7 @@ public class ImagesParser extends Activity{
     public static final String STATUS = "status";
     public static final String VISIBILITY = "visibility";
     public static final String FORMAT = "format";
+    public static final String ID = "id";
 
 
     public static ImagesParser parser = null;
@@ -56,11 +57,13 @@ public class ImagesParser extends Activity{
                 image.setStatus(objsrv.getString("status"));
                 image.setVisibility(objsrv.getString("visibility"));
                 image.setFormat(objsrv.getString("disk_format"));
+                image.setId(objsrv.getString("id"));
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NAME, image.getName());
                 map.put(STATUS, image.getStatus());
                 map.put(VISIBILITY, image.getVisibility());
                 map.put(FORMAT, image.getFormat());
+                map.put(ID, image.getId());
                 jsonList.add(map);
             }
         } catch (JSONException e) {

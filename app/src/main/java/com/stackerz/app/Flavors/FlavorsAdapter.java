@@ -23,6 +23,7 @@ public class FlavorsAdapter extends RecyclerView.Adapter<FlavorsListRowHolder> {
     public static final String RAM = "ram";
     public static final String VCPUS = "vcpus";
     public static final String DISK = "disk";
+    public static final String ID = "id";
     private Context mContext;
 
     public FlavorsAdapter(Context context, ArrayList<HashMap<String, String>> flavorList) {
@@ -45,6 +46,7 @@ public class FlavorsAdapter extends RecyclerView.Adapter<FlavorsListRowHolder> {
         flavorListRowHolder.vcpus.setText(e.get(VCPUS)+" "+"vCPUs");
         flavorListRowHolder.ram.setText(e.get(RAM) + "Mb" + " " + "RAM");
         flavorListRowHolder.disk.setText(e.get(DISK) + "Gb" + " " + "disk");
+        flavorListRowHolder.setId(e.get(ID));
 
 
     }
@@ -61,6 +63,15 @@ class FlavorsListRowHolder extends RecyclerView.ViewHolder implements View.OnCli
     protected TextView vcpus;
     protected TextView ram;
     protected TextView disk;
+    protected String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
 
 

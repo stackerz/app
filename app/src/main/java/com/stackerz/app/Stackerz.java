@@ -28,6 +28,10 @@ import com.stackerz.app.Images.ImagesParser;
 import com.stackerz.app.Instances.InstancesFragment;
 import com.stackerz.app.Instances.NovaJSON;
 import com.stackerz.app.Instances.NovaParser;
+import com.stackerz.app.Networks.Networks;
+import com.stackerz.app.Networks.NetworksFragment;
+import com.stackerz.app.Networks.NetworksJSON;
+import com.stackerz.app.Networks.NetworksParser;
 import com.stackerz.app.System.ObscuredSharedPreferences;
 import com.stackerz.app.System.SSLCerts;
 
@@ -47,11 +51,12 @@ public class Stackerz extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    public Bundle extras, novaExtras, flavorsExtras, glanceExtras;
+    public Bundle extras, novaExtras, flavorsExtras, glanceExtras, networksExtras;
     public ArrayList<HashMap<String, String>> jsonList;
     public ArrayList<HashMap<String, String>> novaList;
     public ArrayList<HashMap<String, String>> flavorsList;
     public ArrayList<HashMap<String, String>> imagesList;
+    public ArrayList<HashMap<String, String>> networksList;
     public String endpoints="";
     public String authToken="";
     public String instances="";
@@ -60,6 +65,8 @@ public class Stackerz extends Activity
     public String flavorsCached="";
     public String images="";
     public String imagesCached="";
+    public String networks="";
+    public String networksCached="";
 
 
     @Override
@@ -70,6 +77,7 @@ public class Stackerz extends Activity
         novaBundle();
         flavorsBundle();
         glanceBundle();
+        networksBundle();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -154,6 +162,27 @@ public class Stackerz extends Activity
         return glanceExtras;
     }
 
+    public Bundle networksBundle(){
+        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        endpoints = shPref.getString("KeystoneData", endpoints);
+        authToken = shPref.getString("AuthToken",authToken);
+        jsonList = EndpointsParser.parseJSON(endpoints);
+        EndpointsParser.shared().getURLs(jsonList);
+        String neutronURL = EndpointsParser.getNeutronURL();
+        networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
+        networksExtras = new Bundle();
+        if (networks != null) {
+            shPref.edit().putString("Networks",networks).commit();
+            networksList = NetworksParser.parseJSON(networks);
+            networksExtras.putSerializable("NetworksParsed", networksList);
+        } else if (shPref.getString("Networks",networks)!= null){
+            networksCached = shPref.getString("Networks",networks);
+            networksList = NetworksParser.parseJSON(networksCached);
+            networksExtras.putSerializable("NetworksParsed", networksList);
+        }
+        return networksExtras;
+    }
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
@@ -191,7 +220,11 @@ public class Stackerz extends Activity
                 fragmentManager.beginTransaction().replace(R.id.container, imagesFragment).commit();
                 break;
             case 4:
-                fragmentManager.beginTransaction().replace(R.id.container, NetworksFragment.newInstance(position)).commit();
+                networksExtras = networksBundle();
+                NetworksFragment networksFragment = new NetworksFragment();
+                networksFragment.setArguments(networksExtras);
+                fragmentManager.beginTransaction().add(R.id.container, NetworksFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, networksFragment).commit();
                 break;
             case 5:
                 fragmentManager.beginTransaction().replace(R.id.container, RoutersFragment.newInstance(position)).commit();

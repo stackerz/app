@@ -23,6 +23,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesListRowHolder> {
     public static final String STATUS = "status";
     public static final String VISIBILITY = "visibility";
     public static final String FORMAT = "format";
+    public static final String ID = "id";
     private Context mContext;
 
     public ImagesAdapter(Context context, ArrayList<HashMap<String, String>> imageList) {
@@ -45,6 +46,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesListRowHolder> {
         imageListRowHolder.status.setText(e.get(STATUS));
         imageListRowHolder.visibility.setText(e.get(VISIBILITY));
         imageListRowHolder.format.setText("format: " + e.get(FORMAT));
+        imageListRowHolder.setId(e.get(ID));
 
 
     }
@@ -61,6 +63,15 @@ class ImagesListRowHolder extends RecyclerView.ViewHolder implements View.OnClic
     protected TextView status;
     protected TextView visibility;
     protected TextView format;
+    protected String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
 
 

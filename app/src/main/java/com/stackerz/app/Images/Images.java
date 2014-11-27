@@ -11,16 +11,26 @@ public class Images {
     public static final String STATUS = "status";
     public static final String VISIBILITY = "visibility";
     public static final String FORMAT = "format";
+    public static final String ID = "id";
 
     //fields
     String name;
     String status;
     String visibility;
     String format;
+    String id;
 
 
 //getters and setters
 
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
