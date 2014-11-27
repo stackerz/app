@@ -58,16 +58,12 @@ public class RoutersParser extends Activity{
                 routers.setState(objsrv.getString("admin_state_up"));
                 routers.setId(objsrv.getString("id"));
                 JSONObject gateway = objsrv.getJSONObject("external_gateway_info");
+                routers.setSnat(gateway.getString("enable_snat"));
                 JSONArray addr = gateway.getJSONArray("external_fixed_ips");
                 for (int j = 0; j < addr.length(); j++) {
-                    JSONObject objgw = addr.getJSONObject(k);
-                    routers.setSnat(objgw.getString("enable_snat"));
-
-                    for (int k = 0; k < 1; k++){
-                        JSONObject objaddr = addr.getJSONObject(k);
+                        JSONObject objaddr = addr.getJSONObject(j);
                         routers.setIp(objaddr.getString("ip_address"));
                     }
-                }
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NAME, routers.getName());
                 map.put(STATE, routers.getState());

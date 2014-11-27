@@ -73,13 +73,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:text="snat"
+            android:text="source nat"
             android:textSize="@dimen/abc_text_size_small_material"
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
-            android:layout_alignTop="@+id/ipRouter"
-            android:layout_alignLeft="@+id/stateRouter"
-            android:layout_alignStart="@+id/stateRouter" />
+            android:layout_alignBottom="@+id/linearLayout"
+            android:layout_alignRight="@+id/stateRouter"
+            android:layout_alignEnd="@+id/stateRouter" />
 
         <TextView
             android:id="@+id/ipRouter"
@@ -90,10 +90,10 @@
             android:textSize="@dimen/abc_text_size_small_material"
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
-            android:layout_alignBottom="@+id/linearLayout"
-            android:layout_toRightOf="@+id/linearLayout"
             android:layout_toEndOf="@+id/linearLayout"
-            android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp"
+            android:layout_alignBottom="@+id/linearLayout"
+            android:layout_toRightOf="@+id/linearLayout" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
