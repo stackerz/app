@@ -57,11 +57,12 @@ public class RoutersParser extends Activity{
                 routers.setName(objsrv.getString("name"));
                 routers.setState(objsrv.getString("admin_state_up"));
                 routers.setId(objsrv.getString("id"));
-                JSONArray gateway = objsrv.getJSONArray("external_gateway_info");
-                for (int j = 0; j < 1; j++) {
-                    JSONObject objgw = gateway.getJSONObject(j);
+                JSONObject gateway = objsrv.getJSONObject("external_gateway_info");
+                JSONArray addr = gateway.getJSONArray("external_fixed_ips");
+                for (int j = 0; j < addr.length(); j++) {
+                    JSONObject objgw = addr.getJSONObject(k);
                     routers.setSnat(objgw.getString("enable_snat"));
-                    JSONArray addr = objgw.getJSONArray("external_fixed_ips");
+
                     for (int k = 0; k < 1; k++){
                         JSONObject objaddr = addr.getJSONObject(k);
                         routers.setIp(objaddr.getString("ip_address"));
