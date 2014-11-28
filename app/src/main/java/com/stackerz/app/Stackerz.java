@@ -330,12 +330,6 @@ public class Stackerz extends Activity
                 fragmentManager.beginTransaction().add(R.id.container, SecurityFragment.newInstance(position)).commit();
                 fragmentManager.beginTransaction().replace(R.id.container, securityFragment).commit();
                 break;
-            case 8:
-                fragmentManager.beginTransaction().replace(R.id.container, ProjectsFragment.newInstance(position)).commit();
-                break;
-            case 9:
-                fragmentManager.beginTransaction().replace(R.id.container, UsersFragment.newInstance(position)).commit();
-                break;
             default:
                 fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position)).commit();
                 break;
@@ -369,12 +363,6 @@ public class Stackerz extends Activity
                 break;
             case 7:
                 mTitle = getString(R.string.securitySection);
-                break;
-            case 8:
-                mTitle = getString(R.string.projectsSection);
-                break;
-            case 9:
-                mTitle = getString(R.string.usersSection);
                 break;
         }
     }

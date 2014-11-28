@@ -21,7 +21,8 @@
             android:layout_height="@dimen/abc_action_button_min_height_material"
             android:background="@color/accent"
             android:layout_alignParentTop="true"
-            android:id="@+id/linearLayoutRouter">
+            android:id="@+id/linearLayoutRouter"
+            android:layout_alignBottom="@+id/ipRouter">
             <!--android:layout_alignBottom="@+id/nameRouter"-->
 
 
