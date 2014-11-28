@@ -34,6 +34,10 @@ import com.stackerz.app.Networks.NetworksParser;
 import com.stackerz.app.Routers.RoutersFragment;
 import com.stackerz.app.Routers.RoutersJSON;
 import com.stackerz.app.Routers.RoutersParser;
+import com.stackerz.app.Subnets.Subnets;
+import com.stackerz.app.Subnets.SubnetsFragment;
+import com.stackerz.app.Subnets.SubnetsJSON;
+import com.stackerz.app.Subnets.SubnetsParser;
 import com.stackerz.app.System.ObscuredSharedPreferences;
 import com.stackerz.app.System.SSLCerts;
 
@@ -53,13 +57,14 @@ public class Stackerz extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    public Bundle extras, novaExtras, flavorsExtras, glanceExtras, networksExtras, routersExtras;
+    public Bundle extras, novaExtras, flavorsExtras, glanceExtras, networksExtras, routersExtras, subnetsExtras;
     public ArrayList<HashMap<String, String>> jsonList;
     public ArrayList<HashMap<String, String>> novaList;
     public ArrayList<HashMap<String, String>> flavorsList;
     public ArrayList<HashMap<String, String>> imagesList;
     public ArrayList<HashMap<String, String>> networksList;
     public ArrayList<HashMap<String, String>> routersList;
+    public ArrayList<HashMap<String, String>> subnetsList;
     public String endpoints="";
     public String authToken="";
     public String instances="";
@@ -72,6 +77,8 @@ public class Stackerz extends Activity
     public String networksCached="";
     public String routers ="";
     public String routersCached="";
+    public String subnets ="";
+    public String subnetsCached="";
 
 
     @Override
@@ -84,6 +91,7 @@ public class Stackerz extends Activity
         glanceBundle();
         networksBundle();
         routersBundle();
+        subnetsBundle();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -210,6 +218,27 @@ public class Stackerz extends Activity
         return routersExtras;
     }
 
+    public Bundle subnetsBundle(){
+        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        endpoints = shPref.getString("KeystoneData", endpoints);
+        authToken = shPref.getString("AuthToken",authToken);
+        jsonList = EndpointsParser.parseJSON(endpoints);
+        EndpointsParser.shared().getURLs(jsonList);
+        String neutronURL = EndpointsParser.getNeutronURL();
+        subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
+        subnetsExtras = new Bundle();
+        if (routers != null) {
+            shPref.edit().putString("Subnets",subnets).commit();
+            subnetsList = SubnetsParser.parseJSON(subnets);
+            subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
+        } else if (shPref.getString("Subnets",subnets)!= null){
+            subnetsCached = shPref.getString("Subnets",subnets);
+            subnetsList = SubnetsParser.parseJSON(subnetsCached);
+            subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
+        }
+        return subnetsExtras;
+    }
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
@@ -261,9 +290,19 @@ public class Stackerz extends Activity
                 fragmentManager.beginTransaction().replace(R.id.container, routersFragment).commit();
                 break;
             case 6:
-                fragmentManager.beginTransaction().replace(R.id.container, ProjectsFragment.newInstance(position)).commit();
+                subnetsExtras = subnetsBundle();
+                SubnetsFragment subnetsFragment = new SubnetsFragment();
+                subnetsFragment.setArguments(subnetsExtras);
+                fragmentManager.beginTransaction().add(R.id.container, SubnetsFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, subnetsFragment).commit();
                 break;
             case 7:
+                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position)).commit();
+                break;
+            case 8:
+                fragmentManager.beginTransaction().replace(R.id.container, ProjectsFragment.newInstance(position)).commit();
+                break;
+            case 9:
                 fragmentManager.beginTransaction().replace(R.id.container, UsersFragment.newInstance(position)).commit();
                 break;
             default:
@@ -295,9 +334,15 @@ public class Stackerz extends Activity
                 mTitle = getString(R.string.routersSection);
                 break;
             case 6:
-                mTitle = getString(R.string.projectsSection);
+                mTitle = getString(R.string.subnetsSection);
                 break;
             case 7:
+                mTitle = getString(R.string.securitySection);
+                break;
+            case 8:
+                mTitle = getString(R.string.projectsSection);
+                break;
+            case 9:
                 mTitle = getString(R.string.usersSection);
                 break;
         }

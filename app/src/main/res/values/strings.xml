@@ -9,6 +9,8 @@
     <string name="networksSection">Networks</string>
     <string name="routersSection">Routers</string>
     <string name="projectsSection">Projects</string>
+    <string name="subnetsSection">Subnets</string>
+    <string name="securitySection">Security Groups</string>
     <string name="usersSection">Users</string>
     <string name="userLoginTV">User Name:</string>
     <string name="userLoginET">john.doe</string>
