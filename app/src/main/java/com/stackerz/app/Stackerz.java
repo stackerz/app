@@ -132,11 +132,11 @@ public class Stackerz extends Activity
             shPref.edit().putString("Instances",instances).commit();
             novaList = NovaParser.parseJSON(instances);
             novaExtras.putSerializable("NovaParsed", novaList);
-        } else if (shPref.getString("Instances",instances)!= null){
+        /*} else if (shPref.getString("Instances",instances)!= null){
             instancesCached = shPref.getString("Instances",instancesCached);
             novaList = NovaParser.parseJSON(instancesCached);
             novaExtras.putSerializable("NovaParsed", novaList);
-        }
+        */}
         return novaExtras;
     }
 
@@ -153,11 +153,11 @@ public class Stackerz extends Activity
             shPref.edit().putString("Flavors",flavors).commit();
             flavorsList = FlavorsParser.parseJSON(flavors);
             flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
-        } else if (shPref.getString("Flavors",flavors)!= null){
+        /*} else if (shPref.getString("Flavors",flavors)!= null){
             flavorsCached = shPref.getString("Flavors",flavors);
             flavorsList = FlavorsParser.parseJSON(flavorsCached);
             flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
-        }
+        */}
         return flavorsExtras;
     }
 
@@ -174,11 +174,11 @@ public class Stackerz extends Activity
             shPref.edit().putString("Images",images).commit();
             imagesList = ImagesParser.parseJSON(images);
             glanceExtras.putSerializable("ImagesParsed", imagesList);
-        } else if (shPref.getString("Images",images)!= null){
+        /*} else if (shPref.getString("Images",images)!= null){
             imagesCached = shPref.getString("Images",images);
             imagesList = ImagesParser.parseJSON(imagesCached);
             glanceExtras.putSerializable("ImagesParsed", imagesList);
-        }
+        */}
         return glanceExtras;
     }
 
@@ -195,11 +195,11 @@ public class Stackerz extends Activity
             shPref.edit().putString("Networks",networks).commit();
             networksList = NetworksParser.parseJSON(networks);
             networksExtras.putSerializable("NetworksParsed", networksList);
-        } else if (shPref.getString("Networks",networks)!= null){
+        /*} else if (shPref.getString("Networks",networks)!= null){
             networksCached = shPref.getString("Networks",networks);
             networksList = NetworksParser.parseJSON(networksCached);
             networksExtras.putSerializable("NetworksParsed", networksList);
-        }
+        */}
         return networksExtras;
     }
 
@@ -216,11 +216,11 @@ public class Stackerz extends Activity
             shPref.edit().putString("Subnets",subnets).commit();
             subnetsList = SubnetsParser.parseJSON(subnets);
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
-        } else if (shPref.getString("Subnets",subnets)!= null){
+        /*} else if (shPref.getString("Subnets",subnets)!= null){
             subnetsCached = shPref.getString("Subnets",subnets);
             subnetsList = SubnetsParser.parseJSON(subnetsCached);
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
-        }
+        */}
         return subnetsExtras;
     }
 
@@ -237,11 +237,11 @@ public class Stackerz extends Activity
             shPref.edit().putString("Routers",routers).commit();
             routersList = RoutersParser.parseJSON(routers);
             routersExtras.putSerializable("RoutersParsed", routersList);
-        } else if (shPref.getString("Routers",routers)!= null){
+        /*} else if (shPref.getString("Routers",routers)!= null){
             routersCached = shPref.getString("Routers",routers);
             routersList = RoutersParser.parseJSON(routersCached);
             routersExtras.putSerializable("RoutersParsed", routersList);
-        }
+        */}
         return routersExtras;
     }
 
@@ -259,11 +259,11 @@ public class Stackerz extends Activity
             shPref.edit().putString("Security",security).commit();
             securityList = SecurityParser.parseJSON(security);
             securityExtras.putSerializable("SecurityParsed", securityList);
-        } else if (shPref.getString("Security",security)!= null){
+        /*} else if (shPref.getString("Security",security)!= null){
             securityCached = shPref.getString("Security",security);
             securityList = SubnetsParser.parseJSON(securityCached);
             securityExtras.putSerializable("SecurityParsed", securityList);
-        }
+        */}
         return securityExtras;
     }
 
