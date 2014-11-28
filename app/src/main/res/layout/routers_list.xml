@@ -83,17 +83,17 @@
 
         <TextView
             android:id="@+id/ipRouter"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:text="ip address"
             android:textSize="@dimen/abc_text_size_small_material"
-            android:paddingRight="5dp"
-            android:paddingBottom="5dp"
-            android:layout_toEndOf="@+id/linearLayoutRouter"
+            android:layout_alignStart="@+id/nameRouter"
+            android:layout_below="@+id/nameRouter"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:paddingLeft="5dp"
-            android:layout_alignBottom="@+id/linearLayoutRouter"
-            android:layout_toRightOf="@+id/linearLayoutRouter" />
+            android:paddingBottom="5dp" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

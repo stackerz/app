@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_gravity="center"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/window_bg"
+    android:elevation="100dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true">
+
+    <LinearLayout
+        android:layout_width="40dp"
+        android:layout_height="@dimen/abc_action_button_min_height_material"
+        android:background="@color/accent"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/nameSec">
+        <!--android:layout_alignBottom="@+id/url"-->
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/arrow"
+        android:src="@drawable/arrow"
+        android:layout_gravity="center_vertical"
+        android:padding="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    </LinearLayout>
+
+        <TextView
+        android:id="@+id/nameSec"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:maxWidth="250dp"
+        android:textSize="@dimen/abc_text_size_large_material"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="40dp"
+        android:paddingLeft="5dp"
+        android:paddingBottom="5dp"/>
+
+    <TextView
+        android:id="@+id/descSec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:text="status"
+        android:textSize="@dimen/abc_text_size_small_material"
+        android:paddingRight="5dp"
+        android:layout_alignBottom="@+id/nameSec"
+        android:layout_alignRight="@+id/nameSec"
+        android:layout_alignEnd="@+id/nameSec"
+        android:paddingBottom="5dp"/>
+
+</RelativeLayout>
+</android.support.v7.widget.CardView>
+

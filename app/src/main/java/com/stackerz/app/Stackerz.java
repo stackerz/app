@@ -34,6 +34,9 @@ import com.stackerz.app.Networks.NetworksParser;
 import com.stackerz.app.Routers.RoutersFragment;
 import com.stackerz.app.Routers.RoutersJSON;
 import com.stackerz.app.Routers.RoutersParser;
+import com.stackerz.app.Security.SecurityFragment;
+import com.stackerz.app.Security.SecurityJSON;
+import com.stackerz.app.Security.SecurityParser;
 import com.stackerz.app.Subnets.Subnets;
 import com.stackerz.app.Subnets.SubnetsFragment;
 import com.stackerz.app.Subnets.SubnetsJSON;
@@ -57,7 +60,7 @@ public class Stackerz extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    public Bundle extras, novaExtras, flavorsExtras, glanceExtras, networksExtras, routersExtras, subnetsExtras;
+    public Bundle extras, novaExtras, flavorsExtras, glanceExtras, networksExtras, routersExtras, subnetsExtras, securityExtras;
     public ArrayList<HashMap<String, String>> jsonList;
     public ArrayList<HashMap<String, String>> novaList;
     public ArrayList<HashMap<String, String>> flavorsList;
@@ -65,6 +68,7 @@ public class Stackerz extends Activity
     public ArrayList<HashMap<String, String>> networksList;
     public ArrayList<HashMap<String, String>> routersList;
     public ArrayList<HashMap<String, String>> subnetsList;
+    public ArrayList<HashMap<String, String>> securityList;
     public String endpoints="";
     public String authToken="";
     public String instances="";
@@ -79,6 +83,8 @@ public class Stackerz extends Activity
     public String routersCached="";
     public String subnets ="";
     public String subnetsCached="";
+    public String security ="";
+    public String securityCached="";
 
 
     @Override
@@ -239,6 +245,27 @@ public class Stackerz extends Activity
         return subnetsExtras;
     }
 
+    public Bundle securityBundle(){
+        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        endpoints = shPref.getString("KeystoneData", endpoints);
+        authToken = shPref.getString("AuthToken",authToken);
+        jsonList = EndpointsParser.parseJSON(endpoints);
+        EndpointsParser.shared().getURLs(jsonList);
+        String neutronURL = EndpointsParser.getNeutronURL();
+        security = SecurityJSON.shared().receiveData(neutronURL, authToken);
+        securityExtras = new Bundle();
+        if (security != null) {
+            shPref.edit().putString("Security",security).commit();
+            securityList = SecurityParser.parseJSON(security);
+            securityExtras.putSerializable("SecurityParsed", securityList);
+        } else if (shPref.getString("Security",security)!= null){
+            securityCached = shPref.getString("Security",security);
+            securityList = SubnetsParser.parseJSON(securityCached);
+            securityExtras.putSerializable("SecurityParsed", securityList);
+        }
+        return securityExtras;
+    }
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
@@ -297,7 +324,11 @@ public class Stackerz extends Activity
                 fragmentManager.beginTransaction().replace(R.id.container, subnetsFragment).commit();
                 break;
             case 7:
-                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position)).commit();
+                securityExtras = securityBundle();
+                SecurityFragment securityFragment = new SecurityFragment();
+                securityFragment.setArguments(securityExtras);
+                fragmentManager.beginTransaction().add(R.id.container, SecurityFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, securityFragment).commit();
                 break;
             case 8:
                 fragmentManager.beginTransaction().replace(R.id.container, ProjectsFragment.newInstance(position)).commit();
