@@ -20,6 +20,9 @@ public class VolleySingleton extends Application {
     private ImageLoader mImageLoader;
     private static Context mCtx;
 
+    public VolleySingleton() {
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
