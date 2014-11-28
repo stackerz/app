@@ -203,6 +203,27 @@ public class Stackerz extends Activity
         return networksExtras;
     }
 
+    public Bundle subnetsBundle(){
+        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        endpoints = shPref.getString("KeystoneData", endpoints);
+        authToken = shPref.getString("AuthToken",authToken);
+        jsonList = EndpointsParser.parseJSON(endpoints);
+        EndpointsParser.shared().getURLs(jsonList);
+        String neutronURL = EndpointsParser.getNeutronURL();
+        subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
+        subnetsExtras = new Bundle();
+        if (routers != null) {
+            shPref.edit().putString("Subnets",subnets).commit();
+            subnetsList = SubnetsParser.parseJSON(subnets);
+            subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
+        } else if (shPref.getString("Subnets",subnets)!= null){
+            subnetsCached = shPref.getString("Subnets",subnets);
+            subnetsList = SubnetsParser.parseJSON(subnetsCached);
+            subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
+        }
+        return subnetsExtras;
+    }
+
     public Bundle routersBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         endpoints = shPref.getString("KeystoneData", endpoints);
@@ -224,26 +245,6 @@ public class Stackerz extends Activity
         return routersExtras;
     }
 
-    public Bundle subnetsBundle(){
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        endpoints = shPref.getString("KeystoneData", endpoints);
-        authToken = shPref.getString("AuthToken",authToken);
-        jsonList = EndpointsParser.parseJSON(endpoints);
-        EndpointsParser.shared().getURLs(jsonList);
-        String neutronURL = EndpointsParser.getNeutronURL();
-        subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
-        subnetsExtras = new Bundle();
-        if (routers != null) {
-            shPref.edit().putString("Subnets",subnets).commit();
-            subnetsList = SubnetsParser.parseJSON(subnets);
-            subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
-        } else if (shPref.getString("Subnets",subnets)!= null){
-            subnetsCached = shPref.getString("Subnets",subnets);
-            subnetsList = SubnetsParser.parseJSON(subnetsCached);
-            subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
-        }
-        return subnetsExtras;
-    }
 
     public Bundle securityBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
@@ -310,18 +311,18 @@ public class Stackerz extends Activity
                 fragmentManager.beginTransaction().replace(R.id.container, networksFragment).commit();
                 break;
             case 5:
-                routersExtras = routersBundle();
-                RoutersFragment routersFragment = new RoutersFragment();
-                routersFragment.setArguments(routersExtras);
-                fragmentManager.beginTransaction().add(R.id.container, RoutersFragment.newInstance(position)).commit();
-                fragmentManager.beginTransaction().replace(R.id.container, routersFragment).commit();
-                break;
-            case 6:
                 subnetsExtras = subnetsBundle();
                 SubnetsFragment subnetsFragment = new SubnetsFragment();
                 subnetsFragment.setArguments(subnetsExtras);
                 fragmentManager.beginTransaction().add(R.id.container, SubnetsFragment.newInstance(position)).commit();
                 fragmentManager.beginTransaction().replace(R.id.container, subnetsFragment).commit();
+                break;
+            case 6:
+                routersExtras = routersBundle();
+                RoutersFragment routersFragment = new RoutersFragment();
+                routersFragment.setArguments(routersExtras);
+                fragmentManager.beginTransaction().add(R.id.container, RoutersFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, routersFragment).commit();
                 break;
             case 7:
                 securityExtras = securityBundle();
@@ -356,10 +357,10 @@ public class Stackerz extends Activity
                 mTitle = getString(R.string.networksSection);
                 break;
             case 5:
-                mTitle = getString(R.string.routersSection);
+                mTitle = getString(R.string.subnetsSection);
                 break;
             case 6:
-                mTitle = getString(R.string.subnetsSection);
+                mTitle = getString(R.string.routersSection);
                 break;
             case 7:
                 mTitle = getString(R.string.securitySection);
