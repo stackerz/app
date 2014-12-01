@@ -77,7 +77,7 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     public void onClick(View view){
         Dialog dialog = new Dialog(view.getContext());
-        dialog.setContentView(R.layout.instances_list);
+        dialog.setContentView(R.layout.instances_listdetail);
         dialog.setTitle("Details " + name.getText() + " " + getPosition());
         dialog.show();
     }

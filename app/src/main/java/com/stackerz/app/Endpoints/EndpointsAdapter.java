@@ -72,10 +72,7 @@ class EndpointListRowHolder extends RecyclerView.ViewHolder implements View.OnCl
     }
 
     public void onClick(View view){
-        Dialog dialog = new Dialog(view.getContext());
-        dialog.setContentView(R.layout.endpoint_list);
-        dialog.setTitle("Details " + name.getText() + " " + getPosition());
-        dialog.show();
+
     }
 
 }
