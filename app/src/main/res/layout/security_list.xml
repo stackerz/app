@@ -11,17 +11,16 @@
     android:foreground="?android:attr/selectableItemBackground">
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/card_height"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
     android:layout_alignParentTop="true">
 
     <LinearLayout
         android:layout_width="40dp"
-        android:layout_height="@dimen/abc_action_button_min_height_material"
+        android:layout_height="@dimen/card_height"
         android:background="@color/accent"
-        android:layout_alignParentTop="true"
-        android:layout_alignBottom="@+id/nameSec">
+        android:layout_alignParentTop="true">
         <!--android:layout_alignBottom="@+id/url"-->
 
 
@@ -61,10 +60,10 @@
         android:text="status"
         android:textSize="@dimen/abc_text_size_small_material"
         android:paddingRight="5dp"
-        android:layout_alignBottom="@+id/nameSec"
+        android:paddingBottom="5dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/nameSec"
-        android:layout_alignEnd="@+id/nameSec"
-        android:paddingBottom="5dp"/>
+        android:layout_alignEnd="@+id/nameSec" />
 
 </RelativeLayout>
 </android.support.v7.widget.CardView>

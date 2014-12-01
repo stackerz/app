@@ -11,17 +11,16 @@
     android:foreground="?android:attr/selectableItemBackground">
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/card_height"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
     android:layout_alignParentTop="true">
 
     <LinearLayout
         android:layout_width="40dp"
-        android:layout_height="@dimen/abc_action_button_min_height_material"
+        android:layout_height="@dimen/card_height"
         android:background="@color/accent"
-        android:layout_alignParentTop="true"
-        android:layout_alignBottom="@+id/nameInstance">
+        android:layout_alignParentTop="true">
         <!--android:layout_alignBottom="@+id/url"-->
 
 
@@ -61,10 +60,10 @@
         android:text="status"
         android:textSize="@dimen/abc_text_size_small_material"
         android:paddingRight="5dp"
-        android:layout_alignBottom="@+id/nameInstance"
-        android:layout_alignRight="@+id/nameInstance"
-        android:layout_alignEnd="@+id/nameInstance"
-        android:paddingBottom="5dp"/>
+        android:paddingBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <!--<TextView
         android:id="@+id/idInstance"
