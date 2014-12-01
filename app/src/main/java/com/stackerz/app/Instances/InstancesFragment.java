@@ -3,10 +3,12 @@ package com.stackerz.app.Instances;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +50,7 @@ public class InstancesFragment extends Fragment {
 
     public ArrayList<HashMap<String, String>> jsonList;
     public RecyclerView recyclerView;
+    public ProgressDialog pDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,7 +91,19 @@ public class InstancesFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         NovaAdapter novaAdapter = new NovaAdapter(getActivity(),jsonList);
-        recyclerView.setAdapter(novaAdapter);
+        if (novaAdapter.getItemCount() != 0) {
+            recyclerView.setAdapter(novaAdapter);
+        }else{
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Retrieving data from Server");
+            pDialog.show();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    pDialog.dismiss();
+                }
+            }, 5000);
+        }
         super.onViewCreated(view, savedInstanceState);
     }
 

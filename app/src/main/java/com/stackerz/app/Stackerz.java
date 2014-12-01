@@ -98,6 +98,7 @@ public class Stackerz extends Activity
         networksBundle();
         routersBundle();
         subnetsBundle();
+        securityBundle();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();

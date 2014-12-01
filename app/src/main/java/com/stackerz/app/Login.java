@@ -237,12 +237,12 @@ public class Login extends Activity implements View.OnClickListener{
         pDialog.setMessage("Loading...");
         pDialog.show();
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                pDialog.dismiss();
-            }
-        }, 5000);  // 5000 milliseconds
+        //Handler handler = new Handler();
+        //handler.postDelayed(new Runnable() {
+        //    public void run() {
+        //        pDialog.dismiss();
+        //    }
+        //}, 5000);  // 5000 milliseconds
 
         JSONObject login = null;
         try {

@@ -3,10 +3,12 @@ package com.stackerz.app.Subnets;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,6 +51,7 @@ public class SubnetsFragment extends Fragment {
 
     public ArrayList<HashMap<String, String>> jsonList;
     public RecyclerView recyclerView;
+    public ProgressDialog pDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +59,22 @@ public class SubnetsFragment extends Fragment {
         Bundle extras = getArguments();
         Serializable parsedList = extras.getSerializable("SubnetsParsed");
         jsonList = (ArrayList<HashMap<String, String>>)parsedList;
+        if (extras == null){
+            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+            alert.setTitle("Token Expired");
+            alert.setMessage("Authentication Token expired! Please login again.")
+                    .setNeutralButton("Connect", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(getActivity(), Login.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                            getFragmentManager().beginTransaction().remove(SubnetsFragment.this).commit();
+                        }
+                    });
+            AlertDialog alertDialog = alert.create();
+            alertDialog.show();
+        }
         View rootView = inflater.inflate(R.layout.fragment_subnets, container, false);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.subnetsRV);
         return rootView;
@@ -74,22 +93,20 @@ public class SubnetsFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         SubnetsAdapter subnetsAdapter = new SubnetsAdapter(getActivity(),jsonList);
         recyclerView.setAdapter(subnetsAdapter);
-        if (layoutManager == null){
-            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-            alert.setTitle("Token Expired");
-            alert.setMessage("Authentication Token expired! Please login again.")
-                    .setNeutralButton("Connect", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(getActivity(), Login.class);
-                            startActivity(intent);
-                            getActivity().finish();
-                            getFragmentManager().beginTransaction().remove(SubnetsFragment.this).commit();
-                        }
-                    });
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
+        if (subnetsAdapter.getItemCount() != 0) {
+            recyclerView.setAdapter(subnetsAdapter);
+        }else{
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Retrieving data from Server");
+            pDialog.show();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    pDialog.dismiss();
+                }
+            }, 5000);
         }
+
         super.onViewCreated(view, savedInstanceState);
     }
 
