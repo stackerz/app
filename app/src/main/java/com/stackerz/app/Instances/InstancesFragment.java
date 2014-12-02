@@ -91,7 +91,23 @@ public class InstancesFragment extends Fragment {
                 Fragment instancesFragment = getFragmentManager().findFragmentById(R.id.container);
                 getFragmentManager().beginTransaction().detach(instancesFragment).commit();
                 getFragmentManager().beginTransaction().attach(instancesFragment).commit();
-                refreshLayout.isRefreshing();
+
+
+            }
+        });
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            public void onScrollStateChanged(int newState) {
+            }
+
+            public void onScrolled(int dx, int dy) {
+                refreshLayout.setEnabled(layoutManager.findFirstCompletelyVisibleItemPosition() == 0);
+                Fragment instancesFragment = getFragmentManager().findFragmentById(R.id.container);
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.detach(instancesFragment);
+                fragmentTransaction.attach(instancesFragment);
+                fragmentTransaction.commit();
+
             }
         });
         super.onViewCreated(view, savedInstanceState);
