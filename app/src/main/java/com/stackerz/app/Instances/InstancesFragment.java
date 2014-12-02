@@ -88,13 +88,10 @@ public class InstancesFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                NovaAdapter novaAdapter = new NovaAdapter(getActivity(),jsonList);
-                recyclerView.setAdapter(novaAdapter);
-                new Handler().postDelayed(new Runnable() {
-                    @Override public void run() {
-                       refreshLayout.setRefreshing(false);                    }
-                }, 3000);
-
+                Fragment instancesFragment = getFragmentManager().findFragmentById(R.id.container);
+                getFragmentManager().beginTransaction().detach(instancesFragment).commit();
+                getFragmentManager().beginTransaction().attach(instancesFragment).commit();
+                refreshLayout.isRefreshing();
             }
         });
         super.onViewCreated(view, savedInstanceState);
