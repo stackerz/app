@@ -84,7 +84,6 @@ public class InstancesFragment extends Fragment {
         if (novaAdapter.getItemCount() != 0) {
             recyclerView.setAdapter(novaAdapter);
         }
-        refreshLayout.setColorSchemeColors(Color.RED, Color.GRAY);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -96,20 +95,7 @@ public class InstancesFragment extends Fragment {
 
             }
         });
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            public void onScrollStateChanged(int newState) {
-            }
-
-            public void onScrolled(int dx, int dy) {
-                refreshLayout.setEnabled(layoutManager.findFirstCompletelyVisibleItemPosition() == 0);
-                Fragment instancesFragment = getFragmentManager().findFragmentById(R.id.container);
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.remove(instancesFragment);
-                fragmentTransaction.commit();
-
-            }
-        });
+        refreshLayout.setColorSchemeColors(Color.RED, Color.GRAY);
         super.onViewCreated(view, savedInstanceState);
     }
 
