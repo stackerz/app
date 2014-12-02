@@ -89,8 +89,9 @@ public class InstancesFragment extends Fragment {
             @Override
             public void onRefresh() {
                 Fragment instancesFragment = getFragmentManager().findFragmentById(R.id.container);
-                getFragmentManager().beginTransaction().detach(instancesFragment).commit();
-                getFragmentManager().beginTransaction().attach(instancesFragment).commit();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.remove(instancesFragment);
+                fragmentTransaction.commit();
 
 
             }
@@ -104,8 +105,7 @@ public class InstancesFragment extends Fragment {
                 refreshLayout.setEnabled(layoutManager.findFirstCompletelyVisibleItemPosition() == 0);
                 Fragment instancesFragment = getFragmentManager().findFragmentById(R.id.container);
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.detach(instancesFragment);
-                fragmentTransaction.attach(instancesFragment);
+                fragmentTransaction.remove(instancesFragment);
                 fragmentTransaction.commit();
 
             }
