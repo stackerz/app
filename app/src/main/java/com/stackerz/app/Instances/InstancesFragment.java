@@ -3,18 +3,22 @@ package com.stackerz.app.Instances;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 
 import com.stackerz.app.System.DividerItemDecoration;
 import com.stackerz.app.Login;
@@ -50,7 +54,8 @@ public class InstancesFragment extends Fragment {
 
     public ArrayList<HashMap<String, String>> jsonList;
     public RecyclerView recyclerView;
-    public ProgressDialog pDialog;
+    public SwipeRefreshLayout refreshLayout;
+    private Handler handler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,30 +64,15 @@ public class InstancesFragment extends Fragment {
         Serializable parsedList = extras.getSerializable("NovaParsed");
         jsonList = (ArrayList<HashMap<String, String>>)parsedList;
         View rootView = inflater.inflate(R.layout.fragment_instances, container, false);
+        refreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.instancesSRL);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.instancesRV);
-        if (recyclerView == null){
-            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-            alert.setTitle("Token Expired");
-            alert.setMessage("Authentication Token expired! Please login again.")
-                    .setNeutralButton("Connect", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(getActivity(), Login.class);
-                            startActivity(intent);
-                            getActivity().finish();
-                            getFragmentManager().beginTransaction().remove(InstancesFragment.this).commit();
-                        }
-                    });
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
-        }
         return rootView;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.supportsPredictiveItemAnimations();
         recyclerView.setLayoutManager(layoutManager);
@@ -93,17 +83,20 @@ public class InstancesFragment extends Fragment {
         NovaAdapter novaAdapter = new NovaAdapter(getActivity(),jsonList);
         if (novaAdapter.getItemCount() != 0) {
             recyclerView.setAdapter(novaAdapter);
-        }else{
-            pDialog = new ProgressDialog(getActivity());
-            pDialog.setMessage("Retrieving data from Server");
-            pDialog.show();
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    pDialog.dismiss();
-                }
-            }, 5000);
         }
+        refreshLayout.setColorSchemeColors(Color.RED, Color.GRAY);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                NovaAdapter novaAdapter = new NovaAdapter(getActivity(),jsonList);
+                recyclerView.setAdapter(novaAdapter);
+                new Handler().postDelayed(new Runnable() {
+                    @Override public void run() {
+                       refreshLayout.setRefreshing(false);                    }
+                }, 3000);
+
+            }
+        });
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -120,11 +113,8 @@ public class InstancesFragment extends Fragment {
         //}
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

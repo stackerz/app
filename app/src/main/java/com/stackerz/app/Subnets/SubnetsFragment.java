@@ -3,6 +3,7 @@ package com.stackerz.app.Subnets;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -93,20 +94,6 @@ public class SubnetsFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         SubnetsAdapter subnetsAdapter = new SubnetsAdapter(getActivity(),jsonList);
         recyclerView.setAdapter(subnetsAdapter);
-        if (subnetsAdapter.getItemCount() != 0) {
-            recyclerView.setAdapter(subnetsAdapter);
-        }else{
-            pDialog = new ProgressDialog(getActivity());
-            pDialog.setMessage("Retrieving data from Server");
-            pDialog.show();
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    pDialog.dismiss();
-                }
-            }, 5000);
-        }
-
         super.onViewCreated(view, savedInstanceState);
     }
 
