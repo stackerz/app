@@ -31,10 +31,7 @@
                 android:id="@+id/images_icon"
                 android:src="@drawable/ic_settings_overscan_black_48dp"
                 android:layout_gravity="center_vertical"
-                android:padding="5dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:padding="11dp"/>
         </LinearLayout>
 
 
@@ -57,14 +54,14 @@
 
         <TextView
             android:id="@+id/statusImage"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:text="status"
             android:textSize="@dimen/abc_text_size_small_material"
             android:paddingLeft="5dp"
             android:paddingBottom="5dp"
-            android:layout_alignParentBottom="true"
+            android:layout_alignTop="@+id/formatImage"
             android:layout_toRightOf="@+id/linearLayout"
             android:layout_toEndOf="@+id/linearLayout" />
 
@@ -82,6 +79,18 @@
             android:layout_alignParentEnd="true" />
 
         <TextView
+            android:id="@+id/emptyImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text=""
+            android:textSize="@dimen/abc_text_size_small_material"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:layout_below="@+id/visibility"
+            android:layout_alignParentRight="true" />
+
+        <TextView
             android:id="@+id/formatImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,9 +99,9 @@
             android:textSize="@dimen/abc_text_size_small_material"
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
-            android:layout_alignTop="@+id/statusImage"
-            android:layout_alignRight="@+id/visibility"
-            android:layout_alignEnd="@+id/visibility" />
+            android:layout_below="@+id/emptyImage"
+            android:layout_alignRight="@+id/emptyImage"
+            android:layout_alignEnd="@+id/emptyImage" />
 
 
     </RelativeLayout>

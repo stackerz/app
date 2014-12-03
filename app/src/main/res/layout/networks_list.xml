@@ -31,10 +31,7 @@
                 android:id="@+id/net_icon"
                 android:src="@drawable/ic_dashboard_black_48dp"
                 android:layout_gravity="center_vertical"
-                android:padding="5dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:padding="11dp"/>
         </LinearLayout>
 
 

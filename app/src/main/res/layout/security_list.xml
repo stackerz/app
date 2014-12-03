@@ -22,7 +22,6 @@
         android:background="@color/accent"
         android:layout_alignParentTop="true"
         android:id="@+id/linearLayout2">
-        <!--android:layout_alignBottom="@+id/url"-->
 
 
     <ImageView
@@ -31,10 +30,7 @@
         android:id="@+id/arrow"
         android:src="@drawable/ic_https_black_48dp"
         android:layout_gravity="center_vertical"
-        android:padding="5dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:padding="11dp" />
     </LinearLayout>
 
         <TextView
@@ -51,6 +47,18 @@
         android:paddingBottom="5dp"
             android:layout_toRightOf="@+id/linearLayout2"
             android:layout_toEndOf="@+id/linearLayout2" />
+    <TextView
+        android:id="@+id/emptySec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:text=""
+        android:textSize="@dimen/abc_text_size_small_material"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/descSec"
@@ -61,9 +69,9 @@
         android:textSize="@dimen/abc_text_size_small_material"
         android:paddingRight="5dp"
         android:paddingBottom="5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/nameSec"
-        android:layout_alignEnd="@+id/nameSec" />
+        android:layout_below="@+id/emptySec"
+        android:layout_alignRight="@+id/emptySec"
+        android:layout_alignEnd="@+id/emptySec" />
 
 </RelativeLayout>
 </android.support.v7.widget.CardView>
