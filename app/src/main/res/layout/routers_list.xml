@@ -31,7 +31,7 @@
                 android:id="@+id/routers_icon"
                 android:src="@drawable/ic_track_changes_black_48dp"
                 android:layout_gravity="center_vertical"
-                android:padding="12dp"/>
+                android:padding="11dp"/>
         </LinearLayout>
 
 

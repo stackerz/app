@@ -31,7 +31,7 @@
         android:id="@+id/instances_icon"
         android:src="@drawable/ic_view_carousel_black_48dp"
         android:layout_gravity="center_vertical"
-        android:padding="12dp" />
+        android:padding="11dp" />
     </LinearLayout>
 
         <TextView

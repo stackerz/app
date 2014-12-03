@@ -30,7 +30,7 @@
                 android:id="@+id/subnets_icon"
                 android:src="@drawable/ic_language_black_48dp"
                 android:layout_gravity="center_vertical"
-                android:padding="12dp" />
+                android:padding="11dp" />
         </LinearLayout>
 
 
