@@ -29,6 +29,16 @@ public class SubnetsParser extends Activity{
 
     public static SubnetsParser parser = null;
 
+    public static OnJSONLoaded mListener;
+
+    public static void setOnJSONLoadedListener(OnJSONLoaded listener) {
+        mListener = listener;
+    }
+
+    public interface OnJSONLoaded {
+        void onJsonLoaded(ArrayList<HashMap<String, String>> list);
+    }
+
     public static SubnetsParser shared(){
         if (parser  == null){
             parser  = new SubnetsParser();
@@ -76,8 +86,12 @@ public class SubnetsParser extends Activity{
             }
         });
 
+        if (mListener != null) {
+            mListener.onJsonLoaded(jsonList);
+        }
 
         return jsonList;
+
     }
 
 

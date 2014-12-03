@@ -213,7 +213,7 @@ public class Stackerz extends Activity
         String neutronURL = EndpointsParser.getNeutronURL();
         subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
         subnetsExtras = new Bundle();
-        if (routers != null) {
+        if (subnets != null) {
             shPref.edit().putString("Subnets",subnets).commit();
             subnetsList = SubnetsParser.parseJSON(subnets);
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);

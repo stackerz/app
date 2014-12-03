@@ -27,14 +27,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SubnetsFragment extends Fragment {
+import static com.stackerz.app.Subnets.SubnetsParser.OnJSONLoaded;
+
+public class SubnetsFragment extends Fragment implements OnJSONLoaded{
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     private OnFragmentInteractionListener mListener;
-    /**
+    public ArrayList<HashMap<String, String>> jsonList;
+    public RecyclerView recyclerView;
+    public ProgressDialog pDialog;
+        /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
@@ -49,10 +54,6 @@ public class SubnetsFragment extends Fragment {
 
     public SubnetsFragment() {
     }
-
-    public ArrayList<HashMap<String, String>> jsonList;
-    public RecyclerView recyclerView;
-    public ProgressDialog pDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,7 +84,7 @@ public class SubnetsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
+        super.onViewCreated(view, savedInstanceState);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.supportsPredictiveItemAnimations();
@@ -92,11 +93,29 @@ public class SubnetsFragment extends Fragment {
         recyclerView.setClickable(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        SubnetsAdapter subnetsAdapter = new SubnetsAdapter(getActivity(),jsonList);
-        recyclerView.setAdapter(subnetsAdapter);
-        super.onViewCreated(view, savedInstanceState);
+
+        onJsonLoaded(jsonList);
+
     }
 
+    @Override
+    public void onJsonLoaded(ArrayList<HashMap<String, String>> list) {
+
+        SubnetsParser.setOnJSONLoadedListener(new OnJSONLoaded() {
+            @Override
+            public void onJsonLoaded(ArrayList<HashMap<String, String>> list) {
+                if (list.size() != 0){
+                    SubnetsAdapter subnetsAdapter = new SubnetsAdapter(getActivity(),jsonList);
+                    recyclerView.setAdapter(subnetsAdapter);
+                }else {
+                    pDialog = new ProgressDialog(getActivity());
+                    pDialog.setMessage("Retrieving data from Server");
+                    pDialog.show();
+                }
+            }
+        });
+
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -116,6 +135,9 @@ public class SubnetsFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
+
 
     /**
      * This interface must be implemented by activities that contain this
