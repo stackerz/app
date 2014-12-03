@@ -30,7 +30,7 @@
                 android:id="@+id/subnets_icon"
                 android:src="@drawable/ic_language_black_48dp"
                 android:layout_gravity="center_vertical"
-                android:padding="11dp" />
+                android:padding="12dp" />
         </LinearLayout>
 
 
@@ -65,6 +65,18 @@
             android:layout_toEndOf="@+id/linearLayout" />
 
         <TextView
+            android:id="@+id/emptySubnet2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text=""
+            android:textSize="@dimen/abc_text_size_small_material"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
             android:id="@+id/emptySubnet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,9 +85,11 @@
             android:textSize="@dimen/abc_text_size_small_material"
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
-            android:layout_below="@+id/nameSubnet"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/emptySubnet2"
+            android:layout_alignLeft="@+id/emptySubnet2"
+            android:layout_alignStart="@+id/emptySubnet2" />
+
 
         <TextView
             android:id="@+id/gwSubnet"

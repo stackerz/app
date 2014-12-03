@@ -58,8 +58,8 @@
         android:paddingRight="5dp"
         android:paddingBottom="5dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignRight="@+id/nameSec"
+        android:layout_alignEnd="@+id/nameSec" />
 
 </RelativeLayout>
 </android.support.v7.widget.CardView>

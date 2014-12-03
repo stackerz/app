@@ -55,7 +55,7 @@
 
         <TextView
             android:id="@+id/typeNetwork"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:text="type"
@@ -63,7 +63,6 @@
             android:paddingLeft="5dp"
             android:paddingBottom="5dp"
             android:layout_below="@+id/externalNetwork"
-            android:layout_alignParentBottom="true"
             android:layout_toRightOf="@+id/linearLayout"
             android:layout_toEndOf="@+id/linearLayout" />
 
@@ -116,17 +115,17 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test"
-            android:layout_gravity="center_horizontal" />
-        <Button
-            android:layout_width="214dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_gravity="center" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="test"
+                android:layout_gravity="center_horizontal" />
+            <Button
+                android:layout_width="214dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_gravity="center" />
+        </LinearLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>
 
