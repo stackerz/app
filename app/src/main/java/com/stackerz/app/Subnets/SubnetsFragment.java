@@ -93,8 +93,9 @@ public class SubnetsFragment extends Fragment implements OnJSONLoaded{
         recyclerView.setClickable(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-
-        onJsonLoaded(jsonList);
+        SubnetsAdapter subnetsAdapter = new SubnetsAdapter(getActivity(),jsonList);
+        recyclerView.setAdapter(subnetsAdapter);
+        //onJsonLoaded(jsonList);
 
     }
 
