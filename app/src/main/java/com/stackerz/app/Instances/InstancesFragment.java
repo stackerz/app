@@ -71,8 +71,8 @@ public class InstancesFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        super.onViewCreated(view, savedInstanceState);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.supportsPredictiveItemAnimations();
         recyclerView.setLayoutManager(layoutManager);
@@ -91,12 +91,14 @@ public class InstancesFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.remove(instancesFragment);
                 fragmentTransaction.commit();
-
+                refreshLayout.measure(20, 20);
+                refreshLayout.setRefreshing(true);
 
             }
         });
         refreshLayout.setColorSchemeColors(Color.RED, Color.GRAY);
-        super.onViewCreated(view, savedInstanceState);
+
+
     }
 
     @Override
