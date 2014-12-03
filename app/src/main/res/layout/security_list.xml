@@ -4,21 +4,21 @@
     android:id="@+id/card_view"
     android:layout_gravity="center"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/card_height"
     app:cardBackgroundColor="@color/window_bg"
     android:elevation="100dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground">
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="@dimen/card_height"
+    android:layout_height="match_parent"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
     android:layout_alignParentTop="true">
 
     <LinearLayout
         android:layout_width="60dp"
-        android:layout_height="@dimen/card_height"
+        android:layout_height="match_parent"
         android:background="@color/accent"
         android:layout_alignParentTop="true"
         android:id="@+id/linearLayout2">

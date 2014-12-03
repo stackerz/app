@@ -1,11 +1,13 @@
 package com.stackerz.app.Images;
 
+import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 
 import com.stackerz.app.R;
@@ -64,6 +66,8 @@ class ImagesListRowHolder extends RecyclerView.ViewHolder implements View.OnClic
     protected TextView visibility;
     protected TextView format;
     protected String id;
+    private int mOriginalHeight = 0;
+    private boolean mIsViewExpanded = false;
 
     public String getId() {
         return id;
@@ -85,11 +89,29 @@ class ImagesListRowHolder extends RecyclerView.ViewHolder implements View.OnClic
 
     }
 
-    public void onClick(View view){
-        Dialog dialog = new Dialog(view.getContext());
-        dialog.setContentView(R.layout.images_list);
-        dialog.setTitle("Details " + name.getText() + " " + getPosition());
-        dialog.show();
+    public void onClick(final View view){
+        if (mOriginalHeight == 0) {
+            mOriginalHeight = view.getHeight();
+        }
+        ValueAnimator valueAnimator;
+        if (!mIsViewExpanded) {
+            mIsViewExpanded = true;
+            valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 1.5));
+        } else {
+            mIsViewExpanded = false;
+            valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 1.5), mOriginalHeight);
+        }
+        valueAnimator.setDuration(300);
+        valueAnimator.setInterpolator(new LinearInterpolator());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Integer value = (Integer) animation.getAnimatedValue();
+                view.getLayoutParams().height = value.intValue();
+                view.requestLayout();
+            }
+        });
+        valueAnimator.start();
+
     }
 
 }
