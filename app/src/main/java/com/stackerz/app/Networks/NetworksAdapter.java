@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.stackerz.app.R;
@@ -86,6 +88,8 @@ class NetworksListRowHolder extends RecyclerView.ViewHolder implements View.OnCl
     protected String id;
     private int mOriginalHeight = 0;
     private boolean mIsViewExpanded = false;
+    RelativeLayout main;
+    LinearLayout expanded;
 
     public String getId() {
         return id;
@@ -105,6 +109,9 @@ class NetworksListRowHolder extends RecyclerView.ViewHolder implements View.OnCl
         this.external = (TextView) view.findViewById(R.id.externalNetwork);
         this.type = (TextView) view.findViewById(R.id.typeNetwork);
         this.shared = (TextView) view.findViewById(R.id.sharedNetwork);
+        main = (RelativeLayout)view.findViewById(R.id.layoutNetworks);
+        expanded = (LinearLayout)view.findViewById(R.id.expandedNetworks);
+        expanded.setVisibility(View.GONE);
 
     }
 
@@ -116,9 +123,11 @@ class NetworksListRowHolder extends RecyclerView.ViewHolder implements View.OnCl
         if (!mIsViewExpanded) {
             mIsViewExpanded = true;
             valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 1.5));
+            expanded.setVisibility(View.VISIBLE);
         } else {
             mIsViewExpanded = false;
             valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 1.5), mOriginalHeight);
+            expanded.setVisibility(View.GONE);
         }
         valueAnimator.setDuration(300);
         valueAnimator.setInterpolator(new LinearInterpolator());

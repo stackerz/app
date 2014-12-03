@@ -31,7 +31,7 @@
                 android:id="@+id/images_icon"
                 android:src="@drawable/ic_settings_overscan_black_48dp"
                 android:layout_gravity="center_vertical"
-                android:padding="12dp"/>
+                android:padding="11dp"/>
         </LinearLayout>
 
 
