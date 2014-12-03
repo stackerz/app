@@ -64,6 +64,7 @@
             android:textSize="@dimen/abc_text_size_small_material"
             android:paddingLeft="5dp"
             android:paddingBottom="5dp"
+            android:layout_below="@+id/externalNetwork"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@+id/linearLayout"
             android:layout_toEndOf="@+id/linearLayout" />
@@ -91,10 +92,9 @@
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
             android:paddingLeft="5dp"
+            android:layout_below="@+id/nameNetwork"
             android:layout_toRightOf="@+id/linearLayout"
-            android:layout_toEndOf="@+id/linearLayout"
-            android:layout_above="@+id/typeNetwork"
-            android:layout_alignEnd="@+id/nameNetwork" />
+            android:layout_toEndOf="@+id/linearLayout" />
 
         <TextView
             android:id="@+id/sharedNetwork"
@@ -106,8 +106,8 @@
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
             android:layout_alignTop="@+id/typeNetwork"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignRight="@+id/stateNetwork"
+            android:layout_alignEnd="@+id/stateNetwork" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
