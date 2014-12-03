@@ -86,14 +86,11 @@ tools:context="com.stackerz.app.Instances.InstancesFragment">
             android:tint="@android:color/white"
             android:layout_gravity="end|bottom"
             android:layout_marginBottom="@dimen/add_button_margin"
-            android:layout_marginEnd="@dimen/card_height"
+            android:layout_marginEnd="@dimen/add_button_margin"
             android:src="@android:drawable/ic_input_add"
             android:clickable="true"
             android:stateListAnimator="@drawable/button_elevation"
-            android:background="@drawable/fab_selector"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:background="@drawable/fab_selector"/>
     </FrameLayout>
 
 </RelativeLayout>
