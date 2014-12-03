@@ -17,10 +17,11 @@
     android:layout_alignParentTop="true">
 
     <LinearLayout
-        android:layout_width="40dp"
+        android:layout_width="60dp"
         android:layout_height="@dimen/card_height"
         android:background="@color/accent"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:id="@+id/linearLayout2">
         <!--android:layout_alignBottom="@+id/url"-->
 
 
@@ -28,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/arrow"
-        android:src="@drawable/arrow"
+        android:src="@drawable/ic_https_black_48dp"
         android:layout_gravity="center_vertical"
         android:padding="5dp"
         android:layout_alignParentTop="true"
@@ -46,11 +47,10 @@
         android:maxWidth="250dp"
         android:textSize="@dimen/abc_text_size_large_material"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="40dp"
-        android:paddingLeft="5dp"
-        android:paddingBottom="5dp"/>
+            android:paddingLeft="5dp"
+        android:paddingBottom="5dp"
+            android:layout_toRightOf="@+id/linearLayout2"
+            android:layout_toEndOf="@+id/linearLayout2" />
 
     <TextView
         android:id="@+id/descSec"

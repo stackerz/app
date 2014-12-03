@@ -17,7 +17,7 @@
     android:layout_alignParentTop="true">
 
     <LinearLayout
-        android:layout_width="40dp"
+        android:layout_width="60dp"
         android:layout_height="@dimen/card_height"
         android:background="@color/accent"
         android:layout_alignParentTop="true"
@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/endpoint_icon"
-        android:src="@drawable/ic_assessment_black_48dp"
+        android:src="@drawable/ic_settings_applications_black_48dp"
         android:layout_gravity="center_vertical"
         android:padding="5dp"
         android:layout_alignParentTop="true"
@@ -44,11 +44,10 @@
         android:text="name"
         android:textColor="@android:color/white"
         android:textSize="@dimen/abc_text_size_large_material"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="40dp"
-        android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/linearLayout"
+            android:layout_toEndOf="@+id/linearLayout" />
 
 
     <TextView

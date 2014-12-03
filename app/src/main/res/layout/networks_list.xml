@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true">
 
         <LinearLayout
-            android:layout_width="40dp"
+            android:layout_width="60dp"
             android:layout_height="@dimen/card_height"
             android:background="@color/accent"
             android:layout_alignParentTop="true"
@@ -49,11 +49,10 @@
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:maxWidth="250dp"
+            android:paddingLeft="5dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="40dp"
-            android:paddingLeft="5dp"/>
+            android:layout_toRightOf="@+id/linearLayout"
+            android:layout_toEndOf="@+id/linearLayout" />
 
 
         <TextView

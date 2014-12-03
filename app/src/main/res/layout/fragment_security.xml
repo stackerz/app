@@ -35,7 +35,18 @@ tools:context="com.stackerz.app.Security.SecurityFragment">
             android:layout_width="44dp"
             android:layout_height="@dimen/abc_action_button_min_height_material"
             android:background="@color/window_bg"
-            android:layout_alignEnd="@id/securityTV"/>
+            android:layout_alignEnd="@id/securityTV">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/endpoint_icon"
+                android:src="@drawable/ic_stars_white_48dp"
+                android:layout_gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </LinearLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>
 
