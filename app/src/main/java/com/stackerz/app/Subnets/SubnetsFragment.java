@@ -85,10 +85,6 @@ public class SubnetsFragment extends Fragment implements OnJSONLoaded{
         //onJsonLoaded(jsonList);
         if (subnetsJSON != null) {
             SubnetsParser.parseJSON(subnetsJSON);
-        }else {
-            pDialog = new ProgressDialog(getActivity());
-            pDialog.setMessage("Retrieving data from Server");
-            pDialog.show();
         }
     }
 
