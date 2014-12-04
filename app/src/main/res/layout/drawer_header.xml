@@ -1,0 +1,15 @@
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/card_height"
+            android:background="#000"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/card_height"
+                android:id="@+id/imageView"
+                android:src="@drawable/about"
+                android:layout_margin="20dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
