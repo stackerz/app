@@ -277,56 +277,56 @@ public class Stackerz extends Activity
                 .replace(R.id.container, PlaceholderFragment.newInstance(position))
                 .commit();
         switch (position) {
-            case 0:
+            case 1:
                 extras = authBundle();
                 OverviewFragment overviewFragment = new OverviewFragment();
                 overviewFragment.setArguments(extras);
                 fragmentManager.beginTransaction().add(R.id.container, OverviewFragment.newInstance(position)).commit();
                 fragmentManager.beginTransaction().replace(R.id.container,overviewFragment).commit();
                 break;
-            case 1:
+            case 2:
                 novaExtras = novaBundle();
                 InstancesFragment instancesFragment = new InstancesFragment();
                 instancesFragment.setArguments(novaExtras);
                 fragmentManager.beginTransaction().add(R.id.container, InstancesFragment.newInstance(position)).commit();
                 fragmentManager.beginTransaction().replace(R.id.container, instancesFragment).commit();
                 break;
-            case 2:
+            case 3:
                 flavorsExtras = flavorsBundle();
                 FlavorsFragment flavorsFragment = new FlavorsFragment();
                 flavorsFragment.setArguments(flavorsExtras);
                 fragmentManager.beginTransaction().add(R.id.container, FlavorsFragment.newInstance(position)).commit();
                 fragmentManager.beginTransaction().replace(R.id.container, flavorsFragment).commit();
                 break;
-            case 3:
+            case 4:
                 glanceExtras = glanceBundle();
                 ImagesFragment imagesFragment = new ImagesFragment();
                 imagesFragment.setArguments(glanceExtras);
                 fragmentManager.beginTransaction().add(R.id.container, ImagesFragment.newInstance(position)).commit();
                 fragmentManager.beginTransaction().replace(R.id.container, imagesFragment).commit();
                 break;
-            case 4:
+            case 5:
                 networksExtras = networksBundle();
                 NetworksFragment networksFragment = new NetworksFragment();
                 networksFragment.setArguments(networksExtras);
                 fragmentManager.beginTransaction().add(R.id.container, NetworksFragment.newInstance(position)).commit();
                 fragmentManager.beginTransaction().replace(R.id.container, networksFragment).commit();
                 break;
-            case 5:
+            case 6:
                 subnetsExtras = subnetsBundle();
                 SubnetsFragment subnetsFragment = new SubnetsFragment();
                 subnetsFragment.setArguments(subnetsExtras);
                 fragmentManager.beginTransaction().add(R.id.container, SubnetsFragment.newInstance(position)).commit();
                 fragmentManager.beginTransaction().replace(R.id.container, subnetsFragment).commit();
                 break;
-            case 6:
+            case 7:
                 routersExtras = routersBundle();
                 RoutersFragment routersFragment = new RoutersFragment();
                 routersFragment.setArguments(routersExtras);
                 fragmentManager.beginTransaction().add(R.id.container, RoutersFragment.newInstance(position)).commit();
                 fragmentManager.beginTransaction().replace(R.id.container, routersFragment).commit();
                 break;
-            case 7:
+            case 8:
                 securityExtras = securityBundle();
                 SecurityFragment securityFragment = new SecurityFragment();
                 securityFragment.setArguments(securityExtras);
@@ -343,28 +343,28 @@ public class Stackerz extends Activity
 
     public void onSectionAttached(int number) {
         switch (number) {
-            case 0:
+            case 1:
                 mTitle = getString(R.string.overviewSection);
                 break;
-            case 1:
+            case 2:
                 mTitle = getString(R.string.instancesSection);
                 break;
-            case 2:
+            case 3:
                 mTitle = getString(R.string.flavorsSection);
                 break;
-            case 3:
+            case 4:
                 mTitle = getString(R.string.imagesSection);
                 break;
-            case 4:
+            case 5:
                 mTitle = getString(R.string.networksSection);
                 break;
-            case 5:
+            case 6:
                 mTitle = getString(R.string.subnetsSection);
                 break;
-            case 6:
+            case 7:
                 mTitle = getString(R.string.routersSection);
                 break;
-            case 7:
+            case 8:
                 mTitle = getString(R.string.securitySection);
                 break;
         }
