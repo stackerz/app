@@ -39,6 +39,7 @@ public class SubnetsFragment extends Fragment implements OnJSONLoaded{
     public ArrayList<HashMap<String, String>> jsonList;
     public RecyclerView recyclerView;
     public ProgressDialog pDialog;
+    public String subnetsJSON;
         /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -60,23 +61,8 @@ public class SubnetsFragment extends Fragment implements OnJSONLoaded{
                              Bundle savedInstanceState) {
         Bundle extras = getArguments();
         Serializable parsedList = extras.getSerializable("SubnetsParsed");
+        subnetsJSON = extras.getString("SubnetsJSON");
         jsonList = (ArrayList<HashMap<String, String>>)parsedList;
-        if (extras == null){
-            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-            alert.setTitle("Token Expired");
-            alert.setMessage("Authentication Token expired! Please login again.")
-                    .setNeutralButton("Connect", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(getActivity(), Login.class);
-                            startActivity(intent);
-                            getActivity().finish();
-                            getFragmentManager().beginTransaction().remove(SubnetsFragment.this).commit();
-                        }
-                    });
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
-        }
         View rootView = inflater.inflate(R.layout.fragment_subnets, container, false);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.subnetsRV);
         return rootView;
@@ -93,10 +79,17 @@ public class SubnetsFragment extends Fragment implements OnJSONLoaded{
         recyclerView.setClickable(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        SubnetsAdapter subnetsAdapter = new SubnetsAdapter(getActivity(),jsonList);
-        recyclerView.setAdapter(subnetsAdapter);
-        //onJsonLoaded(jsonList);
 
+        //SubnetsAdapter subnetsAdapter = new SubnetsAdapter(getActivity(),jsonList);
+        //recyclerView.setAdapter(subnetsAdapter);
+        //onJsonLoaded(jsonList);
+        if (subnetsJSON != null) {
+            SubnetsParser.parseJSON(subnetsJSON);
+        }else {
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Retrieving data from Server");
+            pDialog.show();
+        }
     }
 
     @Override
@@ -106,12 +99,25 @@ public class SubnetsFragment extends Fragment implements OnJSONLoaded{
             @Override
             public void onJsonLoaded(ArrayList<HashMap<String, String>> list) {
                 if (list.size() != 0){
+                    pDialog.dismiss();
                     SubnetsAdapter subnetsAdapter = new SubnetsAdapter(getActivity(),jsonList);
                     recyclerView.setAdapter(subnetsAdapter);
                 }else {
-                    pDialog = new ProgressDialog(getActivity());
-                    pDialog.setMessage("Retrieving data from Server");
-                    pDialog.show();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                    alert.setTitle("This is taking too long!");
+                    alert.setMessage("It seems there's a problem with your connection, check the server. It's also possible " +
+                            "the Authentication Token expired. Please try to login again.")
+                            .setNeutralButton("Connect", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Intent intent = new Intent(getActivity(), Login.class);
+                                    startActivity(intent);
+                                    getActivity().finish();
+                                    getFragmentManager().beginTransaction().remove(SubnetsFragment.this).commit();
+                                }
+                            });
+                    AlertDialog alertDialog = alert.create();
+                    alertDialog.show();
                 }
             }
         });

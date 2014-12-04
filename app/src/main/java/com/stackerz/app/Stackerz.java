@@ -216,6 +216,7 @@ public class Stackerz extends Activity
         if (subnets != null) {
             shPref.edit().putString("Subnets",subnets).commit();
             subnetsList = SubnetsParser.parseJSON(subnets);
+            subnetsExtras.putString("SubnetsJSON",subnets);
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
         /*} else if (shPref.getString("Subnets",subnets)!= null){
             subnetsCached = shPref.getString("Subnets",subnets);

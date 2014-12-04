@@ -96,7 +96,7 @@ public class InstancesFragment extends Fragment {
 
             }
         });
-        refreshLayout.setColorSchemeColors(Color.RED, Color.GRAY);
+        refreshLayout.setColorSchemeColors(Color.RED, Color.GRAY, Color.RED, Color.GRAY);
 
 
     }
