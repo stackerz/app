@@ -24,6 +24,21 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.stackerz.app.Endpoints.EndpointsParser;
+import com.stackerz.app.Flavors.FlavorsJSON;
+import com.stackerz.app.Flavors.FlavorsParser;
+import com.stackerz.app.Images.ImagesJSON;
+import com.stackerz.app.Images.ImagesParser;
+import com.stackerz.app.Instances.NovaJSON;
+import com.stackerz.app.Instances.NovaParser;
+import com.stackerz.app.Networks.NetworksJSON;
+import com.stackerz.app.Networks.NetworksParser;
+import com.stackerz.app.Routers.RoutersJSON;
+import com.stackerz.app.Routers.RoutersParser;
+import com.stackerz.app.Security.SecurityJSON;
+import com.stackerz.app.Security.SecurityParser;
+import com.stackerz.app.Subnets.SubnetsJSON;
+import com.stackerz.app.Subnets.SubnetsParser;
 import com.stackerz.app.System.ObscuredSharedPreferences;
 import com.stackerz.app.System.SSLCerts;
 import com.stackerz.app.System.VolleySingleton;
@@ -31,6 +46,7 @@ import com.stackerz.app.System.VolleySingleton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -53,6 +69,25 @@ public class Login extends Activity implements View.OnClickListener{
     boolean connError = false;
     boolean reachable = false;
     boolean prefSaved = false;
+
+    public Bundle extras;
+
+    public ArrayList<HashMap<String, String>> jsonList;
+    public ArrayList<HashMap<String, String>> instancesList;
+    public ArrayList<HashMap<String, String>> flavorsList;
+    public ArrayList<HashMap<String, String>> imagesList;
+    public ArrayList<HashMap<String, String>> networksList;
+    public ArrayList<HashMap<String, String>> routersList;
+    public ArrayList<HashMap<String, String>> subnetsList;
+    public ArrayList<HashMap<String, String>> securityList;
+
+    public String instances="";
+    public String flavors="";
+    public String images="";
+    public String networks="";
+    public String routers="";
+    public String subnets="";
+    public String security="";
 
     public static Login login = null;
 
@@ -189,6 +224,7 @@ public class Login extends Activity implements View.OnClickListener{
             prefSaved = true;
             if (loginRequest()) {
                 connError = false;
+                setupCache();
                 Intent intent = new Intent(Login.this, Stackerz.class);
                 intent.putExtra("AuthToken", authToken);
                 startActivityForResult(intent,1);
@@ -313,6 +349,48 @@ public class Login extends Activity implements View.OnClickListener{
         } else {
             return false;
         }
+    }
+
+
+    public void setupCache(){
+        endpointStr = shPref.getString("KeystoneData", endpointStr);
+        authToken = shPref.getString("AuthToken",authToken);
+        jsonList = EndpointsParser.parseJSON(endpointStr);
+        EndpointsParser.shared().getURLs(jsonList);
+
+        String novaURL = EndpointsParser.getNovaURL();
+        String glanceURL = EndpointsParser.getGlanceURL();
+        String neutronURL = EndpointsParser.getNeutronURL();
+
+        instances = NovaJSON.shared().receiveData(novaURL, authToken);
+        flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
+        images = ImagesJSON.shared().receiveData(glanceURL, authToken);
+        networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
+        subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
+        routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
+        security = SecurityJSON.shared().receiveData(neutronURL, authToken);
+
+        if (instances != null) {
+            shPref.edit().putString("Instances", instances).commit();
+            instancesList = NovaParser.parseJSON(instances);
+        }
+        if (networks != null) {
+            shPref.edit().putString("Networks", networks).commit();
+            networksList = NetworksParser.parseJSON(networks);
+        }
+        if (subnets != null) {
+            shPref.edit().putString("Subnets", subnets).commit();
+            subnetsList = SubnetsParser.parseJSON(subnets);
+        }
+        if (routers != null) {
+            shPref.edit().putString("Routers", routers).commit();
+            routersList = RoutersParser.parseJSON(routers);
+        }
+        if (security != null) {
+            shPref.edit().putString("Security", security).commit();
+            securityList = SecurityParser.parseJSON(security);
+        }
+
     }
 
 

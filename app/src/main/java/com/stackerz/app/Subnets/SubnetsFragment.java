@@ -80,12 +80,12 @@ public class SubnetsFragment extends Fragment implements OnJSONLoaded{
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
-        //SubnetsAdapter subnetsAdapter = new SubnetsAdapter(getActivity(),jsonList);
-        //recyclerView.setAdapter(subnetsAdapter);
+        SubnetsAdapter subnetsAdapter = new SubnetsAdapter(getActivity(),jsonList);
+        recyclerView.setAdapter(subnetsAdapter);
         //onJsonLoaded(jsonList);
-        if (subnetsJSON != null) {
-            SubnetsParser.parseJSON(subnetsJSON);
-        }
+        //if (subnetsJSON != null) {
+        //    SubnetsParser.parseJSON(subnetsJSON);
+        //}
     }
 
     @Override
