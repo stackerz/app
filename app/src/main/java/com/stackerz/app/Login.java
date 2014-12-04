@@ -50,6 +50,7 @@ public class Login extends Activity implements View.OnClickListener{
     public JSONObject endpoints;
     public String authToken;
     public String endpointStr;
+    boolean connError = false;
     boolean reachable = false;
     boolean prefSaved = false;
 
@@ -186,21 +187,18 @@ public class Login extends Activity implements View.OnClickListener{
         if (reachable) {
             setSharedPrefs();
             prefSaved = true;
-            loginRequest();
-            //JSONData.shared().setAuthtoken(authToken);
-            //JSONData.shared().setEndpoint(endpointStr);
-            //try {
-            //    Thread.sleep(1000);
-            //} catch (InterruptedException e) {
-            //    e.printStackTrace();
-            //}
-            if (reachable) {
+            if (loginRequest()) {
+                connError = false;
                 Intent intent = new Intent(Login.this, Stackerz.class);
                 intent.putExtra("AuthToken", authToken);
                 startActivityForResult(intent,1);
                 SharedPreferences first = getSharedPreferences("First", 0);
                 first.edit().putBoolean("First", true).commit();
                 first.edit().putBoolean("Token", true).commit();
+            } else {
+                Intent intent = new Intent(Login.this, Connect.class);
+                startActivity(intent);
+                finish();
             }
         }
     }
@@ -227,13 +225,14 @@ public class Login extends Activity implements View.OnClickListener{
             return false;
     }
 
-    public void loginRequest() {
+    public boolean loginRequest() {
         final String user = shPref.getString("Username", username);
         final String pass = shPref.getString("Password", password);
         final String url = shPref.getString("Endpoint", endpoint);
         final String tnt = shPref.getString("Tenant", tenant);
         final String json = "{\"auth\": {\"tenantName\": \"" + tnt + "\", \"passwordCredentials\": {\"username\": \"" + user + "\", \"password\": \"" + pass + "\"}}}";
         final ProgressDialog pDialog = new ProgressDialog(this);
+
         pDialog.setMessage("Loading...");
         pDialog.show();
 
@@ -266,7 +265,7 @@ public class Login extends Activity implements View.OnClickListener{
                         } catch (JSONException e) {
                             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                             e.printStackTrace();
-                         }
+                        }
 
                         //Log.d("App", response.toString());
                         setEndpoints(response);
@@ -285,12 +284,12 @@ public class Login extends Activity implements View.OnClickListener{
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
                         pDialog.hide();
-                        reachable = false;
-                        finishActivity(1);
+                        connError = true;
                         Intent intent = new Intent(Login.this, Connect.class);
                         startActivity(intent);
 
                     }
+
                 }
         ) {
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -309,6 +308,11 @@ public class Login extends Activity implements View.OnClickListener{
         RequestQueue queue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
         queue.add(getRequest);
+        if (!connError){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

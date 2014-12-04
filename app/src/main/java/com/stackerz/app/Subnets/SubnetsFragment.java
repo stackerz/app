@@ -95,7 +95,6 @@ public class SubnetsFragment extends Fragment implements OnJSONLoaded{
             @Override
             public void onJsonLoaded(ArrayList<HashMap<String, String>> list) {
                 if (list.size() != 0){
-                    pDialog.dismiss();
                     SubnetsAdapter subnetsAdapter = new SubnetsAdapter(getActivity(),jsonList);
                     recyclerView.setAdapter(subnetsAdapter);
                 }else {
