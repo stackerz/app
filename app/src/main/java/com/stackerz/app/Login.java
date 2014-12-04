@@ -222,20 +222,22 @@ public class Login extends Activity implements View.OnClickListener{
         if (reachable) {
             setSharedPrefs();
             prefSaved = true;
-            if (loginRequest()) {
+            loginRequest();
+            if (!isConnError()) {
                 connError = false;
-                setupCache();
                 Intent intent = new Intent(Login.this, Stackerz.class);
                 intent.putExtra("AuthToken", authToken);
                 startActivityForResult(intent,1);
                 SharedPreferences first = getSharedPreferences("First", 0);
                 first.edit().putBoolean("First", true).commit();
                 first.edit().putBoolean("Token", true).commit();
+
             } else {
                 Intent intent = new Intent(Login.this, Connect.class);
                 startActivity(intent);
                 finish();
             }
+            setupCache();
         }
     }
 
@@ -261,7 +263,15 @@ public class Login extends Activity implements View.OnClickListener{
             return false;
     }
 
-    public boolean loginRequest() {
+    public boolean isConnError(){
+        if (connError){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void loginRequest() {
         final String user = shPref.getString("Username", username);
         final String pass = shPref.getString("Password", password);
         final String url = shPref.getString("Endpoint", endpoint);
@@ -306,6 +316,7 @@ public class Login extends Activity implements View.OnClickListener{
                         //Log.d("App", response.toString());
                         setEndpoints(response);
                         setEndpointStr(response.toString());
+                        connError = false;
                         //Test JSON
                         //Toast.makeText(getApplicationContext(), endpoints.toString(), Toast.LENGTH_LONG).show();
                         pDialog.hide();
@@ -344,17 +355,21 @@ public class Login extends Activity implements View.OnClickListener{
         RequestQueue queue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
         queue.add(getRequest);
-        if (!connError){
-            return true;
-        } else {
-            return false;
-        }
+
     }
 
 
     public void setupCache(){
-        endpointStr = shPref.getString("KeystoneData", endpointStr);
-        authToken = shPref.getString("AuthToken",authToken);
+        if (endpointStr == null){
+            endpointStr = getEndpointStr();
+        } else {
+            endpointStr = shPref.getString("KeystoneData", endpointStr);
+        }
+        if (authToken == null){
+            authToken = getAuthToken();
+        } else {
+            authToken = shPref.getString("AuthToken",authToken);
+        }
         jsonList = EndpointsParser.parseJSON(endpointStr);
         EndpointsParser.shared().getURLs(jsonList);
 
