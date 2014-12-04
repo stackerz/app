@@ -286,10 +286,10 @@ public class Stackerz extends Activity
                 break;
             case 1:
                 extras = authBundle();
-                OverviewFragment overviewFragment = new OverviewFragment();
-                overviewFragment.setArguments(extras);
+                OverviewFragment overviewFragment1 = new OverviewFragment();
+                overviewFragment1.setArguments(extras);
                 fragmentManager.beginTransaction().add(R.id.container, OverviewFragment.newInstance(position)).commit();
-                fragmentManager.beginTransaction().replace(R.id.container,overviewFragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.container,overviewFragment1).commit();
                 break;
             case 2:
                 novaExtras = novaBundle();
