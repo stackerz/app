@@ -1,15 +1,27 @@
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/card_height"
-            android:background="#ffff"
-            >
-
+            android:background="@color/accent"
+            android:weightSum="1">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#ffffff"
+                android:orientation="horizontal"/>
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_height"
-                android:id="@+id/imageView"
+                android:id="@+id/drawerLogo"
                 android:src="@drawable/about"
-                android:layout_margin="20dp"
+                android:layout_margin="5dp"
                 android:layout_gravity="center" />
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#ffffff"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
