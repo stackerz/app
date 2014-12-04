@@ -277,6 +277,13 @@ public class Stackerz extends Activity
                 .replace(R.id.container, PlaceholderFragment.newInstance(position))
                 .commit();
         switch (position) {
+            case 0:
+                extras = authBundle();
+                OverviewFragment overviewFragment = new OverviewFragment();
+                overviewFragment.setArguments(extras);
+                fragmentManager.beginTransaction().add(R.id.container, OverviewFragment.newInstance(position)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container,overviewFragment).commit();
+                break;
             case 1:
                 extras = authBundle();
                 OverviewFragment overviewFragment = new OverviewFragment();
@@ -343,6 +350,9 @@ public class Stackerz extends Activity
 
     public void onSectionAttached(int number) {
         switch (number) {
+            case 0:
+                mTitle = getString(R.string.overviewSection);
+                break;
             case 1:
                 mTitle = getString(R.string.overviewSection);
                 break;
