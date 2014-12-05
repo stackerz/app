@@ -223,6 +223,7 @@ public class Login extends Activity implements View.OnClickListener{
                 if (firstSP.getInt("First",first)>1){
                     setupCache();
                 }
+                first = (firstSP.getInt("First",first));
                 first++;
                 firstSP.edit().putInt ("First", first).commit();
             }
