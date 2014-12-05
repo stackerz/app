@@ -339,11 +339,11 @@ public class Login extends Activity implements View.OnClickListener{
 
     public void setupCache(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        endpointStr = shPref.getString("KeystoneData", endpointStr);
-        authToken = shPref.getString("AuthToken", authToken);
+        endpointStr = getEndpointStr();
+        authToken = getAuthToken();
         if (endpointStr == null || authToken == null) {
-            endpointStr = getEndpointStr();
-            authToken = getAuthToken();
+            endpointStr = shPref.getString("KeystoneData", endpointStr);
+            authToken = shPref.getString("AuthToken", authToken);
             }
         if (endpointStr != null || authToken != null) {
             jsonList = EndpointsParser.parseJSON(endpointStr);
