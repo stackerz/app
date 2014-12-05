@@ -345,8 +345,8 @@ public class Login extends Activity implements View.OnClickListener{
             endpointStr = shPref.getString("KeystoneData", endpointStr);
             authToken = shPref.getString("AuthToken", authToken);
         }
-        jsonList = EndpointsParser.parseJSON(endpointStr);
-        if (jsonList !=null) {
+        if (endpointStr != null || authToken != null) {
+            jsonList = EndpointsParser.parseJSON(endpointStr);
             EndpointsParser.shared().getURLs(jsonList);
 
             String novaURL = EndpointsParser.getNovaURL();

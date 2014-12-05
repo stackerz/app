@@ -272,7 +272,7 @@ public class Stackerz extends Activity
             securityExtras.putSerializable("SecurityParsed", securityList);
         } else if (firstSP.getInt("First",first)>1){
             securityCached = shPref.getString("Security",security);
-            securityList = SubnetsParser.parseJSON(securityCached);
+            securityList = SecurityParser.parseJSON(securityCached);
             securityExtras.putSerializable("SecurityParsed", securityList);
         }
         return securityExtras;

@@ -30,7 +30,7 @@
         android:id="@+id/arrow"
         android:src="@drawable/ic_https_black_48dp"
         android:layout_gravity="center_vertical"
-        android:padding="11dp" />
+        android:padding="12dp" />
     </LinearLayout>
 
         <TextView
