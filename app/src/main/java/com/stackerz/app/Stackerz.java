@@ -136,8 +136,8 @@ public class Stackerz extends Activity
             shPref.edit().putString("Instances",instances).commit();
             novaList = NovaParser.parseJSON(instances);
             novaExtras.putSerializable("NovaParsed", novaList);
-        } else if (firstSP.getInt("First", first)>1 && shPref.getString("Instances",instances) != null){
-            instancesCached = shPref.getString("Instances",instancesCached);
+        } else if (firstSP.getInt("First", first)>1 && shPref.getString("Instances",instances)!= null){
+            instancesCached = shPref.getString("Instances",instances);
             novaList = NovaParser.parseJSON(instancesCached);
             novaExtras.putSerializable("NovaParsed", novaList);
         }
@@ -158,8 +158,8 @@ public class Stackerz extends Activity
             shPref.edit().putString("Flavors", flavors).commit();
             flavorsList = FlavorsParser.parseJSON(flavors);
             flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
-        } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Flavors", flavors) != null) {
-                flavorsCached = shPref.getString("Flavors", flavorsCached);
+        } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Flavors", flavors)!= null) {
+                flavorsCached = shPref.getString("Flavors", flavors);
                 flavorsList = FlavorsParser.parseJSON(flavorsCached);
                 flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
         }
@@ -180,8 +180,8 @@ public class Stackerz extends Activity
             shPref.edit().putString("Images",images).commit();
             imagesList = ImagesParser.parseJSON(images);
             glanceExtras.putSerializable("ImagesParsed", imagesList);
-        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Images",images) != null){
-            imagesCached = shPref.getString("Images",imagesCached);
+        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Images",images)!= null){
+            imagesCached = shPref.getString("Images",images);
             imagesList = ImagesParser.parseJSON(imagesCached);
             glanceExtras.putSerializable("ImagesParsed", imagesList);
        }
@@ -202,8 +202,8 @@ public class Stackerz extends Activity
             shPref.edit().putString("Networks",networks).commit();
             networksList = NetworksParser.parseJSON(networks);
             networksExtras.putSerializable("NetworksParsed", networksList);
-        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Networks",networks) != null){
-            networksCached = shPref.getString("Networks",networksCached);
+        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Networks",networks)!= null){
+            networksCached = shPref.getString("Networks",networks);
             networksList = NetworksParser.parseJSON(networksCached);
             networksExtras.putSerializable("NetworksParsed", networksList);
         }
@@ -225,8 +225,8 @@ public class Stackerz extends Activity
             subnetsList = SubnetsParser.parseJSON(subnets);
             subnetsExtras.putString("SubnetsJSON", subnets);
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
-        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Subnets",subnets) != null){
-            subnetsCached = shPref.getString("Subnets",subnetsCached);
+        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Subnets",subnets)!= null){
+            subnetsCached = shPref.getString("Subnets",subnets);
             subnetsList = SubnetsParser.parseJSON(subnetsCached);
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
         }
@@ -247,8 +247,8 @@ public class Stackerz extends Activity
             shPref.edit().putString("Routers",routers).commit();
             routersList = RoutersParser.parseJSON(routers);
             routersExtras.putSerializable("RoutersParsed", routersList);
-        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Routers",routers) != null){
-            routersCached = shPref.getString("Routers",routersCached);
+        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Routers",routers)!= null){
+            routersCached = shPref.getString("Routers",routers);
             routersList = RoutersParser.parseJSON(routersCached);
             routersExtras.putSerializable("RoutersParsed", routersList);
         }
@@ -270,8 +270,8 @@ public class Stackerz extends Activity
             shPref.edit().putString("Security",security).commit();
             securityList = SecurityParser.parseJSON(security);
             securityExtras.putSerializable("SecurityParsed", securityList);
-        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Security",security) != null){
-            securityCached = shPref.getString("Security",securityCached);
+        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Security",security)!= null){
+            securityCached = shPref.getString("Security",security);
             securityList = SecurityParser.parseJSON(securityCached);
             securityExtras.putSerializable("SecurityParsed", securityList);
         }
