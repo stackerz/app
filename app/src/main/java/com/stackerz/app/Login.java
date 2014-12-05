@@ -111,7 +111,6 @@ public class Login extends Activity implements View.OnClickListener{
             tenantInput.setText(shPref.getString("Tenant", tenant));
             userInput.setText(shPref.getString("Username", username));
             passInput.requestFocus();
-            setupCache();
         }
     }
 
@@ -216,13 +215,15 @@ public class Login extends Activity implements View.OnClickListener{
             setSharedPrefs();
             prefSaved = true;
             loginRequest();
-
             if (reachable) {
+                SharedPreferences firstSP = getSharedPreferences("First", first);
                 Intent intent = new Intent(Login.this, Stackerz.class);
                 intent.putExtra("AuthToken", authToken);
                 startActivityForResult(intent,1);
+                if (firstSP.getInt("First",first)>1){
+                    setupCache();
+                }
                 first++;
-                SharedPreferences firstSP = getSharedPreferences("First", first);
                 firstSP.edit().putInt ("First", first).commit();
             }
         }
@@ -294,8 +295,7 @@ public class Login extends Activity implements View.OnClickListener{
                         //Log.d("App", response.toString());
                         setEndpoints(response);
                         setEndpointStr(response.toString());
-                        //Test JSON
-                        //Toast.makeText(getApplicationContext(), endpoints.toString(), Toast.LENGTH_LONG).show();
+                        reachable = true;
                         pDialog.hide();
                     }
                 },
@@ -339,12 +339,12 @@ public class Login extends Activity implements View.OnClickListener{
 
     public void setupCache(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        endpointStr = getEndpointStr();
-        authToken = getAuthToken();
+        endpointStr = shPref.getString("KeystoneData", endpointStr);
+        authToken = shPref.getString("AuthToken", authToken);
         if (endpointStr == null || authToken == null) {
-            endpointStr = shPref.getString("KeystoneData", endpointStr);
-            authToken = shPref.getString("AuthToken", authToken);
-        }
+            endpointStr = getEndpointStr();
+            authToken = getAuthToken();
+            }
         if (endpointStr != null || authToken != null) {
             jsonList = EndpointsParser.parseJSON(endpointStr);
             EndpointsParser.shared().getURLs(jsonList);
@@ -353,13 +353,19 @@ public class Login extends Activity implements View.OnClickListener{
             String glanceURL = EndpointsParser.getGlanceURL();
             String neutronURL = EndpointsParser.getNeutronURL();
 
-            instances = NovaJSON.shared().receiveData(novaURL, authToken);
-            flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
-            images = ImagesJSON.shared().receiveData(glanceURL, authToken);
-            networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
-            subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
-            routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
-            security = SecurityJSON.shared().receiveData(neutronURL, authToken);
+            if (novaURL != null) {
+                instances = NovaJSON.shared().receiveData(novaURL, authToken);
+                flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
+            }
+            if (glanceURL != null){
+                images = ImagesJSON.shared().receiveData(glanceURL, authToken);
+            }
+            if (neutronURL != null) {
+                networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
+                subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
+                routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
+                security = SecurityJSON.shared().receiveData(neutronURL, authToken);
+            }
 
             if (instances != null) {
                 shPref.edit().putString("Instances", instances).commit();
