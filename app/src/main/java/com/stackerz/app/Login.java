@@ -9,7 +9,6 @@ import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
@@ -24,13 +23,32 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.stackerz.app.Flavors.Flavors;
 import com.stackerz.app.System.ObscuredSharedPreferences;
 import com.stackerz.app.System.SSLCerts;
 import com.stackerz.app.System.VolleySingleton;
 
+import com.stackerz.app.Endpoints.EndpointsParser;
+import com.stackerz.app.Flavors.FlavorsJSON;
+import com.stackerz.app.Flavors.FlavorsParser;
+import com.stackerz.app.Images.ImagesJSON;
+import com.stackerz.app.Images.ImagesParser;
+import com.stackerz.app.Instances.NovaJSON;
+import com.stackerz.app.Instances.NovaParser;
+import com.stackerz.app.Networks.NetworksJSON;
+import com.stackerz.app.Networks.NetworksParser;
+import com.stackerz.app.Routers.RoutersJSON;
+import com.stackerz.app.Routers.RoutersParser;
+import com.stackerz.app.Security.SecurityJSON;
+import com.stackerz.app.Security.SecurityParser;
+import com.stackerz.app.Subnets.SubnetsJSON;
+import com.stackerz.app.Subnets.SubnetsParser;
+
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -50,8 +68,26 @@ public class Login extends Activity implements View.OnClickListener{
     public JSONObject endpoints;
     public String authToken;
     public String endpointStr;
+    public int first = 0;
     boolean reachable = false;
     boolean prefSaved = false;
+
+    public ArrayList<HashMap<String, String>> jsonList;
+    public ArrayList<HashMap<String, String>> instancesList;
+    public ArrayList<HashMap<String, String>> flavorsList;
+    public ArrayList<HashMap<String, String>> imagesList;
+    public ArrayList<HashMap<String, String>> networksList;
+    public ArrayList<HashMap<String, String>> routersList;
+    public ArrayList<HashMap<String, String>> subnetsList;
+    public ArrayList<HashMap<String, String>> securityList;
+
+    public String instances="";
+    public String flavors="";
+    public String images="";
+    public String networks="";
+    public String routers="";
+    public String subnets="";
+    public String security="";
 
     public static Login login = null;
 
@@ -68,21 +104,14 @@ public class Login extends Activity implements View.OnClickListener{
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_login);
         getInit();
-        SharedPreferences first = getSharedPreferences("First",0);
-        if (first.getBoolean("First",true)){
+        SharedPreferences firstSP = getSharedPreferences("First",first);
+        if (firstSP.getInt("First",first)>0){
             shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
             serverInput.setText(shPref.getString("Endpoint", endpoint));
             tenantInput.setText(shPref.getString("Tenant", tenant));
             userInput.setText(shPref.getString("Username", username));
             passInput.requestFocus();
-            if (first.getBoolean("Token",true)) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Please confirm your password in order to get a new Authentication Token for your session", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 175);
-                toast.show();
-                first.edit().putBoolean("Token",false).commit();
-            }
-
+            setupCache();
         }
     }
 
@@ -187,20 +216,14 @@ public class Login extends Activity implements View.OnClickListener{
             setSharedPrefs();
             prefSaved = true;
             loginRequest();
-            //JSONData.shared().setAuthtoken(authToken);
-            //JSONData.shared().setEndpoint(endpointStr);
-            //try {
-            //    Thread.sleep(1000);
-            //} catch (InterruptedException e) {
-            //    e.printStackTrace();
-            //}
+
             if (reachable) {
                 Intent intent = new Intent(Login.this, Stackerz.class);
                 intent.putExtra("AuthToken", authToken);
                 startActivityForResult(intent,1);
-                SharedPreferences first = getSharedPreferences("First", 0);
-                first.edit().putBoolean("First", true).commit();
-                first.edit().putBoolean("Token", true).commit();
+                first++;
+                SharedPreferences firstSP = getSharedPreferences("First", first);
+                firstSP.edit().putInt ("First", first).commit();
             }
         }
     }
@@ -312,4 +335,60 @@ public class Login extends Activity implements View.OnClickListener{
     }
 
 
+
+
+    public void setupCache(){
+        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        endpointStr = getEndpointStr();
+        authToken = getAuthToken();
+        if (endpointStr == null || authToken == null) {
+            endpointStr = shPref.getString("KeystoneData", endpointStr);
+            authToken = shPref.getString("AuthToken", authToken);
+        }
+        jsonList = EndpointsParser.parseJSON(endpointStr);
+        if (jsonList !=null) {
+            EndpointsParser.shared().getURLs(jsonList);
+
+            String novaURL = EndpointsParser.getNovaURL();
+            String glanceURL = EndpointsParser.getGlanceURL();
+            String neutronURL = EndpointsParser.getNeutronURL();
+
+            instances = NovaJSON.shared().receiveData(novaURL, authToken);
+            flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
+            images = ImagesJSON.shared().receiveData(glanceURL, authToken);
+            networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
+            subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
+            routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
+            security = SecurityJSON.shared().receiveData(neutronURL, authToken);
+
+            if (instances != null) {
+                shPref.edit().putString("Instances", instances).commit();
+                instancesList = NovaParser.parseJSON(instances);
+            }
+            if (flavors != null) {
+                shPref.edit().putString("Flavors", flavors).commit();
+                flavorsList = FlavorsParser.parseJSON(flavors);
+            }
+            if (images != null) {
+                shPref.edit().putString("Images", images).commit();
+                imagesList = ImagesParser.parseJSON(images);
+            }
+            if (networks != null) {
+                shPref.edit().putString("Networks", networks).commit();
+                networksList = NetworksParser.parseJSON(networks);
+            }
+            if (subnets != null) {
+                shPref.edit().putString("Subnets", subnets).commit();
+                subnetsList = SubnetsParser.parseJSON(subnets);
+            }
+            if (routers != null) {
+                shPref.edit().putString("Routers", routers).commit();
+                routersList = RoutersParser.parseJSON(routers);
+            }
+            if (security != null) {
+                shPref.edit().putString("Security", security).commit();
+                securityList = SecurityParser.parseJSON(security);
+            }
+        }
+    }
 }

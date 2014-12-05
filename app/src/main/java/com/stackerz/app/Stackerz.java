@@ -85,6 +85,7 @@ public class Stackerz extends Activity
     public String subnetsCached="";
     public String security ="";
     public String securityCached="";
+    public int first = 0;
 
 
     @Override
@@ -92,7 +93,6 @@ public class Stackerz extends Activity
         super.onCreate(savedInstanceState);
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
-        //setupCache();
         novaBundle();
         flavorsBundle();
         glanceBundle();
@@ -110,47 +110,7 @@ public class Stackerz extends Activity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
- /*   public void setupCache(){
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        endpoints = shPref.getString("KeystoneData", endpoints);
-        authToken = shPref.getString("AuthToken",authToken);
-        jsonList = EndpointsParser.parseJSON(endpoints);
-        EndpointsParser.shared().getURLs(jsonList);
 
-        String novaURL = EndpointsParser.getNovaURL();
-        String glanceURL = EndpointsParser.getGlanceURL();
-        String neutronURL = EndpointsParser.getNeutronURL();
-
-        instances = NovaJSON.shared().receiveData(novaURL, authToken);
-        flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
-        images = ImagesJSON.shared().receiveData(glanceURL, authToken);
-        networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
-        subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
-        routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
-        security = SecurityJSON.shared().receiveData(neutronURL, authToken);
-
-        if (instances != null) {
-            shPref.edit().putString("Instances", instances).commit();
-            novaList = NovaParser.parseJSON(instances);
-        }
-        if (networks != null) {
-            shPref.edit().putString("Networks", networks).commit();
-            networksList = NetworksParser.parseJSON(networks);
-        }
-        if (subnets != null) {
-            shPref.edit().putString("Subnets", subnets).commit();
-            subnetsList = SubnetsParser.parseJSON(subnets);
-        }
-        if (routers != null) {
-            shPref.edit().putString("Routers", routers).commit();
-            routersList = RoutersParser.parseJSON(routers);
-        }
-        if (security != null) {
-            shPref.edit().putString("Security", security).commit();
-            securityList = SecurityParser.parseJSON(security);
-        }
-
-    }
 
     public Bundle authBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
@@ -164,81 +124,7 @@ public class Stackerz extends Activity
 
     public Bundle novaBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        instancesCached = shPref.getString("Instances",instancesCached);
-        novaList = NovaParser.parseJSON(instancesCached);
-        novaExtras = new Bundle();
-        novaExtras.putSerializable("NovaParsed", novaList);
-        return novaExtras;
-    }
-
-    public Bundle flavorsBundle(){
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        flavorsCached = shPref.getString("Flavors",flavorsCached);
-        flavorsList = FlavorsParser.parseJSON(flavorsCached);
-        flavorsExtras = new Bundle();
-        flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
-        return flavorsExtras;
-    }
-
-    public Bundle glanceBundle(){
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        imagesCached = shPref.getString("Images",imagesCached);
-        imagesList = ImagesParser.parseJSON(imagesCached);
-        glanceExtras = new Bundle();
-        glanceExtras.putSerializable("ImagesParsed", imagesList);
-        return glanceExtras;
-    }
-
-    public Bundle networksBundle(){
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        networksCached = shPref.getString("Networks",networksCached);
-        networksList = NetworksParser.parseJSON(networksCached);
-        networksExtras = new Bundle();
-        networksExtras.putSerializable("NetworksParsed", networksList);
-        return networksExtras;
-    }
-
-    public Bundle subnetsBundle(){
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        subnetsCached = shPref.getString("Subnets",subnets);
-        subnetsList = SubnetsParser.parseJSON(subnetsCached);
-        subnetsExtras = new Bundle();
-        subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
-        return subnetsExtras;
-    }
-
-    public Bundle routersBundle(){
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        routersCached = shPref.getString("Routers",routers);
-        routersList = RoutersParser.parseJSON(routersCached);
-        routersExtras = new Bundle();
-        routersExtras.putSerializable("RoutersParsed", routersList);
-        return routersExtras;
-    }
-
-
-    public Bundle securityBundle(){
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        securityCached = shPref.getString("Security",security);
-        securityList = SecurityParser.parseJSON(securityCached);
-        securityExtras = new Bundle();
-        securityExtras.putSerializable("SecurityParsed", securityList);
-        return securityExtras;
-    }
-*/
-
-    public Bundle authBundle(){
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        endpoints = shPref.getString("KeystoneData", endpoints);
-        authToken = shPref.getString("AuthToken",authToken);
-        jsonList = EndpointsParser.parseJSON(endpoints);
-        extras = new Bundle();
-        extras.putSerializable("ParsedList", jsonList);
-        return extras;
-    }
-
-    public Bundle novaBundle(){
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        SharedPreferences firstSP = getSharedPreferences("First",first);
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken",authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -250,16 +136,17 @@ public class Stackerz extends Activity
             shPref.edit().putString("Instances",instances).commit();
             novaList = NovaParser.parseJSON(instances);
             novaExtras.putSerializable("NovaParsed", novaList);
-        /*} else if (shPref.getString("Instances",instances)!= null){
+        } else if (firstSP.getInt("First", first)>1){
             instancesCached = shPref.getString("Instances",instancesCached);
             novaList = NovaParser.parseJSON(instancesCached);
             novaExtras.putSerializable("NovaParsed", novaList);
-        */}
+        }
         return novaExtras;
     }
 
     public Bundle flavorsBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        SharedPreferences firstSP = getSharedPreferences("First",first);
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken",authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -268,19 +155,20 @@ public class Stackerz extends Activity
         flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
         flavorsExtras = new Bundle();
         if (flavors != null) {
-            shPref.edit().putString("Flavors",flavors).commit();
+            shPref.edit().putString("Flavors", flavors).commit();
             flavorsList = FlavorsParser.parseJSON(flavors);
             flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
-        /*} else if (shPref.getString("Flavors",flavors)!= null){
-            flavorsCached = shPref.getString("Flavors",flavors);
-            flavorsList = FlavorsParser.parseJSON(flavorsCached);
-            flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
-        */}
+        } else if (firstSP.getInt("First", first) > 1) {
+                flavorsCached = shPref.getString("Flavors", flavors);
+                flavorsList = FlavorsParser.parseJSON(flavorsCached);
+                flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
+        }
         return flavorsExtras;
     }
 
     public Bundle glanceBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        SharedPreferences firstSP = getSharedPreferences("First",first);
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken",authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -292,16 +180,17 @@ public class Stackerz extends Activity
             shPref.edit().putString("Images",images).commit();
             imagesList = ImagesParser.parseJSON(images);
             glanceExtras.putSerializable("ImagesParsed", imagesList);
-        /*} else if (shPref.getString("Images",images)!= null){
+        } else if (firstSP.getInt("First",first)>1){
             imagesCached = shPref.getString("Images",images);
             imagesList = ImagesParser.parseJSON(imagesCached);
             glanceExtras.putSerializable("ImagesParsed", imagesList);
-        */}
+       }
         return glanceExtras;
     }
 
     public Bundle networksBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        SharedPreferences firstSP = getSharedPreferences("First", first);
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken",authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -313,16 +202,17 @@ public class Stackerz extends Activity
             shPref.edit().putString("Networks",networks).commit();
             networksList = NetworksParser.parseJSON(networks);
             networksExtras.putSerializable("NetworksParsed", networksList);
-        /*} else if (shPref.getString("Networks",networks)!= null){
+        } else if (firstSP.getInt("First",first)>1){
             networksCached = shPref.getString("Networks",networks);
             networksList = NetworksParser.parseJSON(networksCached);
             networksExtras.putSerializable("NetworksParsed", networksList);
-        */}
+        }
         return networksExtras;
     }
 
     public Bundle subnetsBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        SharedPreferences firstSP = getSharedPreferences("First",first);
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken",authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -333,18 +223,19 @@ public class Stackerz extends Activity
         if (subnets != null) {
             shPref.edit().putString("Subnets",subnets).commit();
             subnetsList = SubnetsParser.parseJSON(subnets);
-            subnetsExtras.putString("SubnetsJSON",subnets);
+            subnetsExtras.putString("SubnetsJSON", subnets);
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
-        /*} else if (shPref.getString("Subnets",subnets)!= null){
+        } else if (firstSP.getInt("First",first)>1){
             subnetsCached = shPref.getString("Subnets",subnets);
             subnetsList = SubnetsParser.parseJSON(subnetsCached);
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
-        */}
+        }
         return subnetsExtras;
     }
 
     public Bundle routersBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        SharedPreferences firstSP = getSharedPreferences("First",first);
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken",authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -356,17 +247,18 @@ public class Stackerz extends Activity
             shPref.edit().putString("Routers",routers).commit();
             routersList = RoutersParser.parseJSON(routers);
             routersExtras.putSerializable("RoutersParsed", routersList);
-        /*} else if (shPref.getString("Routers",routers)!= null){
+        } else if (firstSP.getInt("First",first)>1){
             routersCached = shPref.getString("Routers",routers);
             routersList = RoutersParser.parseJSON(routersCached);
             routersExtras.putSerializable("RoutersParsed", routersList);
-        */}
+        }
         return routersExtras;
     }
 
 
     public Bundle securityBundle(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        SharedPreferences firstSP = getSharedPreferences("First",first);
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken",authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -378,11 +270,11 @@ public class Stackerz extends Activity
             shPref.edit().putString("Security",security).commit();
             securityList = SecurityParser.parseJSON(security);
             securityExtras.putSerializable("SecurityParsed", securityList);
-        /*} else if (shPref.getString("Security",security)!= null){
+        } else if (firstSP.getInt("First",first)>1){
             securityCached = shPref.getString("Security",security);
             securityList = SubnetsParser.parseJSON(securityCached);
             securityExtras.putSerializable("SecurityParsed", securityList);
-        */}
+        }
         return securityExtras;
     }
 
@@ -538,11 +430,11 @@ public class Stackerz extends Activity
             SharedPreferences.Editor sharedPreferences = getSharedPreferences("Login_Credentials", 0).edit();
             sharedPreferences.clear();
             sharedPreferences.commit();
-            SharedPreferences.Editor first = getSharedPreferences("First", 0).edit();
-            first.clear();
-            first.commit();
-            first.putBoolean("First",false).commit();
-            first.putBoolean("Token",false).commit();
+            SharedPreferences.Editor firstSP = getSharedPreferences("First", first).edit();
+            firstSP.clear();
+            firstSP.commit();
+            first = 0;
+            firstSP.putInt("First",first).commit();
             intent = new Intent(this, Connect.class);
             startActivity(intent);
             return true;
