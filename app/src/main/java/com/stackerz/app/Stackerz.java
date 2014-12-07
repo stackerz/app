@@ -314,6 +314,7 @@ public class Stackerz extends Activity
         subnetsExtras = new Bundle();
         if (subnets != null) {
             if (subnets.contains("com.android.volley.AuthFailureError")) {
+                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
                 subnetsCached = shPref.getString("Subnets",subnets);
                 subnetsList = SubnetsParser.parseJSON(subnetsCached);
                 subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
@@ -356,6 +357,7 @@ public class Stackerz extends Activity
         routersExtras = new Bundle();
         if (routers != null) {
             if (routers.contains("com.android.volley.AuthFailureError")) {
+                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
                 routersCached = shPref.getString("Routers", routers);
                 routersList = RoutersParser.parseJSON(routersCached);
                 routersExtras.putSerializable("RoutersParsed", routersList);
@@ -398,6 +400,7 @@ public class Stackerz extends Activity
         securityExtras = new Bundle();
         if (security != null) {
             if (security.contains("com.android.volley.AuthFailureError")) {
+                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
                 securityCached = shPref.getString("Security",security);
                 securityList = SecurityParser.parseJSON(securityCached);
                 securityExtras.putSerializable("SecurityParsed", securityList);
