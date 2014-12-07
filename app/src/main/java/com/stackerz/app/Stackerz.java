@@ -135,6 +135,9 @@ public class Stackerz extends Activity
         if (instances != null) {
             if (instances.contains("com.android.volley.AuthFailureError")){
                 Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session is now being displayed.", Toast.LENGTH_LONG).show();
+                instancesCached = shPref.getString("Instances",instances);
+                novaList = NovaParser.parseJSON(instancesCached);
+                novaExtras.putSerializable("NovaParsed", novaList);
             } else {
                 shPref.edit().putString("Instances", instances).commit();
                 novaList = NovaParser.parseJSON(instances);
