@@ -133,9 +133,13 @@ public class Stackerz extends Activity
         instances = NovaJSON.shared().receiveData(novaURL, authToken);
         novaExtras = new Bundle();
         if (instances != null) {
-            shPref.edit().putString("Instances",instances).commit();
-            novaList = NovaParser.parseJSON(instances);
-            novaExtras.putSerializable("NovaParsed", novaList);
+            if (instances == "com.android.volley.AuthFailureError"){
+                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content is now being displayed.", Toast.LENGTH_LONG).show();
+            } else {
+                shPref.edit().putString("Instances", instances).commit();
+                novaList = NovaParser.parseJSON(instances);
+                novaExtras.putSerializable("NovaParsed", novaList);
+            }
         } else if (firstSP.getInt("First", first)>1 && shPref.getString("Instances",instances)!= null){
             instancesCached = shPref.getString("Instances",instances);
             novaList = NovaParser.parseJSON(instancesCached);
