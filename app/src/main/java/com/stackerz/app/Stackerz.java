@@ -103,6 +103,7 @@ public class Stackerz extends Activity
         routersBundle();
         subnetsBundle();
         securityBundle();
+        // have to do it again because Volley sucks at this!
         novaBundle();
         flavorsBundle();
         glanceBundle();
