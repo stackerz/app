@@ -104,6 +104,7 @@ public class Stackerz extends Activity
         subnetsBundle();
         securityBundle();
         // have to do it again because Volley sucks at this!
+        first = 1;
         novaBundle();
         flavorsBundle();
         glanceBundle();
