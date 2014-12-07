@@ -103,6 +103,13 @@ public class Stackerz extends Activity
         routersBundle();
         subnetsBundle();
         securityBundle();
+        novaBundle();
+        flavorsBundle();
+        glanceBundle();
+        networksBundle();
+        routersBundle();
+        subnetsBundle();
+        securityBundle();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -137,7 +144,7 @@ public class Stackerz extends Activity
         novaExtras = new Bundle();
         if (instances != null) {
             if (instances.contains("com.android.volley.AuthFailureError")){
-                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session is now being displayed.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
                 instancesCached = shPref.getString("Instances",instances);
                 novaList = NovaParser.parseJSON(instancesCached);
                 novaExtras.putSerializable("NovaParsed", novaList);
