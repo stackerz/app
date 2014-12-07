@@ -2,10 +2,12 @@ package com.stackerz.app;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -93,6 +95,7 @@ public class Stackerz extends Activity
         super.onCreate(savedInstanceState);
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
+        first = 1;
         novaBundle();
         flavorsBundle();
         glanceBundle();
@@ -148,6 +151,19 @@ public class Stackerz extends Activity
             novaList = NovaParser.parseJSON(instancesCached);
             novaExtras.putSerializable("NovaParsed", novaList);
         }
+        if (first == 0 && (novaList == null || novaList.size() == 0)) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Retrieving Data");
+            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+            AlertDialog alertDialog = alert.create();
+            alertDialog.show();
+        }
+        first = 0;
         return novaExtras;
     }
 
