@@ -185,14 +185,34 @@ public class Stackerz extends Activity
         flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
         flavorsExtras = new Bundle();
         if (flavors != null) {
-            shPref.edit().putString("Flavors", flavors).commit();
-            flavorsList = FlavorsParser.parseJSON(flavors);
-            flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
+            if (flavors.contains("com.android.volley.AuthFailureError")){
+                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
+                flavorsCached = shPref.getString("Flavors", flavors);
+                flavorsList = FlavorsParser.parseJSON(flavorsCached);
+                flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
+            } else {
+                shPref.edit().putString("Flavors", flavors).commit();
+                flavorsList = FlavorsParser.parseJSON(flavors);
+                flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
+            }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Flavors", flavors)!= null) {
                 flavorsCached = shPref.getString("Flavors", flavors);
                 flavorsList = FlavorsParser.parseJSON(flavorsCached);
                 flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
         }
+        if (first == 0 && (flavorsList == null || flavorsList.size() == 0)) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Retrieving Data");
+            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+            AlertDialog alertDialog = alert.create();
+            alertDialog.show();
+        }
+        first = 0;
         return flavorsExtras;
     }
 
@@ -207,14 +227,34 @@ public class Stackerz extends Activity
         images = ImagesJSON.shared().receiveData(glanceURL, authToken);
         glanceExtras = new Bundle();
         if (images != null) {
-            shPref.edit().putString("Images",images).commit();
-            imagesList = ImagesParser.parseJSON(images);
-            glanceExtras.putSerializable("ImagesParsed", imagesList);
+            if (images.contains("com.android.volley.AuthFailureError")){
+                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
+                imagesCached = shPref.getString("Images",images);
+                imagesList = ImagesParser.parseJSON(imagesCached);
+                glanceExtras.putSerializable("ImagesParsed", imagesList);
+            } else {
+                shPref.edit().putString("Images", images).commit();
+                imagesList = ImagesParser.parseJSON(images);
+                glanceExtras.putSerializable("ImagesParsed", imagesList);
+            }
         } else if (firstSP.getInt("First",first)>1 && shPref.getString("Images",images)!= null){
             imagesCached = shPref.getString("Images",images);
             imagesList = ImagesParser.parseJSON(imagesCached);
             glanceExtras.putSerializable("ImagesParsed", imagesList);
        }
+        if (first == 0 && (imagesList == null || imagesList.size() == 0)) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Retrieving Data");
+            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+            AlertDialog alertDialog = alert.create();
+            alertDialog.show();
+        }
+        first = 0;
         return glanceExtras;
     }
 
@@ -229,14 +269,34 @@ public class Stackerz extends Activity
         networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
         networksExtras = new Bundle();
         if (networks != null) {
-            shPref.edit().putString("Networks",networks).commit();
-            networksList = NetworksParser.parseJSON(networks);
-            networksExtras.putSerializable("NetworksParsed", networksList);
+            if (networks.contains("com.android.volley.AuthFailureError")){
+                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
+                networksCached = shPref.getString("Networks",networks);
+                networksList = NetworksParser.parseJSON(networksCached);
+                networksExtras.putSerializable("NetworksParsed", networksList);
+            } else {
+                shPref.edit().putString("Networks",networks).commit();
+                networksList = NetworksParser.parseJSON(networks);
+                networksExtras.putSerializable("NetworksParsed", networksList);
+            }
         } else if (firstSP.getInt("First",first)>1 && shPref.getString("Networks",networks)!= null){
             networksCached = shPref.getString("Networks",networks);
             networksList = NetworksParser.parseJSON(networksCached);
             networksExtras.putSerializable("NetworksParsed", networksList);
         }
+        if (first == 0 && (networksList == null || networksList.size() == 0)) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Retrieving Data");
+            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+            AlertDialog alertDialog = alert.create();
+            alertDialog.show();
+        }
+        first = 0;
         return networksExtras;
     }
 
@@ -251,15 +311,34 @@ public class Stackerz extends Activity
         subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
         subnetsExtras = new Bundle();
         if (subnets != null) {
-            shPref.edit().putString("Subnets",subnets).commit();
-            subnetsList = SubnetsParser.parseJSON(subnets);
-            subnetsExtras.putString("SubnetsJSON", subnets);
-            subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
+            if (subnets.contains("com.android.volley.AuthFailureError")) {
+                subnetsCached = shPref.getString("Subnets",subnets);
+                subnetsList = SubnetsParser.parseJSON(subnetsCached);
+                subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
+            } else {
+                shPref.edit().putString("Subnets", subnets).commit();
+                subnetsList = SubnetsParser.parseJSON(subnets);
+                subnetsExtras.putString("SubnetsJSON", subnets);
+                subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
+            }
         } else if (firstSP.getInt("First",first)>1 && shPref.getString("Subnets",subnets)!= null){
             subnetsCached = shPref.getString("Subnets",subnets);
             subnetsList = SubnetsParser.parseJSON(subnetsCached);
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
         }
+        if (first == 0 && (subnetsList == null || subnetsList.size() == 0)) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Retrieving Data");
+            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+            AlertDialog alertDialog = alert.create();
+            alertDialog.show();
+        }
+        first = 0;
         return subnetsExtras;
     }
 
@@ -274,14 +353,33 @@ public class Stackerz extends Activity
         routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
         routersExtras = new Bundle();
         if (routers != null) {
-            shPref.edit().putString("Routers",routers).commit();
-            routersList = RoutersParser.parseJSON(routers);
-            routersExtras.putSerializable("RoutersParsed", routersList);
+            if (routers.contains("com.android.volley.AuthFailureError")) {
+                routersCached = shPref.getString("Routers", routers);
+                routersList = RoutersParser.parseJSON(routersCached);
+                routersExtras.putSerializable("RoutersParsed", routersList);
+            }else {
+                shPref.edit().putString("Routers", routers).commit();
+                routersList = RoutersParser.parseJSON(routers);
+                routersExtras.putSerializable("RoutersParsed", routersList);
+            }
         } else if (firstSP.getInt("First",first)>1 && shPref.getString("Routers",routers)!= null){
             routersCached = shPref.getString("Routers",routers);
             routersList = RoutersParser.parseJSON(routersCached);
             routersExtras.putSerializable("RoutersParsed", routersList);
         }
+        if (first == 0 && (routersList == null || routersList.size() == 0)) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Retrieving Data");
+            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+            AlertDialog alertDialog = alert.create();
+            alertDialog.show();
+        }
+        first = 0;
         return routersExtras;
     }
 
@@ -297,14 +395,33 @@ public class Stackerz extends Activity
         security = SecurityJSON.shared().receiveData(neutronURL, authToken);
         securityExtras = new Bundle();
         if (security != null) {
-            shPref.edit().putString("Security",security).commit();
-            securityList = SecurityParser.parseJSON(security);
-            securityExtras.putSerializable("SecurityParsed", securityList);
+            if (security.contains("com.android.volley.AuthFailureError")) {
+                securityCached = shPref.getString("Security",security);
+                securityList = SecurityParser.parseJSON(securityCached);
+                securityExtras.putSerializable("SecurityParsed", securityList);
+            } else {
+                shPref.edit().putString("Security", security).commit();
+                securityList = SecurityParser.parseJSON(security);
+                securityExtras.putSerializable("SecurityParsed", securityList);
+            }
         } else if (firstSP.getInt("First",first)>1 && shPref.getString("Security",security)!= null){
             securityCached = shPref.getString("Security",security);
             securityList = SecurityParser.parseJSON(securityCached);
             securityExtras.putSerializable("SecurityParsed", securityList);
         }
+        if (first == 0 && (securityList == null || securityList.size() == 0)) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Retrieving Data");
+            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+            AlertDialog alertDialog = alert.create();
+            alertDialog.show();
+        }
+        first = 0;
         return securityExtras;
     }
 
