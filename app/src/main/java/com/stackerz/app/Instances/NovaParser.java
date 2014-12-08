@@ -40,6 +40,8 @@ public class NovaParser extends Activity{
     public String authToken;
     public String novaURL;
 
+    public SharedPreferences shPref;
+
     public ArrayList<HashMap<String, String>> flavorList;
 
     public static NovaParser parser = null;
@@ -61,11 +63,6 @@ public class NovaParser extends Activity{
     }
 
     public ArrayList<HashMap<String, String>> getFlavorList(){
-        //SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        //ArrayList<HashMap<String, String>> flavorsList = new ArrayList<>();
-        //String flavors = null;
-        //flavors = shPref.getString("Flavors", flavors);
-        //flavorsList = FlavorsParser.parseJSON(flavors);
         return flavorList;
     }
 
@@ -117,10 +114,12 @@ public class NovaParser extends Activity{
             JSONObject flavor = server.getJSONObject("flavor");
             temp = flavor.getString("id");
             novaInstance.setFlavor(flavor.getString("id"));
+            if (flavorList !=null){
             for (Map<String,String> map : flavorList) {
-                if (map.containsValue(temp)){
+                if (map.containsValue(temp)) {
                     temp = map.get(NAME);
                 }
+            }
             }
             /*JSONObject addresses = server.getJSONObject("addresses");
             Iterator<String> keys=addresses.keys();

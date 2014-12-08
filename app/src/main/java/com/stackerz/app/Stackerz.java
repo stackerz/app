@@ -208,6 +208,7 @@ public class Stackerz extends Activity
             AlertDialog alertDialog = alert.create();
             alertDialog.show();
         }
+        NovaParser.shared().setFlavorList(flavorsList);
         return flavorsExtras;
     }
 
