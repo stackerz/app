@@ -19,7 +19,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.SortedMap;
+import java.util.Stack;
 
 /**
  * Created by ed on 4/11/14.
@@ -59,13 +61,12 @@ public class NovaParser extends Activity{
     }
 
     public ArrayList<HashMap<String, String>> getFlavorList(){
-        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        ArrayList<HashMap<String, String>> flavorsList = new ArrayList<>();
-        String flavors = null;
-        flavors = shPref.getString("Flavors", flavors);
-        flavorsList = FlavorsParser.parseJSON(flavors);
-        setFlavorList(flavorsList);
-        return flavorsList;
+        //SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        //ArrayList<HashMap<String, String>> flavorsList = new ArrayList<>();
+        //String flavors = null;
+        //flavors = shPref.getString("Flavors", flavors);
+        //flavorsList = FlavorsParser.parseJSON(flavors);
+        return flavorList;
     }
 
     public static ArrayList<HashMap<String, String>> parseJSON(String novaJSON){
@@ -81,11 +82,12 @@ public class NovaParser extends Activity{
                 novaInstance.setId(objsrv.getString("id"));
                 novaInstance.setStatus(objsrv.getString("OS-EXT-STS:vm_state"));
                 String instanceDetail = String.valueOf(NovaJSON.shared().getJSONdetail(novaInstance.getId()));
-                parseDetail(instanceDetail);
+                novaInstance.setFlavor(parseDetail(instanceDetail));
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NAME, novaInstance.getName());
                 map.put(ID, novaInstance.getId());
                 map.put(STATUS, novaInstance.getStatus());
+                map.put(FLAVOR, novaInstance.getFlavor());
                 jsonList.add(map);
             }
         } catch (JSONException e) {
@@ -104,9 +106,9 @@ public class NovaParser extends Activity{
         return jsonList;
     }
 
-    public static ArrayList<HashMap<String, String>> parseDetail(String instanceDetail){
-        ArrayList<HashMap<String, String>> jsonListDetail = new ArrayList<HashMap<String, String>>();
-        String temp;
+    public static String parseDetail(String instanceDetail){
+        ArrayList<HashMap<String, String>> flavorList = NovaParser.shared().getFlavorList();
+        String temp = null;
         NovaInstances novaInstance = new NovaInstances();
         JSONObject novaDetail = null;
         try {
@@ -115,6 +117,11 @@ public class NovaParser extends Activity{
             JSONObject flavor = server.getJSONObject("flavor");
             temp = flavor.getString("id");
             novaInstance.setFlavor(flavor.getString("id"));
+            for (Map<String,String> map : flavorList) {
+                if (map.containsValue(temp)){
+                    temp = map.get(NAME);
+                }
+            }
             /*JSONObject addresses = server.getJSONObject("addresses");
             Iterator<String> keys=addresses.keys();
             while(keys.hasNext())
@@ -129,7 +136,7 @@ public class NovaParser extends Activity{
             e.printStackTrace();
         }
 
-        return jsonListDetail;
+        return temp;
     }
 
 }
