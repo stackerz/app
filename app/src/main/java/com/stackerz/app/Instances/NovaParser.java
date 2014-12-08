@@ -1,8 +1,13 @@
 package com.stackerz.app.Instances;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.stackerz.app.Flavors.FlavorsParser;
+import com.stackerz.app.System.ObscuredSharedPreferences;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +38,8 @@ public class NovaParser extends Activity{
     public String authToken;
     public String novaURL;
 
+    public ArrayList<HashMap<String, String>> flavorList;
+
     public static NovaParser parser = null;
 
     public static NovaParser shared(){
@@ -47,9 +54,19 @@ public class NovaParser extends Activity{
         super.onCreate(savedInstanceState);
     }
 
+    public void setFlavorList(ArrayList<HashMap<String, String>> flavorList) {
+        this.flavorList = flavorList;
+    }
 
-
-
+    public ArrayList<HashMap<String, String>> getFlavorList(){
+        SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
+        ArrayList<HashMap<String, String>> flavorsList = new ArrayList<>();
+        String flavors = null;
+        flavors = shPref.getString("Flavors", flavors);
+        flavorsList = FlavorsParser.parseJSON(flavors);
+        setFlavorList(flavorsList);
+        return flavorsList;
+    }
 
     public static ArrayList<HashMap<String, String>> parseJSON(String novaJSON){
         ArrayList<HashMap<String, String>> jsonList = new ArrayList<HashMap<String, String>>();
@@ -89,13 +106,14 @@ public class NovaParser extends Activity{
 
     public static ArrayList<HashMap<String, String>> parseDetail(String instanceDetail){
         ArrayList<HashMap<String, String>> jsonListDetail = new ArrayList<HashMap<String, String>>();
-        String net = null;
+        String temp;
         NovaInstances novaInstance = new NovaInstances();
         JSONObject novaDetail = null;
         try {
             novaDetail = new JSONObject(instanceDetail);
             JSONObject server = novaDetail.getJSONObject("server");
             JSONObject flavor = server.getJSONObject("flavor");
+            temp = flavor.getString("id");
             novaInstance.setFlavor(flavor.getString("id"));
             /*JSONObject addresses = server.getJSONObject("addresses");
             Iterator<String> keys=addresses.keys();
