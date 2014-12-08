@@ -96,21 +96,16 @@ public class Stackerz extends Activity
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
         first = 1;
-        novaBundle();
-        flavorsBundle();
-        glanceBundle();
-        networksBundle();
-        routersBundle();
-        subnetsBundle();
-        securityBundle();
-        // have to do it again because Volley sucks at this!
-        novaBundle();
-        flavorsBundle();
-        glanceBundle();
-        networksBundle();
-        routersBundle();
-        subnetsBundle();
-        securityBundle();
+        // have to do it a couple of times because Volley sucks at this!
+        for (int i=0; i<3; i++) {
+            novaBundle();
+            flavorsBundle();
+            glanceBundle();
+            networksBundle();
+            routersBundle();
+            subnetsBundle();
+            securityBundle();
+        }
         first = 0;
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);

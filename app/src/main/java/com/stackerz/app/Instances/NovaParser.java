@@ -97,7 +97,7 @@ public class NovaParser extends Activity{
             JSONObject server = novaDetail.getJSONObject("server");
             JSONObject flavor = server.getJSONObject("flavor");
             novaInstance.setFlavor(flavor.getString("id"));
-            JSONObject addresses = server.getJSONObject("addresses");
+            /*JSONObject addresses = server.getJSONObject("addresses");
             Iterator<String> keys=addresses.keys();
             while(keys.hasNext())
             {
@@ -105,7 +105,7 @@ public class NovaParser extends Activity{
                 String value=addresses.getString(key);
                 novaInstance.setNet(value);
             }
-            JSONObject security_groups = server.getJSONObject("security_groups");
+            JSONObject security_groups = server.getJSONObject("security_groups");*/
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -220,9 +220,7 @@ public class Login extends Activity implements View.OnClickListener{
                 Intent intent = new Intent(Login.this, Stackerz.class);
                 intent.putExtra("AuthToken", authToken);
                 startActivityForResult(intent,1);
-                if (firstSP.getInt("First",first)>1){
-                    setupCache();
-                }
+                setupCache();
                 first = (firstSP.getInt("First",first));
                 first++;
                 firstSP.edit().putInt ("First", first).commit();
