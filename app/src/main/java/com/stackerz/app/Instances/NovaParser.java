@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.SortedMap;
 
 /**
@@ -88,6 +89,7 @@ public class NovaParser extends Activity{
 
     public static ArrayList<HashMap<String, String>> parseDetail(String instanceDetail){
         ArrayList<HashMap<String, String>> jsonListDetail = new ArrayList<HashMap<String, String>>();
+        String net = null;
         NovaInstances novaInstance = new NovaInstances();
         JSONObject novaDetail = null;
         try {
@@ -96,10 +98,15 @@ public class NovaParser extends Activity{
             JSONObject flavor = server.getJSONObject("flavor");
             novaInstance.setFlavor(flavor.getString("id"));
             JSONObject addresses = server.getJSONObject("addresses");
-            JSONObject network = addresses.getJSONObject("network");
-            JSONObject ip = network.getJSONObject("ip");
-            novaInstance.setAddrfxd(ip.getString("addr"));
+            Iterator<String> keys=addresses.keys();
+            while(keys.hasNext())
+            {
+                String key=keys.next();
+                String value=addresses.getString(key);
+                novaInstance.setNet(value);
+            }
             JSONObject security_groups = server.getJSONObject("security_groups");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

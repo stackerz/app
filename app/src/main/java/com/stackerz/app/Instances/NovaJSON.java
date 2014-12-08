@@ -119,7 +119,7 @@ public class NovaJSON extends Activity {
     public String getJSONdetail(String id) {
         final String authToken = getAuth();
         String novaURL = getNova();
-        novaURL = novaURL+"/servers/"+"id";
+        novaURL = novaURL+"/servers/"+id;
 
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, novaURL, null,
