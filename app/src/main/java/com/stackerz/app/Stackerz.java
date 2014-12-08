@@ -104,7 +104,6 @@ public class Stackerz extends Activity
         subnetsBundle();
         securityBundle();
         // have to do it again because Volley sucks at this!
-        first = 1;
         novaBundle();
         flavorsBundle();
         glanceBundle();
@@ -112,6 +111,7 @@ public class Stackerz extends Activity
         routersBundle();
         subnetsBundle();
         securityBundle();
+        first = 0;
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -172,7 +172,6 @@ public class Stackerz extends Activity
             AlertDialog alertDialog = alert.create();
             alertDialog.show();
         }
-        first = 0;
         return novaExtras;
     }
 
@@ -214,7 +213,6 @@ public class Stackerz extends Activity
             AlertDialog alertDialog = alert.create();
             alertDialog.show();
         }
-        first = 0;
         return flavorsExtras;
     }
 
@@ -256,7 +254,6 @@ public class Stackerz extends Activity
             AlertDialog alertDialog = alert.create();
             alertDialog.show();
         }
-        first = 0;
         return glanceExtras;
     }
 
@@ -298,7 +295,6 @@ public class Stackerz extends Activity
             AlertDialog alertDialog = alert.create();
             alertDialog.show();
         }
-        first = 0;
         return networksExtras;
     }
 
@@ -341,7 +337,6 @@ public class Stackerz extends Activity
             AlertDialog alertDialog = alert.create();
             alertDialog.show();
         }
-        first = 0;
         return subnetsExtras;
     }
 
@@ -383,7 +378,6 @@ public class Stackerz extends Activity
             AlertDialog alertDialog = alert.create();
             alertDialog.show();
         }
-        first = 0;
         return routersExtras;
     }
 
@@ -426,7 +420,6 @@ public class Stackerz extends Activity
             AlertDialog alertDialog = alert.create();
             alertDialog.show();
         }
-        first = 0;
         return securityExtras;
     }
 

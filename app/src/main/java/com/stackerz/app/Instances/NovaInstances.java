@@ -11,19 +11,17 @@ public class NovaInstances {
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String STATUS = "status";
+    public static final String FLAVOR = "flavor";
+    public static final String ADDR = "addr";
+
 
     //fields
     String id;
     String name;
     String status;
+    String flavor;
+    String addr;
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
 //getters and setters
 
@@ -44,13 +42,29 @@ public class NovaInstances {
         this.name = name;
     }
 
-    public Bundle toBundle(){
-        Bundle b = new Bundle();
-        b.putString(NAME, this.name);
-        b.putString(ID, this.id);
-        return b;
+    public String getStatus() {
+        return status;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getFlavor() {
+        return flavor;
+    }
+
+    public void setFlavor(String flavor) {
+        this.flavor = flavor;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
 }
 
 

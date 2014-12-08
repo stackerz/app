@@ -25,6 +25,7 @@ public class NovaJSON extends Activity {
     String novaJSON;
     String nova;
     String auth;
+    String novaJSONdetail;
     RequestQueue queue = null;
 
     public static NovaJSON parser = null;
@@ -58,6 +59,14 @@ public class NovaJSON extends Activity {
 
     public void setAuth(String auth) {
         this.auth = auth;
+    }
+
+    public String getNovaJSONdetail() {
+        return novaJSONdetail;
+    }
+
+    public void setNovaJSONdetail(String novaJSONdetail) {
+        this.novaJSONdetail = novaJSONdetail;
     }
 
     public String receiveData (String novaURL, String authToken){
@@ -105,6 +114,46 @@ public class NovaJSON extends Activity {
         queue = VolleySingleton.getInstance(this).getRequestQueue();
         //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
         queue.add(getRequest);
+    }
+
+    public String getJSONdetail(String id) {
+        final String authToken = getAuth();
+        String novaURL = getNova();
+        novaURL = novaURL+"/servers/"+"id";
+
+
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, novaURL, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Nova on Response", response.toString());
+                        setNovaJSONdetail(response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d("Nova on Error", "Error: " + error.getMessage());
+                        setNovaJSONdetail(error.toString());
+                    }
+                }
+        ) {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("X-Auth-Token", authToken);
+                params.put("User-Agent", "stackerz");
+                params.put("Accept", "application/json");
+                params.put("Content-Type", "application/json; charset=utf-8");
+                return params;
+            }
+
+        };
+
+
+        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
+        queue.add(getRequest);
+        return novaJSONdetail;
     }
 }
 
