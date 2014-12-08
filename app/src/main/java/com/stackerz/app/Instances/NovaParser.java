@@ -19,9 +19,15 @@ import java.util.SortedMap;
  * Created by ed on 4/11/14.
  */
 public class NovaParser extends Activity{
-    public static final String NAME = "name";
+
     public static final String ID = "id";
+    public static final String NAME = "name";
     public static final String STATUS = "status";
+    public static final String FLAVOR = "flavor";
+    public static final String ADDRFXD = "addrfxd";
+    public static final String ADDRFLT = "addrflt";
+    public static final String NET = "net";
+    public static final String SECGRP = "secgrp";
 
     public String authToken;
     public String novaURL;
@@ -57,6 +63,7 @@ public class NovaParser extends Activity{
                 novaInstance.setId(objsrv.getString("id"));
                 novaInstance.setStatus(objsrv.getString("OS-EXT-STS:vm_state"));
                 String instanceDetail = String.valueOf(NovaJSON.shared().getJSONdetail(novaInstance.getId()));
+                parseDetail(instanceDetail);
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NAME, novaInstance.getName());
                 map.put(ID, novaInstance.getId());
@@ -79,6 +86,26 @@ public class NovaParser extends Activity{
         return jsonList;
     }
 
+    public static ArrayList<HashMap<String, String>> parseDetail(String instanceDetail){
+        ArrayList<HashMap<String, String>> jsonListDetail = new ArrayList<HashMap<String, String>>();
+        NovaInstances novaInstance = new NovaInstances();
+        JSONObject novaDetail = null;
+        try {
+            novaDetail = new JSONObject(instanceDetail);
+            JSONObject server = novaDetail.getJSONObject("server");
+            JSONObject flavor = server.getJSONObject("flavor");
+            novaInstance.setFlavor(flavor.getString("id"));
+            JSONObject addresses = server.getJSONObject("addresses");
+            JSONObject network = addresses.getJSONObject("network");
+            JSONObject ip = network.getJSONObject("ip");
+            novaInstance.setAddrfxd(ip.getString("addr"));
+            JSONObject security_groups = server.getJSONObject("security_groups");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonListDetail;
+    }
 
 }
 
