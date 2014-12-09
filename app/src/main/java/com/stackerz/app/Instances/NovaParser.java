@@ -32,8 +32,8 @@ public class NovaParser extends Activity{
     public static final String NAME = "name";
     public static final String STATUS = "status";
     public static final String FLAVOR = "flavor";
-    public static final String NETID1 = "netid1";
-    public static final String ADDR1 = "addr1";
+    public static final String NETID = "netid";
+    public static final String ADDR = "addr";
     public static final String HOST = "host";
 
     public String authToken;
@@ -158,12 +158,13 @@ public class NovaParser extends Activity{
             for (int i = 0; i < network.length(); i++) {
                 JSONObject objnet = network.getJSONObject(i);
                 addr = objnet.getString("addr");
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put(NETID, netId);
+                map.put(ADDR, addr);
+                netList.add(map);
             }
             }
-            HashMap<String, String> map = new HashMap<String, String>();
-            map.put(NETID1, netId);
-            map.put(ADDR1, addr);
-            netList.add(map);
+
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -25,8 +25,8 @@ public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
     public static final String NAME = "name";
     public static final String FLAVOR = "flavor";
     public static final String ID = "id";
-    public static final String NETID1 = "netid1";
-    public static final String ADDR1 = "addr1";
+    public static final String NETID = "netid1";
+    public static final String ADDR = "addr1";
     public static final String HOST = "host";
     private Context mContext;
 
@@ -96,10 +96,10 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         ValueAnimator valueAnimator;
         if (!mIsViewExpanded) {
             mIsViewExpanded = true;
-            valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 1.5));
+            valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 2.5));
         } else {
             mIsViewExpanded = false;
-            valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 1.5), mOriginalHeight);
+            valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 2.5), mOriginalHeight);
         }
         valueAnimator.setDuration(300);
         valueAnimator.setInterpolator(new LinearInterpolator());
