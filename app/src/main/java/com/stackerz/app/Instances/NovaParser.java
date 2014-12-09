@@ -79,16 +79,27 @@ public class NovaParser extends Activity{
                 novaInstance.setId(objsrv.getString("id"));
                 novaInstance.setStatus(objsrv.getString("OS-EXT-STS:vm_state"));
                 novaInstance.setHost(objsrv.getString("OS-EXT-SRV-ATTR:host"));
-                String instanceDetail = String.valueOf(NovaJSON.shared().getJSONdetail(novaInstance.getId()));
-                novaInstance.setFlavor(parseFlavor(instanceDetail));
-                String netDetail = String.valueOf(NovaJSON.shared().getJSONip(novaInstance.getId()));
-                tempList = parseNet(netDetail);
+                String id = novaInstance.getId();
+                String instanceDetail = NovaJSON.shared().receiveDetail(id);
+                if (instanceDetail != null) {
+                    novaInstance.setFlavor(parseFlavor(instanceDetail));
+                }
+                String netDetail = NovaJSON.shared().receiveIP(id);
+                if (netDetail != null) {
+                    tempList = parseNet(netDetail);
+                }
+                for (int j = 0; j < tempList.size(); j++) {
+                    novaInstance.setNetid(tempList.get(j).get(NETID));
+                    novaInstance.setAddr(tempList.get(j).get(ADDR));
+                }
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NAME, novaInstance.getName());
                 map.put(ID, novaInstance.getId());
                 map.put(STATUS, novaInstance.getStatus());
                 map.put(FLAVOR, novaInstance.getFlavor());
                 map.put(HOST, novaInstance.getHost());
+                map.put(NETID, novaInstance.getNetid());
+                map.put(ADDR, novaInstance.getAddr());
                 jsonList.add(map);
             }
         } catch (JSONException e) {

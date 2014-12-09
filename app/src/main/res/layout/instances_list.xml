@@ -109,7 +109,24 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true">
-
+        <TextView
+            android:id="@+id/netInstance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="net"
+            android:textSize="@dimen/abc_text_size_small_material"
+            android:paddingLeft="65dp"
+            android:paddingBottom="5dp"/>
+        <TextView
+            android:id="@+id/addrInstance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="addr"
+            android:textSize="@dimen/abc_text_size_small_material"
+            android:paddingLeft="65dp"
+            android:paddingBottom="5dp"/>
 
     </LinearLayout>
 </RelativeLayout>

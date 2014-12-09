@@ -27,8 +27,8 @@ public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
     public static final String NAME = "name";
     public static final String FLAVOR = "flavor";
     public static final String ID = "id";
-    public static final String NETID = "netid1";
-    public static final String ADDR = "addr1";
+    public static final String NETID = "netid";
+    public static final String ADDR = "addr";
     public static final String HOST = "host";
     private Context mContext;
 
@@ -52,6 +52,8 @@ public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
         novaListRowHolder.status.setText(e.get(STATUS));
         novaListRowHolder.flavor.setText("flavor: "+e.get(FLAVOR));
         novaListRowHolder.host.setText("host: "+e.get(HOST));
+        novaListRowHolder.netid.setText("network: "+e.get(NETID));
+        novaListRowHolder.addr.setText(e.get(ADDR));
         novaListRowHolder.setId(e.get(ID));
 
 
@@ -69,6 +71,8 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
     protected TextView status;
     protected TextView flavor;
     protected TextView host;
+    protected TextView netid;
+    protected TextView addr;
     protected String id;
     private int mOriginalHeight = 0;
     private boolean mIsViewExpanded = false;
@@ -90,6 +94,8 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         this.status = (TextView) view.findViewById(R.id.statusInstance);
         this.flavor = (TextView) view.findViewById(R.id.flavorInstance);
         this.host = (TextView) view.findViewById(R.id.hostInstance);
+        this.netid = (TextView) view.findViewById(R.id.netInstance);
+        this.addr = (TextView) view.findViewById(R.id.addrInstance);
         main = (RelativeLayout)view.findViewById(R.id.layoutInstances);
         expanded = (LinearLayout)view.findViewById(R.id.expandedInstances);
         expanded.setVisibility(View.GONE);

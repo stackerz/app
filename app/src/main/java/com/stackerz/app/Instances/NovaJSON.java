@@ -27,6 +27,7 @@ public class NovaJSON extends Activity {
     String auth;
     String novaJSONdetail;
     String novaJSONip;
+    String id;
     RequestQueue queue = null;
 
     public static NovaJSON parser = null;
@@ -36,6 +37,14 @@ public class NovaJSON extends Activity {
             parser  = new NovaJSON();
         }
         return parser ;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNovaJSON() {
@@ -86,6 +95,20 @@ public class NovaJSON extends Activity {
         return novaJSON;
     }
 
+    public String receiveDetail (String id){
+        setId(id);
+        getJSONdetail();
+        getNovaJSONdetail();
+        return novaJSONdetail;
+    }
+
+    public String receiveIP (String id){
+        setId(id);
+        getJSONip();
+        getNovaJSONip();
+        return novaJSONip;
+    }
+
     public void getJSON() {
         final String authToken = getAuth();
         String novaURL = getNova();
@@ -125,7 +148,7 @@ public class NovaJSON extends Activity {
         queue.add(getRequest);
     }
 
-    public String getJSONdetail(String id) {
+    public void getJSONdetail() {
         final String authToken = getAuth();
         String novaURL = getNova();
         novaURL = novaURL+"/servers/"+id;
@@ -162,10 +185,9 @@ public class NovaJSON extends Activity {
         queue = VolleySingleton.getInstance(this).getRequestQueue();
         //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
         queue.add(getRequest);
-        return novaJSONdetail;
     }
 
-    public String getJSONip(String id) {
+    public void getJSONip() {
         final String authToken = getAuth();
         String novaURL = getNova();
         novaURL = novaURL+"/servers/"+id+"/ips";
@@ -202,7 +224,6 @@ public class NovaJSON extends Activity {
         queue = VolleySingleton.getInstance(this).getRequestQueue();
         //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
         queue.add(getRequest);
-        return novaJSONip;
     }
 }
 
