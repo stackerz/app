@@ -113,7 +113,6 @@ public class NovaParser extends Activity{
             JSONObject server = novaDetail.getJSONObject("server");
             JSONObject flavor = server.getJSONObject("flavor");
             temp = flavor.getString("id");
-            novaInstance.setFlavor(flavor.getString("id"));
             if (flavorList !=null){
             for (Map<String,String> map : flavorList) {
                 if (map.containsValue(temp)) {
