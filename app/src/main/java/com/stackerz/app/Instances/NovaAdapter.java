@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.stackerz.app.R;
@@ -70,6 +72,8 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
     protected String id;
     private int mOriginalHeight = 0;
     private boolean mIsViewExpanded = false;
+    RelativeLayout main;
+    LinearLayout expanded;
 
     public String getId() {
         return id;
@@ -86,6 +90,9 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         this.status = (TextView) view.findViewById(R.id.statusInstance);
         this.flavor = (TextView) view.findViewById(R.id.flavorInstance);
         this.host = (TextView) view.findViewById(R.id.hostInstance);
+        main = (RelativeLayout)view.findViewById(R.id.layoutInstances);
+        expanded = (LinearLayout)view.findViewById(R.id.expandedInstances);
+        expanded.setVisibility(View.GONE);
 
     }
 
@@ -97,9 +104,11 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         if (!mIsViewExpanded) {
             mIsViewExpanded = true;
             valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 2.5));
+            expanded.setVisibility(View.VISIBLE);
         } else {
             mIsViewExpanded = false;
             valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 2.5), mOriginalHeight);
+            expanded.setVisibility(View.GONE);
         }
         valueAnimator.setDuration(300);
         valueAnimator.setInterpolator(new LinearInterpolator());
