@@ -14,16 +14,16 @@ public class NovaInstances {
     public static final String NAME = "name";
     public static final String STATUS = "status";
     public static final String FLAVOR = "flavor";
-
-
-
+    public static final String NETID1 = "netid1";
+    public static final String ADDR1 = "addr1";
 
     //fields
     String id;
     String name;
     String status;
     String flavor;
-
+    String netid1;
+    String addr1;
 
 
 //getters and setters
@@ -61,7 +61,21 @@ public class NovaInstances {
         this.flavor = flavor;
     }
 
+    public String getNetid1() {
+        return netid1;
+    }
 
+    public void setNetid1(String netid1) {
+        this.netid1 = netid1;
+    }
+
+    public String getAddr1() {
+        return addr1;
+    }
+
+    public void setAddr1(String addr1) {
+        this.addr1 = addr1;
+    }
 }
 
 

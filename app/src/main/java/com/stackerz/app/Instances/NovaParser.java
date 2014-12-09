@@ -32,10 +32,8 @@ public class NovaParser extends Activity{
     public static final String NAME = "name";
     public static final String STATUS = "status";
     public static final String FLAVOR = "flavor";
-    public static final String ADDRFXD = "addrfxd";
-    public static final String ADDRFLT = "addrflt";
-    public static final String NET = "net";
-    public static final String SECGRP = "secgrp";
+    public static final String NETID1 = "netid1";
+    public static final String ADDR1 = "addr1";
 
     public String authToken;
     public String novaURL;
@@ -68,6 +66,7 @@ public class NovaParser extends Activity{
 
     public static ArrayList<HashMap<String, String>> parseJSON(String novaJSON){
         ArrayList<HashMap<String, String>> jsonList = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> tempList = new ArrayList<HashMap<String, String>>();
         try {
             NovaInstances novaInstance = new NovaInstances();
             JSONObject nova = new JSONObject(novaJSON);
@@ -79,7 +78,9 @@ public class NovaParser extends Activity{
                 novaInstance.setId(objsrv.getString("id"));
                 novaInstance.setStatus(objsrv.getString("OS-EXT-STS:vm_state"));
                 String instanceDetail = String.valueOf(NovaJSON.shared().getJSONdetail(novaInstance.getId()));
-                novaInstance.setFlavor(parseDetail(instanceDetail));
+                novaInstance.setFlavor(parseFlavor(instanceDetail));
+                String netDetail = String.valueOf(NovaJSON.shared().getJSONip(novaInstance.getId()));
+                tempList = parseNet(netDetail);
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NAME, novaInstance.getName());
                 map.put(ID, novaInstance.getId());
@@ -103,10 +104,9 @@ public class NovaParser extends Activity{
         return jsonList;
     }
 
-    public static String parseDetail(String instanceDetail){
+    public static String parseFlavor(String instanceDetail){
         ArrayList<HashMap<String, String>> flavorList = NovaParser.shared().getFlavorList();
         String temp = null;
-        NovaInstances novaInstance = new NovaInstances();
         JSONObject novaDetail = null;
         try {
             novaDetail = new JSONObject(instanceDetail);
@@ -135,6 +135,38 @@ public class NovaParser extends Activity{
         }
 
         return temp;
+    }
+
+    public static ArrayList<HashMap<String, String>> parseNet(String netDetail){
+        ArrayList<HashMap<String, String>> netList = new ArrayList<HashMap<String, String>>();
+        String netId = null, addr = null;
+        JSONObject net = null;
+        try {
+            net = new JSONObject(netDetail);
+            JSONObject addresses = net.getJSONObject("addresses");
+            Iterator<String> keys=addresses.keys();
+            while(keys.hasNext())
+            {
+                String key=keys.next();
+                String value=addresses.getString(key);
+                netId = key;
+
+            JSONArray network = addresses.getJSONArray(key);
+            for (int i = 0; i < network.length(); i++) {
+                JSONObject objnet = network.getJSONObject(i);
+                addr = objnet.getString("addr");
+            }
+            }
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put(NETID1, netId);
+            map.put(ADDR1, addr);
+            netList.add(map);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return netList;
     }
 
 }
