@@ -139,7 +139,7 @@ public class Stackerz extends Activity
         String novaURL = EndpointsParser.getNovaURL();
         instances = NovaJSON.shared().receiveData(novaURL, authToken);
         novaExtras = new Bundle();
-        if (instances != null) {
+        if (instances != null && !instances.contains("Bad URL")) {
             if (instances.contains("com.android.volley.AuthFailureError")){
                 Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
                 instancesCached = shPref.getString("Instances",instances);
@@ -180,7 +180,7 @@ public class Stackerz extends Activity
         String novaURL = EndpointsParser.getNovaURL();
         flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
         flavorsExtras = new Bundle();
-        if (flavors != null) {
+        if (flavors != null && !flavors.contains("Bad URL")) {
             if (flavors.contains("com.android.volley.AuthFailureError")){
                 Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
                 flavorsCached = shPref.getString("Flavors", flavors);
@@ -222,7 +222,7 @@ public class Stackerz extends Activity
         String glanceURL = EndpointsParser.getGlanceURL();
         images = ImagesJSON.shared().receiveData(glanceURL, authToken);
         glanceExtras = new Bundle();
-        if (images != null) {
+        if (images != null && !images.contains("Bad URL")) {
             if (images.contains("com.android.volley.AuthFailureError")){
                 Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
                 imagesCached = shPref.getString("Images",images);
@@ -263,7 +263,7 @@ public class Stackerz extends Activity
         String neutronURL = EndpointsParser.getNeutronURL();
         networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
         networksExtras = new Bundle();
-        if (networks != null) {
+        if (networks != null && !networks.contains("Bad URL")) {
             if (networks.contains("com.android.volley.AuthFailureError")){
                 Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
                 networksCached = shPref.getString("Networks",networks);
@@ -304,7 +304,7 @@ public class Stackerz extends Activity
         String neutronURL = EndpointsParser.getNeutronURL();
         subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
         subnetsExtras = new Bundle();
-        if (subnets != null) {
+        if (subnets != null && !subnets.contains("Bad URL")) {
             if (subnets.contains("com.android.volley.AuthFailureError")) {
                 Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
                 subnetsCached = shPref.getString("Subnets",subnets);
@@ -346,7 +346,7 @@ public class Stackerz extends Activity
         String neutronURL = EndpointsParser.getNeutronURL();
         routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
         routersExtras = new Bundle();
-        if (routers != null) {
+        if (routers != null && !routers.contains("Bad URL")) {
             if (routers.contains("com.android.volley.AuthFailureError")) {
                 Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
                 routersCached = shPref.getString("Routers", routers);
@@ -388,7 +388,7 @@ public class Stackerz extends Activity
         String neutronURL = EndpointsParser.getNeutronURL();
         security = SecurityJSON.shared().receiveData(neutronURL, authToken);
         securityExtras = new Bundle();
-        if (security != null) {
+        if (security != null && !security.contains("Bad URL")) {
             if (security.contains("com.android.volley.AuthFailureError")) {
                 Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
                 securityCached = shPref.getString("Security",security);
