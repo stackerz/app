@@ -159,16 +159,7 @@ public class Stackerz extends Activity
             novaExtras.putSerializable("NovaParsed", novaList);
         }
         if (first == 0 && (novaList == null || novaList.size() == 0)) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Retrieving Data");
-            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
+            emptyViewAlert();
         }
         return novaExtras;
     }
@@ -201,16 +192,7 @@ public class Stackerz extends Activity
             flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
         }
         if (first == 0 && (flavorsList == null || flavorsList.size() == 0)) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Retrieving Data");
-            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
+            emptyViewAlert();
         }
         NovaParser.shared().setFlavorList(flavorsList);
         return flavorsExtras;
@@ -244,16 +226,7 @@ public class Stackerz extends Activity
             glanceExtras.putSerializable("ImagesParsed", imagesList);
         }
         if (first == 0 && (imagesList == null || imagesList.size() == 0)) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Retrieving Data");
-            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
+            emptyViewAlert();
         }
         return glanceExtras;
     }
@@ -286,16 +259,7 @@ public class Stackerz extends Activity
             networksExtras.putSerializable("NetworksParsed", networksList);
         }
         if (first == 0 && (networksList == null || networksList.size() == 0)) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Retrieving Data");
-            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
+            emptyViewAlert();
         }
         return networksExtras;
     }
@@ -329,16 +293,7 @@ public class Stackerz extends Activity
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
         }
         if (first == 0 && (subnetsList == null || subnetsList.size() == 0)) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Retrieving Data");
-            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
+            emptyViewAlert();
         }
         return subnetsExtras;
     }
@@ -371,16 +326,7 @@ public class Stackerz extends Activity
             routersExtras.putSerializable("RoutersParsed", routersList);
         }
         if (first == 0 && (routersList == null || routersList.size() == 0)) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Retrieving Data");
-            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
+            emptyViewAlert();
         }
         return routersExtras;
     }
@@ -414,16 +360,7 @@ public class Stackerz extends Activity
             securityExtras.putSerializable("SecurityParsed", securityList);
         }
         if (first == 0 && (securityList == null || securityList.size() == 0)) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Retrieving Data");
-            alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
+            emptyViewAlert();
         }
         return securityExtras;
     }
@@ -443,6 +380,19 @@ public class Stackerz extends Activity
     });
     AlertDialog alertDialog = alert.create();
     alertDialog.show();
+    }
+
+    public void emptyViewAlert(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Retrieving Data");
+        alert.setMessage("It's taking too long to get the data from the Server. Please select the option on the left drawer again to try again.")
+                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+        AlertDialog alertDialog = alert.create();
+        alertDialog.show();
     }
 
     @Override
