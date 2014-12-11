@@ -421,8 +421,8 @@ public class Stackerz extends Activity
     public void tokenExpiredAlert() {
 
     AlertDialog.Builder alert = new AlertDialog.Builder(this);
-    alert.setTitle("Token Expired");
-    alert.setMessage("Authentication Token expired! Please login again to reconnect to the server.")
+    alert.setTitle("Authentication Error");
+    alert.setMessage("The Authentication Token is either expired or incomplete! Please login again to reconnect to the server and request a new token.")
             .setNeutralButton("Connect",new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialogInterface,int i){
