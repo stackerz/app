@@ -147,6 +147,7 @@ public class Stackerz extends Activity
                 instancesCached = shPref.getString("Instances", instances);
                 novaList = NovaParser.parseJSON(instancesCached);
                 novaExtras.putSerializable("NovaParsed", novaList);
+                auth = 1;
             } else {
                 shPref.edit().putString("Instances", instances).commit();
                 novaList = NovaParser.parseJSON(instances);
@@ -157,7 +158,7 @@ public class Stackerz extends Activity
             novaList = NovaParser.parseJSON(instancesCached);
             novaExtras.putSerializable("NovaParsed", novaList);
         }
-        if (first == 0 && (novaList == null || novaList.size() == 0)) {
+        if (first == 0 && auth == 0 && (novaList == null || novaList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
@@ -188,6 +189,7 @@ public class Stackerz extends Activity
                 flavorsCached = shPref.getString("Flavors", flavors);
                 flavorsList = FlavorsParser.parseJSON(flavorsCached);
                 flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
+                auth = 1;
             } else {
                 shPref.edit().putString("Flavors", flavors).commit();
                 flavorsList = FlavorsParser.parseJSON(flavors);
@@ -198,7 +200,7 @@ public class Stackerz extends Activity
             flavorsList = FlavorsParser.parseJSON(flavorsCached);
             flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
         }
-        if (first == 0 && (flavorsList == null || flavorsList.size() == 0)) {
+        if (first == 0 && auth == 0 && (flavorsList == null || flavorsList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
@@ -230,6 +232,7 @@ public class Stackerz extends Activity
                 imagesCached = shPref.getString("Images", images);
                 imagesList = ImagesParser.parseJSON(imagesCached);
                 glanceExtras.putSerializable("ImagesParsed", imagesList);
+                auth = 1;
             } else {
                 shPref.edit().putString("Images", images).commit();
                 imagesList = ImagesParser.parseJSON(images);
@@ -240,7 +243,7 @@ public class Stackerz extends Activity
             imagesList = ImagesParser.parseJSON(imagesCached);
             glanceExtras.putSerializable("ImagesParsed", imagesList);
         }
-        if (first == 0 && (imagesList == null || imagesList.size() == 0)) {
+        if (first == 0 && auth == 0 && (imagesList == null || imagesList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
@@ -271,6 +274,7 @@ public class Stackerz extends Activity
                 networksCached = shPref.getString("Networks", networks);
                 networksList = NetworksParser.parseJSON(networksCached);
                 networksExtras.putSerializable("NetworksParsed", networksList);
+                auth = 1;
             } else {
                 shPref.edit().putString("Networks", networks).commit();
                 networksList = NetworksParser.parseJSON(networks);
@@ -281,7 +285,7 @@ public class Stackerz extends Activity
             networksList = NetworksParser.parseJSON(networksCached);
             networksExtras.putSerializable("NetworksParsed", networksList);
         }
-        if (first == 0 && (networksList == null || networksList.size() == 0)) {
+        if (first == 0 && auth == 0 && (networksList == null || networksList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
@@ -312,6 +316,7 @@ public class Stackerz extends Activity
                 subnetsCached = shPref.getString("Subnets", subnets);
                 subnetsList = SubnetsParser.parseJSON(subnetsCached);
                 subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
+                auth = 1;
             } else {
                 shPref.edit().putString("Subnets", subnets).commit();
                 subnetsList = SubnetsParser.parseJSON(subnets);
@@ -323,7 +328,7 @@ public class Stackerz extends Activity
             subnetsList = SubnetsParser.parseJSON(subnetsCached);
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
         }
-        if (first == 0 && (subnetsList == null || subnetsList.size() == 0)) {
+        if (first == 0 && auth == 0 && (subnetsList == null || subnetsList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
@@ -354,6 +359,7 @@ public class Stackerz extends Activity
                 routersCached = shPref.getString("Routers", routers);
                 routersList = RoutersParser.parseJSON(routersCached);
                 routersExtras.putSerializable("RoutersParsed", routersList);
+                auth = 1;
             } else {
                 shPref.edit().putString("Routers", routers).commit();
                 routersList = RoutersParser.parseJSON(routers);
@@ -364,7 +370,7 @@ public class Stackerz extends Activity
             routersList = RoutersParser.parseJSON(routersCached);
             routersExtras.putSerializable("RoutersParsed", routersList);
         }
-        if (first == 0 && (routersList == null || routersList.size() == 0)) {
+        if (first == 0 && auth == 0 && (routersList == null || routersList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
@@ -396,6 +402,7 @@ public class Stackerz extends Activity
                 securityCached = shPref.getString("Security", security);
                 securityList = SecurityParser.parseJSON(securityCached);
                 securityExtras.putSerializable("SecurityParsed", securityList);
+                auth = 1;
             } else {
                 shPref.edit().putString("Security", security).commit();
                 securityList = SecurityParser.parseJSON(security);
@@ -406,7 +413,7 @@ public class Stackerz extends Activity
             securityList = SecurityParser.parseJSON(securityCached);
             securityExtras.putSerializable("SecurityParsed", securityList);
         }
-        if (first == 0 && (securityList == null || securityList.size() == 0)) {
+        if (first == 0 && auth == 0 && (securityList == null || securityList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
