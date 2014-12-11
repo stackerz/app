@@ -139,7 +139,7 @@ public class Stackerz extends Activity
         instances = NovaJSON.shared().receiveData(novaURL, authToken);
         novaExtras = new Bundle();
         if (instances != null && !instances.contains("Bad URL")) {
-            if (instances.contains("com.android.volley.AuthFailureError")) {
+            if (first == 0 && instances.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 instancesCached = shPref.getString("Instances", instances);
                 novaList = NovaParser.parseJSON(instancesCached);
@@ -180,7 +180,7 @@ public class Stackerz extends Activity
         flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
         flavorsExtras = new Bundle();
         if (flavors != null && !flavors.contains("Bad URL")) {
-            if (flavors.contains("com.android.volley.AuthFailureError")) {
+            if (first == 0 && flavors.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 flavorsCached = shPref.getString("Flavors", flavors);
                 flavorsList = FlavorsParser.parseJSON(flavorsCached);
@@ -222,7 +222,7 @@ public class Stackerz extends Activity
         images = ImagesJSON.shared().receiveData(glanceURL, authToken);
         glanceExtras = new Bundle();
         if (images != null && !images.contains("Bad URL")) {
-            if (images.contains("com.android.volley.AuthFailureError")) {
+            if (first == 0 && images.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 imagesCached = shPref.getString("Images", images);
                 imagesList = ImagesParser.parseJSON(imagesCached);
@@ -263,7 +263,7 @@ public class Stackerz extends Activity
         networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
         networksExtras = new Bundle();
         if (networks != null && !networks.contains("Bad URL")) {
-            if (networks.contains("com.android.volley.AuthFailureError")) {
+            if (first == 0 && networks.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 networksCached = shPref.getString("Networks", networks);
                 networksList = NetworksParser.parseJSON(networksCached);
@@ -304,7 +304,7 @@ public class Stackerz extends Activity
         subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
         subnetsExtras = new Bundle();
         if (subnets != null && !subnets.contains("Bad URL")) {
-            if (subnets.contains("com.android.volley.AuthFailureError")) {
+            if (first == 0 && subnets.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 subnetsCached = shPref.getString("Subnets", subnets);
                 subnetsList = SubnetsParser.parseJSON(subnetsCached);
@@ -346,7 +346,7 @@ public class Stackerz extends Activity
         routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
         routersExtras = new Bundle();
         if (routers != null && !routers.contains("Bad URL")) {
-            if (routers.contains("com.android.volley.AuthFailureError")) {
+            if (first == 0 && routers.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 routersCached = shPref.getString("Routers", routers);
                 routersList = RoutersParser.parseJSON(routersCached);
@@ -388,7 +388,7 @@ public class Stackerz extends Activity
         security = SecurityJSON.shared().receiveData(neutronURL, authToken);
         securityExtras = new Bundle();
         if (security != null && !security.contains("Bad URL")) {
-            if (security.contains("com.android.volley.AuthFailureError")) {
+            if (first == 0 && security.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 securityCached = shPref.getString("Security", security);
                 securityList = SecurityParser.parseJSON(securityCached);
