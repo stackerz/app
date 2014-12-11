@@ -158,7 +158,7 @@ public class Stackerz extends Activity
             novaList = NovaParser.parseJSON(instancesCached);
             novaExtras.putSerializable("NovaParsed", novaList);
         }
-        if (first == 0 && auth == 0 && (novaList == null || novaList.size() == 0)) {
+        if (first == 0 && (novaList == null || novaList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
@@ -200,7 +200,7 @@ public class Stackerz extends Activity
             flavorsList = FlavorsParser.parseJSON(flavorsCached);
             flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
         }
-        if (first == 0 && auth == 0 && (flavorsList == null || flavorsList.size() == 0)) {
+        if (first == 0 && (flavorsList == null || flavorsList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
@@ -243,7 +243,7 @@ public class Stackerz extends Activity
             imagesList = ImagesParser.parseJSON(imagesCached);
             glanceExtras.putSerializable("ImagesParsed", imagesList);
         }
-        if (first == 0 && auth == 0 && (imagesList == null || imagesList.size() == 0)) {
+        if (first == 0 && (imagesList == null || imagesList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
@@ -285,7 +285,7 @@ public class Stackerz extends Activity
             networksList = NetworksParser.parseJSON(networksCached);
             networksExtras.putSerializable("NetworksParsed", networksList);
         }
-        if (first == 0 && auth == 0 && (networksList == null || networksList.size() == 0)) {
+        if (first == 0 && (networksList == null || networksList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
@@ -328,7 +328,7 @@ public class Stackerz extends Activity
             subnetsList = SubnetsParser.parseJSON(subnetsCached);
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
         }
-        if (first == 0 && auth == 0 && (subnetsList == null || subnetsList.size() == 0)) {
+        if (first == 0 && (subnetsList == null || subnetsList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
@@ -370,7 +370,7 @@ public class Stackerz extends Activity
             routersList = RoutersParser.parseJSON(routersCached);
             routersExtras.putSerializable("RoutersParsed", routersList);
         }
-        if (first == 0 && auth == 0 && (routersList == null || routersList.size() == 0)) {
+        if (first == 0 && (routersList == null || routersList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
@@ -413,7 +413,7 @@ public class Stackerz extends Activity
             securityList = SecurityParser.parseJSON(securityCached);
             securityExtras.putSerializable("SecurityParsed", securityList);
         }
-        if (first == 0 && auth == 0 && (securityList == null || securityList.size() == 0)) {
+        if (first == 0 && (securityList == null || securityList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
             alert.setMessage("It's taking a while to get the data from the Server. Please select the option on the left drawer again to request it one more time.")
