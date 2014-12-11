@@ -51,7 +51,7 @@ import java.util.HashMap;
 
 
 public class Stackerz extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks{
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -71,22 +71,22 @@ public class Stackerz extends Activity
     public ArrayList<HashMap<String, String>> routersList;
     public ArrayList<HashMap<String, String>> subnetsList;
     public ArrayList<HashMap<String, String>> securityList;
-    public String endpoints="";
-    public String authToken="";
-    public String instances="";
-    public String instancesCached="";
-    public String flavors="";
-    public String flavorsCached="";
-    public String images="";
-    public String imagesCached="";
-    public String networks="";
-    public String networksCached="";
-    public String routers ="";
-    public String routersCached="";
-    public String subnets ="";
-    public String subnetsCached="";
-    public String security ="";
-    public String securityCached="";
+    public String endpoints = "";
+    public String authToken = "";
+    public String instances = "";
+    public String instancesCached = "";
+    public String flavors = "";
+    public String flavorsCached = "";
+    public String images = "";
+    public String imagesCached = "";
+    public String networks = "";
+    public String networksCached = "";
+    public String routers = "";
+    public String routersCached = "";
+    public String subnets = "";
+    public String subnetsCached = "";
+    public String security = "";
+    public String securityCached = "";
     public int first = 0;
 
 
@@ -97,7 +97,7 @@ public class Stackerz extends Activity
         setContentView(R.layout.activity_stackerz);
         first = 1;
         // have to do it a couple of times because Volley sucks at this!
-        for (int i=0; i<3; i++) {
+        for (int i = 0; i < 3; i++) {
             novaBundle();
             flavorsBundle();
             glanceBundle();
@@ -118,31 +118,30 @@ public class Stackerz extends Activity
     }
 
 
-
-    public Bundle authBundle(){
+    public Bundle authBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         endpoints = shPref.getString("KeystoneData", endpoints);
-        authToken = shPref.getString("AuthToken",authToken);
+        authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
         extras = new Bundle();
         extras.putSerializable("ParsedList", jsonList);
         return extras;
     }
 
-    public Bundle novaBundle(){
+    public Bundle novaBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        SharedPreferences firstSP = getSharedPreferences("First",first);
+        SharedPreferences firstSP = getSharedPreferences("First", first);
         endpoints = shPref.getString("KeystoneData", endpoints);
-        authToken = shPref.getString("AuthToken",authToken);
+        authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String novaURL = EndpointsParser.getNovaURL();
         instances = NovaJSON.shared().receiveData(novaURL, authToken);
         novaExtras = new Bundle();
         if (instances != null && !instances.contains("Bad URL")) {
-            if (instances.contains("com.android.volley.AuthFailureError")){
-                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
-                instancesCached = shPref.getString("Instances",instances);
+            if (instances.contains("com.android.volley.AuthFailureError")) {
+                tokenExpiredAlert();
+                instancesCached = shPref.getString("Instances", instances);
                 novaList = NovaParser.parseJSON(instancesCached);
                 novaExtras.putSerializable("NovaParsed", novaList);
             } else {
@@ -150,8 +149,8 @@ public class Stackerz extends Activity
                 novaList = NovaParser.parseJSON(instances);
                 novaExtras.putSerializable("NovaParsed", novaList);
             }
-        } else if (firstSP.getInt("First", first)>1 && shPref.getString("Instances",instances)!= null){
-            instancesCached = shPref.getString("Instances",instances);
+        } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Instances", instances) != null) {
+            instancesCached = shPref.getString("Instances", instances);
             novaList = NovaParser.parseJSON(instancesCached);
             novaExtras.putSerializable("NovaParsed", novaList);
         }
@@ -170,19 +169,19 @@ public class Stackerz extends Activity
         return novaExtras;
     }
 
-    public Bundle flavorsBundle(){
+    public Bundle flavorsBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        SharedPreferences firstSP = getSharedPreferences("First",first);
+        SharedPreferences firstSP = getSharedPreferences("First", first);
         endpoints = shPref.getString("KeystoneData", endpoints);
-        authToken = shPref.getString("AuthToken",authToken);
+        authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String novaURL = EndpointsParser.getNovaURL();
         flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
         flavorsExtras = new Bundle();
         if (flavors != null && !flavors.contains("Bad URL")) {
-            if (flavors.contains("com.android.volley.AuthFailureError")){
-                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
+            if (flavors.contains("com.android.volley.AuthFailureError")) {
+                tokenExpiredAlert();
                 flavorsCached = shPref.getString("Flavors", flavors);
                 flavorsList = FlavorsParser.parseJSON(flavorsCached);
                 flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
@@ -191,10 +190,10 @@ public class Stackerz extends Activity
                 flavorsList = FlavorsParser.parseJSON(flavors);
                 flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
             }
-        } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Flavors", flavors)!= null) {
-                flavorsCached = shPref.getString("Flavors", flavors);
-                flavorsList = FlavorsParser.parseJSON(flavorsCached);
-                flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
+        } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Flavors", flavors) != null) {
+            flavorsCached = shPref.getString("Flavors", flavors);
+            flavorsList = FlavorsParser.parseJSON(flavorsCached);
+            flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
         }
         if (first == 0 && (flavorsList == null || flavorsList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -212,20 +211,20 @@ public class Stackerz extends Activity
         return flavorsExtras;
     }
 
-    public Bundle glanceBundle(){
+    public Bundle glanceBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        SharedPreferences firstSP = getSharedPreferences("First",first);
+        SharedPreferences firstSP = getSharedPreferences("First", first);
         endpoints = shPref.getString("KeystoneData", endpoints);
-        authToken = shPref.getString("AuthToken",authToken);
+        authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String glanceURL = EndpointsParser.getGlanceURL();
         images = ImagesJSON.shared().receiveData(glanceURL, authToken);
         glanceExtras = new Bundle();
         if (images != null && !images.contains("Bad URL")) {
-            if (images.contains("com.android.volley.AuthFailureError")){
-                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
-                imagesCached = shPref.getString("Images",images);
+            if (images.contains("com.android.volley.AuthFailureError")) {
+                tokenExpiredAlert();
+                imagesCached = shPref.getString("Images", images);
                 imagesList = ImagesParser.parseJSON(imagesCached);
                 glanceExtras.putSerializable("ImagesParsed", imagesList);
             } else {
@@ -233,11 +232,11 @@ public class Stackerz extends Activity
                 imagesList = ImagesParser.parseJSON(images);
                 glanceExtras.putSerializable("ImagesParsed", imagesList);
             }
-        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Images",images)!= null){
-            imagesCached = shPref.getString("Images",images);
+        } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Images", images) != null) {
+            imagesCached = shPref.getString("Images", images);
             imagesList = ImagesParser.parseJSON(imagesCached);
             glanceExtras.putSerializable("ImagesParsed", imagesList);
-       }
+        }
         if (first == 0 && (imagesList == null || imagesList.size() == 0)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle("Retrieving Data");
@@ -253,29 +252,29 @@ public class Stackerz extends Activity
         return glanceExtras;
     }
 
-    public Bundle networksBundle(){
+    public Bundle networksBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         SharedPreferences firstSP = getSharedPreferences("First", first);
         endpoints = shPref.getString("KeystoneData", endpoints);
-        authToken = shPref.getString("AuthToken",authToken);
+        authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String neutronURL = EndpointsParser.getNeutronURL();
         networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
         networksExtras = new Bundle();
         if (networks != null && !networks.contains("Bad URL")) {
-            if (networks.contains("com.android.volley.AuthFailureError")){
-                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
-                networksCached = shPref.getString("Networks",networks);
+            if (networks.contains("com.android.volley.AuthFailureError")) {
+                tokenExpiredAlert();
+                networksCached = shPref.getString("Networks", networks);
                 networksList = NetworksParser.parseJSON(networksCached);
                 networksExtras.putSerializable("NetworksParsed", networksList);
             } else {
-                shPref.edit().putString("Networks",networks).commit();
+                shPref.edit().putString("Networks", networks).commit();
                 networksList = NetworksParser.parseJSON(networks);
                 networksExtras.putSerializable("NetworksParsed", networksList);
             }
-        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Networks",networks)!= null){
-            networksCached = shPref.getString("Networks",networks);
+        } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Networks", networks) != null) {
+            networksCached = shPref.getString("Networks", networks);
             networksList = NetworksParser.parseJSON(networksCached);
             networksExtras.putSerializable("NetworksParsed", networksList);
         }
@@ -294,11 +293,11 @@ public class Stackerz extends Activity
         return networksExtras;
     }
 
-    public Bundle subnetsBundle(){
+    public Bundle subnetsBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        SharedPreferences firstSP = getSharedPreferences("First",first);
+        SharedPreferences firstSP = getSharedPreferences("First", first);
         endpoints = shPref.getString("KeystoneData", endpoints);
-        authToken = shPref.getString("AuthToken",authToken);
+        authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String neutronURL = EndpointsParser.getNeutronURL();
@@ -306,8 +305,8 @@ public class Stackerz extends Activity
         subnetsExtras = new Bundle();
         if (subnets != null && !subnets.contains("Bad URL")) {
             if (subnets.contains("com.android.volley.AuthFailureError")) {
-                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
-                subnetsCached = shPref.getString("Subnets",subnets);
+                tokenExpiredAlert();
+                subnetsCached = shPref.getString("Subnets", subnets);
                 subnetsList = SubnetsParser.parseJSON(subnetsCached);
                 subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
             } else {
@@ -316,8 +315,8 @@ public class Stackerz extends Activity
                 subnetsExtras.putString("SubnetsJSON", subnets);
                 subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
             }
-        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Subnets",subnets)!= null){
-            subnetsCached = shPref.getString("Subnets",subnets);
+        } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Subnets", subnets) != null) {
+            subnetsCached = shPref.getString("Subnets", subnets);
             subnetsList = SubnetsParser.parseJSON(subnetsCached);
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
         }
@@ -336,11 +335,11 @@ public class Stackerz extends Activity
         return subnetsExtras;
     }
 
-    public Bundle routersBundle(){
+    public Bundle routersBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        SharedPreferences firstSP = getSharedPreferences("First",first);
+        SharedPreferences firstSP = getSharedPreferences("First", first);
         endpoints = shPref.getString("KeystoneData", endpoints);
-        authToken = shPref.getString("AuthToken",authToken);
+        authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String neutronURL = EndpointsParser.getNeutronURL();
@@ -348,17 +347,17 @@ public class Stackerz extends Activity
         routersExtras = new Bundle();
         if (routers != null && !routers.contains("Bad URL")) {
             if (routers.contains("com.android.volley.AuthFailureError")) {
-                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
+                tokenExpiredAlert();
                 routersCached = shPref.getString("Routers", routers);
                 routersList = RoutersParser.parseJSON(routersCached);
                 routersExtras.putSerializable("RoutersParsed", routersList);
-            }else {
+            } else {
                 shPref.edit().putString("Routers", routers).commit();
                 routersList = RoutersParser.parseJSON(routers);
                 routersExtras.putSerializable("RoutersParsed", routersList);
             }
-        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Routers",routers)!= null){
-            routersCached = shPref.getString("Routers",routers);
+        } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Routers", routers) != null) {
+            routersCached = shPref.getString("Routers", routers);
             routersList = RoutersParser.parseJSON(routersCached);
             routersExtras.putSerializable("RoutersParsed", routersList);
         }
@@ -378,11 +377,11 @@ public class Stackerz extends Activity
     }
 
 
-    public Bundle securityBundle(){
+    public Bundle securityBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
-        SharedPreferences firstSP = getSharedPreferences("First",first);
+        SharedPreferences firstSP = getSharedPreferences("First", first);
         endpoints = shPref.getString("KeystoneData", endpoints);
-        authToken = shPref.getString("AuthToken",authToken);
+        authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String neutronURL = EndpointsParser.getNeutronURL();
@@ -390,8 +389,8 @@ public class Stackerz extends Activity
         securityExtras = new Bundle();
         if (security != null && !security.contains("Bad URL")) {
             if (security.contains("com.android.volley.AuthFailureError")) {
-                Toast.makeText(getApplicationContext(), "Authentication Token is expired! Please connect again. Offline content from the last successful session was cached and it is now being displayed.", Toast.LENGTH_LONG).show();
-                securityCached = shPref.getString("Security",security);
+                tokenExpiredAlert();
+                securityCached = shPref.getString("Security", security);
                 securityList = SecurityParser.parseJSON(securityCached);
                 securityExtras.putSerializable("SecurityParsed", securityList);
             } else {
@@ -399,8 +398,8 @@ public class Stackerz extends Activity
                 securityList = SecurityParser.parseJSON(security);
                 securityExtras.putSerializable("SecurityParsed", securityList);
             }
-        } else if (firstSP.getInt("First",first)>1 && shPref.getString("Security",security)!= null){
-            securityCached = shPref.getString("Security",security);
+        } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Security", security) != null) {
+            securityCached = shPref.getString("Security", security);
             securityList = SecurityParser.parseJSON(securityCached);
             securityExtras.putSerializable("SecurityParsed", securityList);
         }
@@ -419,6 +418,22 @@ public class Stackerz extends Activity
         return securityExtras;
     }
 
+    public void tokenExpiredAlert() {
+
+    AlertDialog.Builder alert = new AlertDialog.Builder(this);
+    alert.setTitle("Token Expired");
+    alert.setMessage("Authentication Token expired! Please login again to reconnect to the server.")
+            .setNeutralButton("Connect",new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick (DialogInterface dialogInterface,int i){
+            Intent intent = new Intent(Stackerz.this, Login.class);
+            startActivity(intent);
+            finish();
+        }
+    });
+    AlertDialog alertDialog = alert.create();
+    alertDialog.show();
+    }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
