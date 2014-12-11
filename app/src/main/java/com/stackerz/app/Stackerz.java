@@ -369,7 +369,7 @@ public class Stackerz extends Activity
 
     AlertDialog.Builder alert = new AlertDialog.Builder(this);
     alert.setTitle("Authentication Error");
-    alert.setMessage("The Authentication Token is either expired or incomplete! Please login again to reconnect to the server and request a new token.")
+    alert.setMessage("The Authentication Token is expired! Please login again to reconnect to the server and request a new token.")
             .setNeutralButton("Connect",new DialogInterface.OnClickListener() {
         @Override
         public void onClick (DialogInterface dialogInterface,int i){
@@ -385,7 +385,7 @@ public class Stackerz extends Activity
     public void emptyViewAlert(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Retrieving Data");
-        alert.setMessage("It's taking too long to get the data from the Server. Please select the option on the left drawer again to try again.")
+        alert.setMessage("It's taking too long to get the data from the Server. Please select the option on the navigation drawer to try again.")
                 .setNeutralButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
