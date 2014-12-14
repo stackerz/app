@@ -88,7 +88,6 @@ public class Stackerz extends Activity
     public String security = "";
     public String securityCached = "";
     public int first = 0;
-    public int auth = 0;
 
 
     @Override
@@ -97,7 +96,6 @@ public class Stackerz extends Activity
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
         first = 1;
-        auth = 1;
         // have to do it a couple of times because Volley sucks at this!
         for (int i = 0; i < 3; i++) {
             novaBundle();
@@ -109,7 +107,6 @@ public class Stackerz extends Activity
             securityBundle();
         }
         first = 0;
-        auth = 0;
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -142,18 +139,16 @@ public class Stackerz extends Activity
         instances = NovaJSON.shared().receiveData(novaURL, authToken);
         novaExtras = new Bundle();
         if (instances != null && !instances.contains("Bad URL")) {
-            if (auth == 0 && instances.contains("com.android.volley.AuthFailureError")) {
+            if (instances.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 instancesCached = shPref.getString("Instances", instances);
                 novaList = NovaParser.parseJSON(instancesCached);
                 novaExtras.putSerializable("NovaParsed", novaList);
                 instances = instancesCached;
-                auth = 1;
             } else {
                 shPref.edit().putString("Instances", instances).commit();
                 novaList = NovaParser.parseJSON(instances);
                 novaExtras.putSerializable("NovaParsed", novaList);
-                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Instances", instances) != null) {
             instancesCached = shPref.getString("Instances", instances);
@@ -177,18 +172,16 @@ public class Stackerz extends Activity
         flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
         flavorsExtras = new Bundle();
         if (flavors != null && !flavors.contains("Bad URL")) {
-            if (auth == 0 && flavors.contains("com.android.volley.AuthFailureError")) {
+            if (flavors.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 flavorsCached = shPref.getString("Flavors", flavors);
                 flavorsList = FlavorsParser.parseJSON(flavorsCached);
                 flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
                 flavors = flavorsCached;
-                auth = 1;
             } else {
                 shPref.edit().putString("Flavors", flavors).commit();
                 flavorsList = FlavorsParser.parseJSON(flavors);
                 flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
-                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Flavors", flavors) != null) {
             flavorsCached = shPref.getString("Flavors", flavors);
@@ -213,18 +206,16 @@ public class Stackerz extends Activity
         images = ImagesJSON.shared().receiveData(glanceURL, authToken);
         glanceExtras = new Bundle();
         if (images != null && !images.contains("Bad URL")) {
-            if (auth == 0 && images.contains("com.android.volley.AuthFailureError")) {
+            if (images.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 imagesCached = shPref.getString("Images", images);
                 imagesList = ImagesParser.parseJSON(imagesCached);
                 glanceExtras.putSerializable("ImagesParsed", imagesList);
                 images = imagesCached;
-                auth = 1;
             } else {
                 shPref.edit().putString("Images", images).commit();
                 imagesList = ImagesParser.parseJSON(images);
                 glanceExtras.putSerializable("ImagesParsed", imagesList);
-                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Images", images) != null) {
             imagesCached = shPref.getString("Images", images);
@@ -248,18 +239,16 @@ public class Stackerz extends Activity
         networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
         networksExtras = new Bundle();
         if (networks != null && !networks.contains("Bad URL")) {
-            if (auth == 0 && networks.contains("com.android.volley.AuthFailureError")) {
+            if (networks.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 networksCached = shPref.getString("Networks", networks);
                 networksList = NetworksParser.parseJSON(networksCached);
                 networksExtras.putSerializable("NetworksParsed", networksList);
                 networks = networksCached;
-                auth = 1;
             } else {
                 shPref.edit().putString("Networks", networks).commit();
                 networksList = NetworksParser.parseJSON(networks);
                 networksExtras.putSerializable("NetworksParsed", networksList);
-                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Networks", networks) != null) {
             networksCached = shPref.getString("Networks", networks);
@@ -283,19 +272,17 @@ public class Stackerz extends Activity
         subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
         subnetsExtras = new Bundle();
         if (subnets != null && !subnets.contains("Bad URL")) {
-            if (auth == 0 && subnets.contains("com.android.volley.AuthFailureError")) {
+            if (subnets.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 subnetsCached = shPref.getString("Subnets", subnets);
                 subnetsList = SubnetsParser.parseJSON(subnetsCached);
                 subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
                 subnets = subnetsCached;
-                auth = 1;
             } else {
                 shPref.edit().putString("Subnets", subnets).commit();
                 subnetsList = SubnetsParser.parseJSON(subnets);
                 subnetsExtras.putString("SubnetsJSON", subnets);
                 subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
-                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Subnets", subnets) != null) {
             subnetsCached = shPref.getString("Subnets", subnets);
@@ -319,18 +306,16 @@ public class Stackerz extends Activity
         routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
         routersExtras = new Bundle();
         if (routers != null && !routers.contains("Bad URL")) {
-            if (auth == 0 && routers.contains("com.android.volley.AuthFailureError")) {
+            if (routers.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 routersCached = shPref.getString("Routers", routers);
                 routersList = RoutersParser.parseJSON(routersCached);
                 routersExtras.putSerializable("RoutersParsed", routersList);
                 routers = routersCached;
-                auth = 1;
             } else {
                 shPref.edit().putString("Routers", routers).commit();
                 routersList = RoutersParser.parseJSON(routers);
                 routersExtras.putSerializable("RoutersParsed", routersList);
-                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Routers", routers) != null) {
             routersCached = shPref.getString("Routers", routers);
@@ -355,18 +340,16 @@ public class Stackerz extends Activity
         security = SecurityJSON.shared().receiveData(neutronURL, authToken);
         securityExtras = new Bundle();
         if (security != null && !security.contains("Bad URL")) {
-            if (auth == 0 && security.contains("com.android.volley.AuthFailureError")) {
+            if (security.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 securityCached = shPref.getString("Security", security);
                 securityList = SecurityParser.parseJSON(securityCached);
                 securityExtras.putSerializable("SecurityParsed", securityList);
                 security = securityCached;
-                auth = 1;
             } else {
                 shPref.edit().putString("Security", security).commit();
                 securityList = SecurityParser.parseJSON(security);
                 securityExtras.putSerializable("SecurityParsed", securityList);
-                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Security", security) != null) {
             securityCached = shPref.getString("Security", security);
