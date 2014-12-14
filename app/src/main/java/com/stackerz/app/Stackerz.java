@@ -147,6 +147,7 @@ public class Stackerz extends Activity
                 instancesCached = shPref.getString("Instances", instances);
                 novaList = NovaParser.parseJSON(instancesCached);
                 novaExtras.putSerializable("NovaParsed", novaList);
+                instances = instancesCached;
                 auth = 1;
             } else {
                 shPref.edit().putString("Instances", instances).commit();
@@ -181,6 +182,7 @@ public class Stackerz extends Activity
                 flavorsCached = shPref.getString("Flavors", flavors);
                 flavorsList = FlavorsParser.parseJSON(flavorsCached);
                 flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
+                flavors = flavorsCached;
                 auth = 1;
             } else {
                 shPref.edit().putString("Flavors", flavors).commit();
@@ -216,6 +218,7 @@ public class Stackerz extends Activity
                 imagesCached = shPref.getString("Images", images);
                 imagesList = ImagesParser.parseJSON(imagesCached);
                 glanceExtras.putSerializable("ImagesParsed", imagesList);
+                images = imagesCached;
                 auth = 1;
             } else {
                 shPref.edit().putString("Images", images).commit();
@@ -250,6 +253,7 @@ public class Stackerz extends Activity
                 networksCached = shPref.getString("Networks", networks);
                 networksList = NetworksParser.parseJSON(networksCached);
                 networksExtras.putSerializable("NetworksParsed", networksList);
+                networks = networksCached;
                 auth = 1;
             } else {
                 shPref.edit().putString("Networks", networks).commit();
@@ -284,6 +288,7 @@ public class Stackerz extends Activity
                 subnetsCached = shPref.getString("Subnets", subnets);
                 subnetsList = SubnetsParser.parseJSON(subnetsCached);
                 subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
+                subnets = subnetsCached;
                 auth = 1;
             } else {
                 shPref.edit().putString("Subnets", subnets).commit();
@@ -319,6 +324,7 @@ public class Stackerz extends Activity
                 routersCached = shPref.getString("Routers", routers);
                 routersList = RoutersParser.parseJSON(routersCached);
                 routersExtras.putSerializable("RoutersParsed", routersList);
+                routers = routersCached;
                 auth = 1;
             } else {
                 shPref.edit().putString("Routers", routers).commit();
@@ -354,6 +360,7 @@ public class Stackerz extends Activity
                 securityCached = shPref.getString("Security", security);
                 securityList = SecurityParser.parseJSON(securityCached);
                 securityExtras.putSerializable("SecurityParsed", securityList);
+                security = securityCached;
                 auth = 1;
             } else {
                 shPref.edit().putString("Security", security).commit();
