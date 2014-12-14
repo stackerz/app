@@ -152,6 +152,7 @@ public class Stackerz extends Activity
                 shPref.edit().putString("Instances", instances).commit();
                 novaList = NovaParser.parseJSON(instances);
                 novaExtras.putSerializable("NovaParsed", novaList);
+                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Instances", instances) != null) {
             instancesCached = shPref.getString("Instances", instances);
@@ -185,6 +186,7 @@ public class Stackerz extends Activity
                 shPref.edit().putString("Flavors", flavors).commit();
                 flavorsList = FlavorsParser.parseJSON(flavors);
                 flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
+                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Flavors", flavors) != null) {
             flavorsCached = shPref.getString("Flavors", flavors);
@@ -219,6 +221,7 @@ public class Stackerz extends Activity
                 shPref.edit().putString("Images", images).commit();
                 imagesList = ImagesParser.parseJSON(images);
                 glanceExtras.putSerializable("ImagesParsed", imagesList);
+                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Images", images) != null) {
             imagesCached = shPref.getString("Images", images);
@@ -252,6 +255,7 @@ public class Stackerz extends Activity
                 shPref.edit().putString("Networks", networks).commit();
                 networksList = NetworksParser.parseJSON(networks);
                 networksExtras.putSerializable("NetworksParsed", networksList);
+                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Networks", networks) != null) {
             networksCached = shPref.getString("Networks", networks);
@@ -286,6 +290,7 @@ public class Stackerz extends Activity
                 subnetsList = SubnetsParser.parseJSON(subnets);
                 subnetsExtras.putString("SubnetsJSON", subnets);
                 subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
+                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Subnets", subnets) != null) {
             subnetsCached = shPref.getString("Subnets", subnets);
@@ -319,6 +324,7 @@ public class Stackerz extends Activity
                 shPref.edit().putString("Routers", routers).commit();
                 routersList = RoutersParser.parseJSON(routers);
                 routersExtras.putSerializable("RoutersParsed", routersList);
+                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Routers", routers) != null) {
             routersCached = shPref.getString("Routers", routers);
@@ -353,6 +359,7 @@ public class Stackerz extends Activity
                 shPref.edit().putString("Security", security).commit();
                 securityList = SecurityParser.parseJSON(security);
                 securityExtras.putSerializable("SecurityParsed", securityList);
+                auth = 0;
             }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Security", security) != null) {
             securityCached = shPref.getString("Security", security);
