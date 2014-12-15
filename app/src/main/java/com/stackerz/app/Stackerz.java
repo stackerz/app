@@ -163,7 +163,6 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (novaList == null || novaList.size() == 0)) {
             emptyViewAlert();
-            auth = 0;
         }
         return novaExtras;
     }
@@ -200,7 +199,6 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (flavorsList == null || flavorsList.size() == 0)) {
             emptyViewAlert();
-            auth = 0;
         }
         NovaParser.shared().setFlavorList(flavorsList);
         return flavorsExtras;
@@ -238,7 +236,6 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (imagesList == null || imagesList.size() == 0)) {
             emptyViewAlert();
-            auth = 0;
         }
         return glanceExtras;
     }
@@ -275,7 +272,6 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (networksList == null || networksList.size() == 0)) {
             emptyViewAlert();
-            auth = 0;
         }
         return networksExtras;
     }
@@ -313,7 +309,6 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (subnetsList == null || subnetsList.size() == 0)) {
             emptyViewAlert();
-            auth = 0;
         }
         return subnetsExtras;
     }
@@ -350,7 +345,6 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (routersList == null || routersList.size() == 0)) {
             emptyViewAlert();
-            auth = 0;
         }
         return routersExtras;
     }
@@ -388,7 +382,6 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (securityList == null || securityList.size() == 0)) {
             emptyViewAlert();
-            auth = 0;
         }
         return securityExtras;
     }
