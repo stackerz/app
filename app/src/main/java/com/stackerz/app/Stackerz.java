@@ -241,8 +241,8 @@ public class Stackerz extends Activity
         String neutronURL = EndpointsParser.getNeutronURL();
         networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
         networksExtras = new Bundle();
-        if (auth == 0 && networks != null && !networks.contains("Bad URL")) {
-            if (networks.contains("com.android.volley.AuthFailureError")) {
+        if (networks != null && !networks.contains("Bad URL")) {
+            if (auth == 0 && networks.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 networksCached = shPref.getString("Networks", networks);
                 networksList = NetworksParser.parseJSON(networksCached);
@@ -342,8 +342,8 @@ public class Stackerz extends Activity
         String neutronURL = EndpointsParser.getNeutronURL();
         security = SecurityJSON.shared().receiveData(neutronURL, authToken);
         securityExtras = new Bundle();
-        if (auth == 0 && security != null && !security.contains("Bad URL")) {
-            if (security.contains("com.android.volley.AuthFailureError")) {
+        if (security != null && !security.contains("Bad URL")) {
+            if (auth == 0 && security.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 securityCached = shPref.getString("Security", security);
                 securityList = SecurityParser.parseJSON(securityCached);
