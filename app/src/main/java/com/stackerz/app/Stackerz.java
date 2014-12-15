@@ -147,7 +147,10 @@ public class Stackerz extends Activity
                 instancesCached = shPref.getString("Instances", instances);
                 novaList = NovaParser.parseJSON(instancesCached);
                 novaExtras.putSerializable("NovaParsed", novaList);
-                instances = instancesCached;
+                auth =1;
+                if (instancesCached != null){
+                    instances = instancesCached;
+                }
             } else {
                 shPref.edit().putString("Instances", instances).commit();
                 novaList = NovaParser.parseJSON(instances);
@@ -160,6 +163,7 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (novaList == null || novaList.size() == 0)) {
             emptyViewAlert();
+            auth = 0;
         }
         return novaExtras;
     }
@@ -180,7 +184,10 @@ public class Stackerz extends Activity
                 flavorsCached = shPref.getString("Flavors", flavors);
                 flavorsList = FlavorsParser.parseJSON(flavorsCached);
                 flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
-                flavors = flavorsCached;
+                auth =1;
+                if (flavorsCached != null){
+                    flavors = flavorsCached;
+                }
             } else {
                 shPref.edit().putString("Flavors", flavors).commit();
                 flavorsList = FlavorsParser.parseJSON(flavors);
@@ -193,6 +200,7 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (flavorsList == null || flavorsList.size() == 0)) {
             emptyViewAlert();
+            auth = 0;
         }
         NovaParser.shared().setFlavorList(flavorsList);
         return flavorsExtras;
@@ -214,7 +222,10 @@ public class Stackerz extends Activity
                 imagesCached = shPref.getString("Images", images);
                 imagesList = ImagesParser.parseJSON(imagesCached);
                 glanceExtras.putSerializable("ImagesParsed", imagesList);
-                images = imagesCached;
+                auth =1;
+                if (imagesCached != null){
+                    images = imagesCached;
+                }
             } else {
                 shPref.edit().putString("Images", images).commit();
                 imagesList = ImagesParser.parseJSON(images);
@@ -227,6 +238,7 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (imagesList == null || imagesList.size() == 0)) {
             emptyViewAlert();
+            auth = 0;
         }
         return glanceExtras;
     }
@@ -247,7 +259,10 @@ public class Stackerz extends Activity
                 networksCached = shPref.getString("Networks", networks);
                 networksList = NetworksParser.parseJSON(networksCached);
                 networksExtras.putSerializable("NetworksParsed", networksList);
-                networks = networksCached;
+                auth =1;
+                if (networksCached != null){
+                    networks = networksCached;
+                }
             } else {
                 shPref.edit().putString("Networks", networks).commit();
                 networksList = NetworksParser.parseJSON(networks);
@@ -260,6 +275,7 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (networksList == null || networksList.size() == 0)) {
             emptyViewAlert();
+            auth = 0;
         }
         return networksExtras;
     }
@@ -280,7 +296,10 @@ public class Stackerz extends Activity
                 subnetsCached = shPref.getString("Subnets", subnets);
                 subnetsList = SubnetsParser.parseJSON(subnetsCached);
                 subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
-                subnets = subnetsCached;
+                auth =1;
+                if (subnetsCached != null){
+                    subnets = subnetsCached;
+                }
             } else {
                 shPref.edit().putString("Subnets", subnets).commit();
                 subnetsList = SubnetsParser.parseJSON(subnets);
@@ -294,6 +313,7 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (subnetsList == null || subnetsList.size() == 0)) {
             emptyViewAlert();
+            auth = 0;
         }
         return subnetsExtras;
     }
@@ -314,7 +334,10 @@ public class Stackerz extends Activity
                 routersCached = shPref.getString("Routers", routers);
                 routersList = RoutersParser.parseJSON(routersCached);
                 routersExtras.putSerializable("RoutersParsed", routersList);
-                routers = routersCached;
+                auth =1;
+                if (routersCached != null){
+                    routers = routersCached;
+                }
             } else {
                 shPref.edit().putString("Routers", routers).commit();
                 routersList = RoutersParser.parseJSON(routers);
@@ -327,6 +350,7 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (routersList == null || routersList.size() == 0)) {
             emptyViewAlert();
+            auth = 0;
         }
         return routersExtras;
     }
@@ -348,7 +372,10 @@ public class Stackerz extends Activity
                 securityCached = shPref.getString("Security", security);
                 securityList = SecurityParser.parseJSON(securityCached);
                 securityExtras.putSerializable("SecurityParsed", securityList);
-                security = securityCached;
+                auth =1;
+                if (securityCached != null){
+                    security = securityCached;
+                }
             } else {
                 shPref.edit().putString("Security", security).commit();
                 securityList = SecurityParser.parseJSON(security);
@@ -361,6 +388,7 @@ public class Stackerz extends Activity
         }
         if (first == 0 && (securityList == null || securityList.size() == 0)) {
             emptyViewAlert();
+            auth = 0;
         }
         return securityExtras;
     }
