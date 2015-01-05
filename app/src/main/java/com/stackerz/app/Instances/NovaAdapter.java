@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -73,6 +75,7 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
     private boolean mIsViewExpanded = false;
     RelativeLayout main;
     RelativeLayout expanded;
+    ImageButton start,pause,stop,info;
 
     public String getId() {
         return id;
@@ -90,6 +93,10 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         this.host = (TextView) view.findViewById(R.id.hostInstance);
         main = (RelativeLayout)view.findViewById(R.id.layoutInstances);
         expanded = (RelativeLayout)view.findViewById(R.id.expandedInstances);
+        start = (ImageButton)view.findViewById(R.id.start_buttonInstances);
+        pause = (ImageButton)view.findViewById(R.id.pause_buttonInstances);
+        stop = (ImageButton)view.findViewById(R.id.stop_buttonInstances);
+        info = (ImageButton)view.findViewById(R.id.info_buttonInstances);
         expanded.setVisibility(View.GONE);
 
     }
