@@ -70,7 +70,7 @@ tools:context="com.stackerz.app.Instances.InstancesFragment">
     android:layout_alignParentRight="true"
     android:layout_alignWithParentIfMissing="false"
     android:alpha="0.1"/>
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageButton
@@ -85,7 +85,7 @@ tools:context="com.stackerz.app.Instances.InstancesFragment">
             android:clickable="true"
             android:stateListAnimator="@drawable/button_elevation"
             android:background="@drawable/fab_selector"/>
-    </FrameLayout>
+    </FrameLayout>-->
 
 </RelativeLayout>
 

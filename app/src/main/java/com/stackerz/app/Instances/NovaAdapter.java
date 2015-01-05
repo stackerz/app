@@ -50,10 +50,7 @@ public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
         HashMap<String, String> e = novaList.get(i);
         novaListRowHolder.name.setText(e.get(NAME));
         novaListRowHolder.status.setText(e.get(STATUS));
-        novaListRowHolder.flavor.setText("flavor: "+e.get(FLAVOR));
         novaListRowHolder.host.setText("host: "+e.get(HOST));
-        novaListRowHolder.netid.setText("network: "+e.get(NETID));
-        novaListRowHolder.addr.setText(e.get(ADDR));
         novaListRowHolder.setId(e.get(ID));
 
 
@@ -69,15 +66,12 @@ public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
 class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     protected TextView name;
     protected TextView status;
-    protected TextView flavor;
     protected TextView host;
-    protected TextView netid;
-    protected TextView addr;
     protected String id;
     private int mOriginalHeight = 0;
     private boolean mIsViewExpanded = false;
     RelativeLayout main;
-    LinearLayout expanded;
+    RelativeLayout expanded;
 
     public String getId() {
         return id;
@@ -92,12 +86,9 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         view.setOnClickListener(this);
         this.name = (TextView) view.findViewById(R.id.nameInstance);
         this.status = (TextView) view.findViewById(R.id.statusInstance);
-        this.flavor = (TextView) view.findViewById(R.id.flavorInstance);
         this.host = (TextView) view.findViewById(R.id.hostInstance);
-        this.netid = (TextView) view.findViewById(R.id.netInstance);
-        this.addr = (TextView) view.findViewById(R.id.addrInstance);
         main = (RelativeLayout)view.findViewById(R.id.layoutInstances);
-        expanded = (LinearLayout)view.findViewById(R.id.expandedInstances);
+        expanded = (RelativeLayout)view.findViewById(R.id.expandedInstances);
         expanded.setVisibility(View.GONE);
 
     }
@@ -109,11 +100,11 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         ValueAnimator valueAnimator;
         if (!mIsViewExpanded) {
             mIsViewExpanded = true;
-            valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 2.5));
+            valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 1.0));
             expanded.setVisibility(View.VISIBLE);
         } else {
             mIsViewExpanded = false;
-            valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 2.5), mOriginalHeight);
+            valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 1.0), mOriginalHeight);
             expanded.setVisibility(View.GONE);
         }
         valueAnimator.setDuration(300);
