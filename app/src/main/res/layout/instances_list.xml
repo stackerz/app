@@ -126,7 +126,7 @@
             android:layout_width="@dimen/diameter"
             android:layout_height="@dimen/diameter"
             android:tint="@android:color/white"
-            android:src="@android:drawable/ic_menu_delete"
+            android:src="@android:drawable/ic_lock_power_off"
             android:clickable="true"
             android:stateListAnimator="@drawable/button_elevation"
             android:layout_marginLeft="5dp"
