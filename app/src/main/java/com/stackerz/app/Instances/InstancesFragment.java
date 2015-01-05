@@ -64,7 +64,6 @@ public class InstancesFragment extends Fragment {
         Serializable parsedList = extras.getSerializable("NovaParsed");
         jsonList = (ArrayList<HashMap<String, String>>)parsedList;
         View rootView = inflater.inflate(R.layout.fragment_instances, container, false);
-        refreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.instancesSRL);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.instancesRV);
         return rootView;
     }
@@ -81,24 +80,8 @@ public class InstancesFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         NovaAdapter novaAdapter = new NovaAdapter(getActivity(),jsonList);
-        if (novaAdapter.getItemCount() != 0) {
-            recyclerView.setAdapter(novaAdapter);
-        }
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Fragment instancesFragment = getFragmentManager().findFragmentById(R.id.container);
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.remove(instancesFragment);
-                fragmentTransaction.commit();
-                refreshLayout.measure(20, 20);
-                refreshLayout.setRefreshing(true);
-
-            }
-        });
-        refreshLayout.setColorSchemeColors(Color.RED, Color.GRAY, Color.RED, Color.GRAY);
-
-
+        recyclerView.setAdapter(novaAdapter);
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override

@@ -58,22 +58,6 @@ public class ImagesFragment extends Fragment {
         jsonList = (ArrayList<HashMap<String, String>>)parsedList;
         View rootView = inflater.inflate(R.layout.fragment_images, container, false);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.imagesRV);
-        if (recyclerView == null){
-            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-            alert.setTitle("Token Expired");
-            alert.setMessage("Authentication Token expired! Please login again.")
-                    .setNeutralButton("Connect", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(getActivity(), Login.class);
-                            startActivity(intent);
-                            getActivity().finish();
-                            getFragmentManager().beginTransaction().remove(ImagesFragment.this).commit();
-                        }
-                    });
-            AlertDialog alertDialog = alert.create();
-            alertDialog.show();
-        }
         return rootView;
     }
 
