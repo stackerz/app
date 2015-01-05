@@ -140,7 +140,7 @@
             android:layout_width="@dimen/diameter"
             android:layout_height="@dimen/diameter"
             android:tint="@android:color/white"
-            android:src="@android:drawable/ic_menu_info_details"
+            android:src="@android:drawable/ic_dialog_info"
             android:layout_marginLeft="5dp"
             android:clickable="true"
             android:stateListAnimator="@drawable/button_elevation"
