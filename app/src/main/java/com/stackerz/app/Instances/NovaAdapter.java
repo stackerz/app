@@ -1,5 +1,6 @@
 package com.stackerz.app.Instances;
 
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Context;
@@ -101,11 +102,18 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         if (!mIsViewExpanded) {
             mIsViewExpanded = true;
             valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 1.0));
+            ObjectAnimator anim = ObjectAnimator.ofFloat(expanded, "alpha", 0f, 1f);
+            anim.setDuration(1000);
+            anim.start();
             expanded.setVisibility(View.VISIBLE);
         } else {
             mIsViewExpanded = false;
             valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 1.0), mOriginalHeight);
+            ObjectAnimator anim = ObjectAnimator.ofFloat(expanded, "alpha", 1f, 0f);
+            anim.setDuration(1000);
+            anim.start();
             expanded.setVisibility(View.GONE);
+
         }
         valueAnimator.setDuration(300);
         valueAnimator.setInterpolator(new LinearInterpolator());
