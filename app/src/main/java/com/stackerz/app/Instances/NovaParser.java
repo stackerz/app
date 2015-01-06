@@ -32,8 +32,8 @@ public class NovaParser extends Activity{
     public static final String NAME = "name";
     public static final String STATUS = "status";
     public static final String FLAVOR = "flavor";
-    public static final String NETID = "netid";
-    public static final String ADDR = "addr";
+    public static final String NETID = "network";
+    public static final String ADDR = "address";
     public static final String HOST = "host";
 
     public String authToken;
@@ -81,21 +81,11 @@ public class NovaParser extends Activity{
                 novaInstance.setHost(objsrv.getString("OS-EXT-SRV-ATTR:host"));
                 String id = novaInstance.getId();
                 String netDetail = NovaJSON.shared().receiveIP(id);
-                if (netDetail != null) {
-                    tempList = parseNet(netDetail);
-                }
-                for (int j = 0; j < tempList.size(); j++) {
-                    novaInstance.setNetid(tempList.get(j).get(NETID));
-                    novaInstance.setAddr(tempList.get(j).get(ADDR));
-                }
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NAME, novaInstance.getName());
                 map.put(ID, novaInstance.getId());
                 map.put(STATUS, novaInstance.getStatus());
-                map.put(FLAVOR, novaInstance.getFlavor());
                 map.put(HOST, novaInstance.getHost());
-                map.put(NETID, novaInstance.getNetid());
-                map.put(ADDR, novaInstance.getAddr());
                 jsonList.add(map);
             }
         } catch (JSONException e) {
