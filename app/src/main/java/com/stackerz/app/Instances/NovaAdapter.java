@@ -104,17 +104,14 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
             public void onClick(View v) {
                 ArrayList<HashMap<String, String>> tempList = new ArrayList<HashMap<String, String>>();
                 String instanceDetail = NovaJSON.shared().receiveDetail(getId());
-                String netDetail = NovaJSON.shared().receiveIP(getId());
                 Dialog dialog = new Dialog(v.getContext());
                 dialog.setContentView(R.layout.instances_info);
                 TextView flavor = (TextView) dialog.findViewById(R.id.flavorInstance);
                 TextView net = (TextView) dialog.findViewById(R.id.netInstance);
                 dialog.setTitle(name.getText() + " Details");
                 if (instanceDetail != null) {
-                    flavor.setText(" flavor : " + NovaParser.shared().parseFlavor(instanceDetail));
-                }
-                if (netDetail != null) {
-                    tempList = NovaParser.shared().parseNet(netDetail);
+                    flavor.setText(" \u2022 flavor : " + NovaParser.shared().parseFlavor(instanceDetail));
+                    tempList = NovaParser.shared().parseNet(instanceDetail);
                     String temp = tempList.toString();
                     temp = temp.replace("["," ");
                     temp = temp.replace("{","");
@@ -122,6 +119,9 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
                     temp = temp.replace("}","");
                     temp = temp.replace(",","\n");
                     temp = temp.replace("="," : ");
+                    temp = temp.replace("address","• address");
+                    temp = temp.replace("network","  network");
+                    temp = temp.replace("type","  type");
                     net.setText(temp);
 
                 }

@@ -34,6 +34,7 @@ public class NovaParser extends Activity{
     public static final String FLAVOR = "flavor";
     public static final String NETID = "network";
     public static final String ADDR = "address";
+    public static final String TYPE = "type";
     public static final String HOST = "host";
 
     public String authToken;
@@ -137,11 +138,12 @@ public class NovaParser extends Activity{
 
     public static ArrayList<HashMap<String, String>> parseNet(String netDetail){
         ArrayList<HashMap<String, String>> netList = new ArrayList<HashMap<String, String>>();
-        String netId = null, addr = null;
+        String netId = null, addr = null, addrType = null;
         JSONObject net = null;
         try {
             net = new JSONObject(netDetail);
-            JSONObject addresses = net.getJSONObject("addresses");
+            JSONObject server = net.getJSONObject("server");
+            JSONObject addresses = server.getJSONObject("addresses");
             Iterator<String> keys=addresses.keys();
             while(keys.hasNext())
             {
@@ -153,9 +155,11 @@ public class NovaParser extends Activity{
             for (int i = 0; i < network.length(); i++) {
                 JSONObject objnet = network.getJSONObject(i);
                 addr = objnet.getString("addr");
+                addrType = objnet.getString("OS-EXT-IPS:type");
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NETID, netId);
                 map.put(ADDR, addr);
+                map.put(TYPE, addrType);
                 netList.add(map);
             }
             }
