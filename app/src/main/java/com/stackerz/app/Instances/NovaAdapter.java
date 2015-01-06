@@ -93,11 +93,21 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         this.host = (TextView) view.findViewById(R.id.hostInstance);
         main = (RelativeLayout)view.findViewById(R.id.layoutInstances);
         expanded = (RelativeLayout)view.findViewById(R.id.expandedInstances);
-        start = (ImageButton)view.findViewById(R.id.start_buttonInstances);
-        pause = (ImageButton)view.findViewById(R.id.pause_buttonInstances);
-        stop = (ImageButton)view.findViewById(R.id.stop_buttonInstances);
-        info = (ImageButton)view.findViewById(R.id.info_buttonInstances);
+        this.start = (ImageButton)view.findViewById(R.id.start_buttonInstances);
+        this.pause = (ImageButton)view.findViewById(R.id.pause_buttonInstances);
+        this.stop = (ImageButton)view.findViewById(R.id.stop_buttonInstances);
+        this.info = (ImageButton)view.findViewById(R.id.info_buttonInstances);
         expanded.setVisibility(View.GONE);
+
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(v.getContext());
+                dialog.setContentView(R.layout.instances_list);
+                dialog.setTitle(name.getText() + " Details");
+                dialog.show();
+            }
+        });
 
     }
 
