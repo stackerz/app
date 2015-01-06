@@ -123,8 +123,8 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
                     netTemp = netTemp.replace(",","\n");
                     netTemp = netTemp.replace("="," : ");
                     netTemp = netTemp.replace("address","• address");
-                    netTemp = netTemp.replace("network","   network");
-                    netTemp = netTemp.replace("type","   type");
+                    netTemp = netTemp.replace("network","     network");
+                    netTemp = netTemp.replace("type","     type");
                     net.setText(netTemp);
                     String secTemp = secList.toString();
                     secTemp = secTemp.replace("["," ");
@@ -135,7 +135,6 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
                     secTemp = secTemp.replace("="," : ");
                     secTemp = secTemp.replace("security group","• security group");
                     sec.setText(secTemp);
-
                 }
                 dialog.show();
             }
