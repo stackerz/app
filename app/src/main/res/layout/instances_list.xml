@@ -91,16 +91,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:gravity="right"
         android:id="@+id/expandedInstances"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true">
         <ImageButton
             android:id="@+id/start_buttonInstances"
-            android:layout_width="@dimen/diameter"
-            android:layout_height="@dimen/diameter"
-            android:layout_marginLeft="75dp"
+            android:layout_width="@dimen/diameter_small"
+            android:layout_height="@dimen/diameter_small"
+            android:layout_marginLeft="5dp"
             android:layout_marginBottom="10dp"
             android:tint="@android:color/white"
             android:src="@android:drawable/ic_media_play"
@@ -109,8 +110,8 @@
             android:background="@drawable/fab_selector"/>
         <ImageButton
             android:id="@+id/pause_buttonInstances"
-            android:layout_width="@dimen/diameter"
-            android:layout_height="@dimen/diameter"
+            android:layout_width="@dimen/diameter_small"
+            android:layout_height="@dimen/diameter_small"
             android:tint="@android:color/white"
             android:src="@android:drawable/ic_media_pause"
             android:layout_marginLeft="5dp"
@@ -123,8 +124,8 @@
             android:layout_toEndOf="@+id/start_buttonInstances" />
         <ImageButton
             android:id="@+id/stop_buttonInstances"
-            android:layout_width="@dimen/diameter"
-            android:layout_height="@dimen/diameter"
+            android:layout_width="@dimen/diameter_small"
+            android:layout_height="@dimen/diameter_small"
             android:tint="@android:color/white"
             android:src="@android:drawable/ic_lock_power_off"
             android:clickable="true"
@@ -137,11 +138,12 @@
             android:layout_toEndOf="@+id/pause_buttonInstances" />
         <ImageButton
             android:id="@+id/info_buttonInstances"
-            android:layout_width="@dimen/diameter"
-            android:layout_height="@dimen/diameter"
+            android:layout_width="@dimen/diameter_small"
+            android:layout_height="@dimen/diameter_small"
             android:tint="@android:color/white"
             android:src="@android:drawable/ic_dialog_info"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
             android:clickable="true"
             android:stateListAnimator="@drawable/button_elevation"
             android:background="@drawable/fab_selector"
