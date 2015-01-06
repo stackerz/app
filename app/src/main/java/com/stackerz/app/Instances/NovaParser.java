@@ -36,6 +36,7 @@ public class NovaParser extends Activity{
     public static final String ADDR = "address";
     public static final String TYPE = "type";
     public static final String HOST = "host";
+    public static final String SECGROUP = "security group";
 
     public String authToken;
     public String novaURL;
@@ -170,6 +171,31 @@ public class NovaParser extends Activity{
         }
 
         return netList;
+    }
+
+    public static ArrayList<HashMap<String, String>> parseSec(String secDetail){
+        ArrayList<HashMap<String, String>> secList = new ArrayList<HashMap<String, String>>();
+        String secGroup = null;
+        JSONObject sec = null;
+        try {
+            sec = new JSONObject(secDetail);
+            JSONObject server = sec.getJSONObject("server");
+            JSONArray secGroups = server.getJSONArray("security_groups");
+            for (int i = 0; i < secGroups.length(); i++) {
+                JSONObject objsec = secGroups.getJSONObject(i);
+                secGroup = objsec.getString("name");
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put(SECGROUP, secGroup);
+                secList.add(map);
+            }
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return secList;
     }
 
 }

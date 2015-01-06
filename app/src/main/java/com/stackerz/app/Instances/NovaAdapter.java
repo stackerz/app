@@ -102,27 +102,39 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<HashMap<String, String>> tempList = new ArrayList<HashMap<String, String>>();
+                ArrayList<HashMap<String, String>> netList = new ArrayList<HashMap<String, String>>();
+                ArrayList<HashMap<String, String>> secList = new ArrayList<HashMap<String, String>>();
                 String instanceDetail = NovaJSON.shared().receiveDetail(getId());
                 Dialog dialog = new Dialog(v.getContext());
                 dialog.setContentView(R.layout.instances_info);
                 TextView flavor = (TextView) dialog.findViewById(R.id.flavorInstance);
                 TextView net = (TextView) dialog.findViewById(R.id.netInstance);
+                TextView sec = (TextView) dialog.findViewById(R.id.secInstance);
                 dialog.setTitle(name.getText() + " Details");
                 if (instanceDetail != null) {
                     flavor.setText(" \u2022 flavor : " + NovaParser.shared().parseFlavor(instanceDetail));
-                    tempList = NovaParser.shared().parseNet(instanceDetail);
-                    String temp = tempList.toString();
-                    temp = temp.replace("["," ");
-                    temp = temp.replace("{","");
-                    temp = temp.replace("]","");
-                    temp = temp.replace("}","");
-                    temp = temp.replace(",","\n");
-                    temp = temp.replace("="," : ");
-                    temp = temp.replace("address","• address");
-                    temp = temp.replace("network","   network");
-                    temp = temp.replace("type","   type");
-                    net.setText(temp);
+                    netList = NovaParser.shared().parseNet(instanceDetail);
+                    secList = NovaParser.shared().parseSec(instanceDetail);
+                    String netTemp = netList.toString();
+                    netTemp = netTemp.replace("["," ");
+                    netTemp = netTemp.replace("{","");
+                    netTemp = netTemp.replace("]","");
+                    netTemp = netTemp.replace("}","");
+                    netTemp = netTemp.replace(",","\n");
+                    netTemp = netTemp.replace("="," : ");
+                    netTemp = netTemp.replace("address","• address");
+                    netTemp = netTemp.replace("network","   network");
+                    netTemp = netTemp.replace("type","   type");
+                    net.setText(netTemp);
+                    String secTemp = secList.toString();
+                    secTemp = secTemp.replace("["," ");
+                    secTemp = secTemp.replace("{","");
+                    secTemp = secTemp.replace("]","");
+                    secTemp = secTemp.replace("}","");
+                    secTemp = secTemp.replace(",","\n");
+                    secTemp = secTemp.replace("="," : ");
+                    secTemp = secTemp.replace("security group","• security group");
+                    sec.setText(secTemp);
 
                 }
                 dialog.show();

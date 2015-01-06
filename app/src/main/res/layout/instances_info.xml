@@ -34,11 +34,22 @@
         android:id="@+id/netInstance"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="net"
+        android:text="network details"
         android:textColor="@android:color/white"
         android:textSize="@dimen/abc_text_size_small_material"
         android:paddingLeft="5dp"
         android:layout_below="@+id/flavorInstance"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    <TextView
+        android:id="@+id/secInstance"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="security groups"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/abc_text_size_small_material"
+        android:paddingLeft="5dp"
+        android:layout_below="@+id/netInstance"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="10dp"/>
