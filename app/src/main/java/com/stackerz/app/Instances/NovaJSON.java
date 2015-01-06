@@ -1,6 +1,7 @@
 package com.stackerz.app.Instances;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -140,6 +141,7 @@ public class NovaJSON extends Activity {
         final String authToken = getAuth();
         String novaURL = getNova();
         novaURL = novaURL+"/servers/"+id;
+        //final ProgressDialog progressDialog = new ProgressDialog(getActivity());
 
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, novaURL, null,
@@ -148,6 +150,7 @@ public class NovaJSON extends Activity {
                     public void onResponse(JSONObject response) {
                         Log.d("Nova on Response", response.toString());
                         setNovaJSONdetail(response.toString());
+                        //progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
@@ -155,6 +158,7 @@ public class NovaJSON extends Activity {
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d("Nova on Error", "Error: " + error.getMessage());
                         setNovaJSONdetail(error.toString());
+                        //progressDialog.dismiss();
                     }
                 }
         ) {
@@ -173,6 +177,8 @@ public class NovaJSON extends Activity {
         queue = VolleySingleton.getInstance(this).getRequestQueue();
         //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
         queue.add(getRequest);
+        //progressDialog.setMessage("Loading...");
+       // progressDialog.show();
     }
 
     public void startJSON(String id){
@@ -197,6 +203,86 @@ public class NovaJSON extends Activity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.d("Start", "Error: " + error.getMessage());
+
+                    }
+                }
+        ) {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("X-Auth-Token", authToken);
+                params.put("User-Agent", "stackerz");
+                params.put("Accept", "application/json");
+                params.put("Content-Type", "application/json; charset=utf-8");
+                return params;
+            }
+
+        };
+        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        queue.add(getRequest);
+    }
+
+    public void pauseJSON(String id){
+        final String authToken = getAuth();
+        String novaURL = getNova();
+        novaURL = novaURL+"/servers/"+id+"/action";
+        String start = "{ \"pause\": null }";
+        JSONObject action  = null;
+        try {
+            action = new JSONObject(start);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST,novaURL,action,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Pause", response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d("Pause", "Error: " + error.getMessage());
+
+                    }
+                }
+        ) {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("X-Auth-Token", authToken);
+                params.put("User-Agent", "stackerz");
+                params.put("Accept", "application/json");
+                params.put("Content-Type", "application/json; charset=utf-8");
+                return params;
+            }
+
+        };
+        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        queue.add(getRequest);
+    }
+
+    public void unpauseJSON(String id){
+        final String authToken = getAuth();
+        String novaURL = getNova();
+        novaURL = novaURL+"/servers/"+id+"/action";
+        String start = "{ \"unpause\": null }";
+        JSONObject action  = null;
+        try {
+            action = new JSONObject(start);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST,novaURL,action,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Unpause", response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d("Unpause", "Error: " + error.getMessage());
 
                     }
                 }

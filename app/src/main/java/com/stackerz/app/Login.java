@@ -259,8 +259,7 @@ public class Login extends Activity implements View.OnClickListener{
         final String tnt = shPref.getString("Tenant", tenant);
         final String json = "{\"auth\": {\"tenantName\": \"" + tnt + "\", \"passwordCredentials\": {\"username\": \"" + user + "\", \"password\": \"" + pass + "\"}}}";
         final ProgressDialog pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Loading...");
-        pDialog.show();
+
 
         //Handler handler = new Handler();
         //handler.postDelayed(new Runnable() {
@@ -297,7 +296,7 @@ public class Login extends Activity implements View.OnClickListener{
                         setEndpoints(response);
                         setEndpointStr(response.toString());
                         reachable = true;
-                        pDialog.hide();
+                        pDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
@@ -308,7 +307,7 @@ public class Login extends Activity implements View.OnClickListener{
                                 "Cannot connect, wrong user name or password. Please try to login again", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                         toast.show();
-                        pDialog.hide();
+                        pDialog.dismiss();
                         reachable = false;
                         finishActivity(1);
                         Intent intent = new Intent(Login.this, Connect.class);
@@ -327,12 +326,11 @@ public class Login extends Activity implements View.OnClickListener{
 
         };
 
-        //RequestQueue queue = Volley.newRequestQueue(this);
-        //queue.add(getRequest);
 
         RequestQueue queue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
-        //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
         queue.add(getRequest);
+        pDialog.setMessage("Loading...");
+        pDialog.show();
     }
 
 

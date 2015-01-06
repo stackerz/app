@@ -143,8 +143,36 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(final View v) {
+                String currentStatus;
+                currentStatus = status.getText().toString();
+                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                alert.setTitle("Pause/Unpause Instance");
+                if (currentStatus.contains("pause")) {
+                    alert.setMessage("Do you want to unpause the instance " + name.getText() + " ? Use the same button to pause it again if necessary.")
+                            .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    NovaJSON.shared().unpauseJSON(getId());
+                                    Toast.makeText(v.getContext(), "Unpause Request sent to server", Toast.LENGTH_LONG).show();
+                                    status.setText("unpause requested");
+                                }
+                            });
+                    AlertDialog alertDialog = alert.create();
+                    alertDialog.show();
+                }else {
+                    alert.setMessage("Do you want to pause the instance " + name.getText() + " ? Use the same button to unpause it if necessary.")
+                            .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    NovaJSON.shared().pauseJSON(getId());
+                                    Toast.makeText(v.getContext(), "Pause Request sent to server", Toast.LENGTH_LONG).show();
+                                    status.setText("pause requested");
+                                }
+                            });
+                    AlertDialog alertDialog = alert.create();
+                    alertDialog.show();
+                }
             }
         });
 
