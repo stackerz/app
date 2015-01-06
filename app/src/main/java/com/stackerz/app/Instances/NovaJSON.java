@@ -102,13 +102,6 @@ public class NovaJSON extends Activity {
         return novaJSONdetail;
     }
 
-    public String receiveIP (String id){
-        setId(id);
-        getJSONip();
-        getNovaJSONip();
-        return novaJSONip;
-    }
-
     public void getJSON() {
         final String authToken = getAuth();
         String novaURL = getNova();
@@ -187,44 +180,7 @@ public class NovaJSON extends Activity {
         queue.add(getRequest);
     }
 
-    public void getJSONip() {
-        final String authToken = getAuth();
-        String novaURL = getNova();
-        novaURL = novaURL+"/servers/"+id+"/ips";
 
-
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, novaURL, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Nova on Response", response.toString());
-                        setNovaJSONip(response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d("Nova on Error", "Error: " + error.getMessage());
-                        setNovaJSONip(error.toString());
-                    }
-                }
-        ) {
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("X-Auth-Token", authToken);
-                params.put("User-Agent", "stackerz");
-                params.put("Accept", "application/json");
-                params.put("Content-Type", "application/json; charset=utf-8");
-                return params;
-            }
-
-        };
-
-
-        queue = VolleySingleton.getInstance(this).getRequestQueue();
-        //VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
-        queue.add(getRequest);
-    }
 }
 
 

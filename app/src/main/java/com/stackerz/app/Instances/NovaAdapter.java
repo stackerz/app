@@ -120,8 +120,8 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
                     temp = temp.replace(",","\n");
                     temp = temp.replace("="," : ");
                     temp = temp.replace("address","• address");
-                    temp = temp.replace("network","  network");
-                    temp = temp.replace("type","  type");
+                    temp = temp.replace("network","   network");
+                    temp = temp.replace("type","   type");
                     net.setText(temp);
 
                 }
