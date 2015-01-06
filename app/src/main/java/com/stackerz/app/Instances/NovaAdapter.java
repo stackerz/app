@@ -102,9 +102,14 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String instanceDetail = NovaJSON.shared().receiveDetail(getId());
                 Dialog dialog = new Dialog(v.getContext());
-                dialog.setContentView(R.layout.instances_list);
+                dialog.setContentView(R.layout.instances_info);
+                TextView flavor = (TextView) dialog.findViewById(R.id.flavorInstance);
                 dialog.setTitle(name.getText() + " Details");
+                if (instanceDetail != null) {
+                    flavor.setText(NovaParser.shared().parseFlavor(instanceDetail));
+                }
                 dialog.show();
             }
         });

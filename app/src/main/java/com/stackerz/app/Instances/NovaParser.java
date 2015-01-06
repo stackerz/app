@@ -80,10 +80,6 @@ public class NovaParser extends Activity{
                 novaInstance.setStatus(objsrv.getString("OS-EXT-STS:vm_state"));
                 novaInstance.setHost(objsrv.getString("OS-EXT-SRV-ATTR:host"));
                 String id = novaInstance.getId();
-                String instanceDetail = NovaJSON.shared().receiveDetail(id);
-                if (instanceDetail != null) {
-                    novaInstance.setFlavor(parseFlavor(instanceDetail));
-                }
                 String netDetail = NovaJSON.shared().receiveIP(id);
                 if (netDetail != null) {
                     tempList = parseNet(netDetail);
