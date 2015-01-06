@@ -43,7 +43,7 @@ public class NovaParser extends Activity{
 
     public SharedPreferences shPref;
 
-    public ArrayList<HashMap<String, String>> flavorList;
+    public ArrayList<HashMap<String, String>> flavorList, imagesList;
 
     public static NovaParser parser = null;
 
@@ -65,6 +65,14 @@ public class NovaParser extends Activity{
 
     public ArrayList<HashMap<String, String>> getFlavorList(){
         return flavorList;
+    }
+
+    public ArrayList<HashMap<String, String>> getImagesList() {
+        return imagesList;
+    }
+
+    public void setImagesList(ArrayList<HashMap<String, String>> imagesList) {
+        this.imagesList = imagesList;
     }
 
     public static ArrayList<HashMap<String, String>> parseJSON(String novaJSON){
@@ -102,6 +110,30 @@ public class NovaParser extends Activity{
 
 
         return jsonList;
+    }
+
+    public static String parseImages(String imagesDetail){
+        ArrayList<HashMap<String, String>> imagesList = NovaParser.shared().getImagesList();
+        String temp = null;
+        JSONObject novaDetail = null;
+        try {
+            novaDetail = new JSONObject(imagesDetail);
+            JSONObject server = novaDetail.getJSONObject("server");
+            JSONObject image = server.getJSONObject("image");
+            if (imagesList !=null){
+                temp = image.getString("id");
+                for (Map<String,String> map : imagesList) {
+                    if (map.containsValue(temp)) {
+                        temp = map.get(NAME);
+                    }
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return temp;
     }
 
     public static String parseFlavor(String instanceDetail){

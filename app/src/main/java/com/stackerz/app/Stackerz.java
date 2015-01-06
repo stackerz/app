@@ -237,6 +237,7 @@ public class Stackerz extends Activity
         if (first == 0 && (imagesList == null || imagesList.size() == 0)) {
             emptyViewAlert();
         }
+        NovaParser.shared().setImagesList(imagesList);
         return glanceExtras;
     }
 

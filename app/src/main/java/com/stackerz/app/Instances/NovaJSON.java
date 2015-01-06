@@ -10,8 +10,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.stackerz.app.Endpoints.EndpointsParser;
 import com.stackerz.app.System.VolleySingleton;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -79,13 +81,6 @@ public class NovaJSON extends Activity {
         this.novaJSONdetail = novaJSONdetail;
     }
 
-    public String getNovaJSONip() {
-        return novaJSONip;
-    }
-
-    public void setNovaJSONip(String novaJSONip) {
-        this.novaJSONip = novaJSONip;
-    }
 
     public String receiveData (String novaURL, String authToken){
         setNova(novaURL);
@@ -180,6 +175,85 @@ public class NovaJSON extends Activity {
         queue.add(getRequest);
     }
 
+    public void startJSON(String id){
+        final String authToken = getAuth();
+        String novaURL = getNova();
+        novaURL = novaURL+"/servers/"+id+"/action";
+        String start = "{ \"os-start\": null }";
+        JSONObject action  = null;
+        try {
+            action = new JSONObject(start);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST,novaURL,action,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Start", response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d("Start", "Error: " + error.getMessage());
+
+                    }
+                }
+        ) {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("X-Auth-Token", authToken);
+                params.put("User-Agent", "stackerz");
+                params.put("Accept", "application/json");
+                params.put("Content-Type", "application/json; charset=utf-8");
+                return params;
+            }
+
+        };
+        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        queue.add(getRequest);
+    }
+
+    public void stopJSON(String id){
+        final String authToken = getAuth();
+        String novaURL = getNova();
+        novaURL = novaURL+"/servers/"+id+"/action";
+        String stop = "{ \"os-stop\": null }";
+        JSONObject action  = null;
+        try {
+            action = new JSONObject(stop);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST,novaURL,action,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Start", response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d("Start", "Error: " + error.getMessage());
+
+                    }
+                }
+        ) {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("X-Auth-Token", authToken);
+                params.put("User-Agent", "stackerz");
+                params.put("Accept", "application/json");
+                params.put("Content-Type", "application/json; charset=utf-8");
+                return params;
+            }
+
+        };
+        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        queue.add(getRequest);
+    }
 
 }
 

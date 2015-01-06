@@ -2,9 +2,14 @@ package com.stackerz.app.Instances;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +19,26 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.stackerz.app.Connect;
+import com.stackerz.app.Endpoints.EndpointsParser;
 import com.stackerz.app.R;
+import com.stackerz.app.System.VolleySingleton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ed on 19/11/14.
@@ -64,6 +84,7 @@ public class NovaAdapter extends RecyclerView.Adapter<NovaListRowHolder> {
     public int getItemCount() {
         return (null != novaList ? novaList.size() : 0);
     }
+
 }
 
 class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -99,6 +120,53 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         this.info = (ImageButton)view.findViewById(R.id.info_buttonInstances);
         expanded.setVisibility(View.GONE);
 
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                alert.setTitle("Start Instance");
+                alert.setMessage("Do you want to start the instance "+name.getText()+" ?")
+                        .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                NovaJSON.shared().startJSON(getId());
+                                Toast.makeText(v.getContext(), "Start Request sent to server", Toast.LENGTH_LONG).show();
+                                status.setText("start requested");
+                            }
+                        });
+                AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+
+            }
+        });
+
+        pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                alert.setTitle("Stop Instance");
+                alert.setMessage("Do you want to stop the instance "+name.getText()+" ?")
+                        .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                NovaJSON.shared().stopJSON(getId());
+                                Toast.makeText(v.getContext(), "Stop Request sent to server", Toast.LENGTH_LONG).show();
+                                status.setText("stop requested");
+                            }
+                        });
+                AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+            }
+        });
+
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,11 +175,13 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
                 String instanceDetail = NovaJSON.shared().receiveDetail(getId());
                 Dialog dialog = new Dialog(v.getContext());
                 dialog.setContentView(R.layout.instances_info);
+                TextView image = (TextView) dialog.findViewById(R.id.imageInstance);
                 TextView flavor = (TextView) dialog.findViewById(R.id.flavorInstance);
                 TextView net = (TextView) dialog.findViewById(R.id.netInstance);
                 TextView sec = (TextView) dialog.findViewById(R.id.secInstance);
                 dialog.setTitle(name.getText() + " Details");
                 if (instanceDetail != null) {
+                    image.setText(" \u2022 image : " + NovaParser.shared().parseImages(instanceDetail));
                     flavor.setText(" \u2022 flavor : " + NovaParser.shared().parseFlavor(instanceDetail));
                     netList = NovaParser.shared().parseNet(instanceDetail);
                     secList = NovaParser.shared().parseSec(instanceDetail);
@@ -175,5 +245,7 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         valueAnimator.start();
 
     }
+
+
 
 }
