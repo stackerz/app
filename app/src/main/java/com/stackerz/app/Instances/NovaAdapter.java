@@ -111,11 +111,18 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
                 TextView net = (TextView) dialog.findViewById(R.id.netInstance);
                 dialog.setTitle(name.getText() + " Details");
                 if (instanceDetail != null) {
-                    flavor.setText("flavor=" + NovaParser.shared().parseFlavor(instanceDetail));
+                    flavor.setText(" flavor : " + NovaParser.shared().parseFlavor(instanceDetail));
                 }
                 if (netDetail != null) {
                     tempList = NovaParser.shared().parseNet(netDetail);
-                    net.setText(tempList.toString());
+                    String temp = tempList.toString();
+                    temp = temp.replace("["," ");
+                    temp = temp.replace("{","");
+                    temp = temp.replace("]","");
+                    temp = temp.replace("}","");
+                    temp = temp.replace(",","\n");
+                    temp = temp.replace("="," : ");
+                    net.setText(temp);
 
                 }
                 dialog.show();
