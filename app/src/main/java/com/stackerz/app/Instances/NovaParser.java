@@ -79,8 +79,6 @@ public class NovaParser extends Activity{
                 novaInstance.setId(objsrv.getString("id"));
                 novaInstance.setStatus(objsrv.getString("OS-EXT-STS:vm_state"));
                 novaInstance.setHost(objsrv.getString("OS-EXT-SRV-ATTR:host"));
-                String id = novaInstance.getId();
-                String netDetail = NovaJSON.shared().receiveIP(id);
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put(NAME, novaInstance.getName());
                 map.put(ID, novaInstance.getId());
