@@ -96,7 +96,7 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
     private boolean mIsViewExpanded = false;
     RelativeLayout main;
     RelativeLayout expanded;
-    ImageButton start,pause,stop,info;
+    ImageButton start,pause,stop,snapshot,info;
 
     public String getId() {
         return id;
@@ -117,6 +117,7 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
         this.start = (ImageButton)view.findViewById(R.id.start_buttonInstances);
         this.pause = (ImageButton)view.findViewById(R.id.pause_buttonInstances);
         this.stop = (ImageButton)view.findViewById(R.id.stop_buttonInstances);
+        this.snapshot = (ImageButton)view.findViewById(R.id.snapshot_buttonInstances);
         this.info = (ImageButton)view.findViewById(R.id.info_buttonInstances);
         expanded.setVisibility(View.GONE);
 
@@ -192,6 +193,26 @@ class NovaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickL
                         });
                 AlertDialog alertDialog = alert.create();
                 alertDialog.show();
+            }
+        });
+
+        snapshot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                alert.setTitle("Take Snapshot");
+                alert.setMessage("Do you want to take a snapshot of the instance "+name.getText()+" ?")
+                        .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                NovaJSON.shared().backupJSON(getId(),name.getText().toString());
+                                Toast.makeText(v.getContext(), "Snapshot Request sent to server", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+
             }
         });
 

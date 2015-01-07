@@ -316,13 +316,53 @@ public class NovaJSON extends Activity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Start", response.toString());
+                        Log.d("Stop", response.toString());
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d("Start", "Error: " + error.getMessage());
+                        VolleyLog.d("Stop", "Error: " + error.getMessage());
+
+                    }
+                }
+        ) {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("X-Auth-Token", authToken);
+                params.put("User-Agent", "stackerz");
+                params.put("Accept", "application/json");
+                params.put("Content-Type", "application/json; charset=utf-8");
+                return params;
+            }
+
+        };
+        queue = VolleySingleton.getInstance(this).getRequestQueue();
+        queue.add(getRequest);
+    }
+
+    public void backupJSON(String id, String name){
+        final String authToken = getAuth();
+        String novaURL = getNova();
+        novaURL = novaURL+"/servers/"+id+"/action";
+        String stop = "{ \"createBackup\": { \"name\": \""+name+"Backup\", \"backup_type\": \"daily\", \"rotation\": 1 }}}";
+        JSONObject action  = null;
+        try {
+            action = new JSONObject(stop);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST,novaURL,action,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Backup", response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d("Backup", "Error: " + error.getMessage());
 
                     }
                 }

@@ -123,6 +123,20 @@
             android:layout_toRightOf="@+id/start_buttonInstances"
             android:layout_toEndOf="@+id/start_buttonInstances" />
         <ImageButton
+            android:id="@+id/snapshot_buttonInstances"
+            android:layout_width="@dimen/diameter_small"
+            android:layout_height="@dimen/diameter_small"
+            android:tint="@android:color/white"
+            android:src="@android:drawable/ic_menu_camera"
+            android:clickable="true"
+            android:stateListAnimator="@drawable/button_elevation"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/fab_selector"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/stop_buttonInstances"
+            />
+        <ImageButton
             android:id="@+id/stop_buttonInstances"
             android:layout_width="@dimen/diameter_small"
             android:layout_height="@dimen/diameter_small"
@@ -149,8 +163,8 @@
             android:background="@drawable/fab_selector"
             android:layout_gravity="center_horizontal"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/stop_buttonInstances"
-            android:layout_toEndOf="@+id/stop_buttonInstances" />
+            android:layout_toRightOf="@+id/snapshot_buttonInstances"
+            android:layout_toEndOf="@+id/snapshot_buttonInstances" />
 
     </RelativeLayout>
 </RelativeLayout>
