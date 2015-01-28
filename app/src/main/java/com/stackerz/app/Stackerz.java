@@ -99,7 +99,7 @@ public class Stackerz extends Activity
         first = 1;
         auth =1;
         // have to do it a couple of times because Volley sucks at this!
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 5; i++) {
             novaBundle();
             flavorsBundle();
             glanceBundle();
