@@ -134,6 +134,7 @@ public class Stackerz extends Activity
     public Bundle novaBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         SharedPreferences firstSP = getSharedPreferences("First", first);
+        int drawerPos = 2;
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -162,7 +163,7 @@ public class Stackerz extends Activity
             novaExtras.putSerializable("NovaParsed", novaList);
         }
         if (first == 0 && (novaList == null || novaList.size() == 0)) {
-            emptyViewAlert();
+            emptyViewAlert(drawerPos);
         }
         return novaExtras;
     }
@@ -170,6 +171,7 @@ public class Stackerz extends Activity
     public Bundle flavorsBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         SharedPreferences firstSP = getSharedPreferences("First", first);
+        int drawerPos = 3;
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -198,7 +200,7 @@ public class Stackerz extends Activity
             flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
         }
         if (first == 0 && (flavorsList == null || flavorsList.size() == 0)) {
-            emptyViewAlert();
+            emptyViewAlert(drawerPos);
         }
         NovaParser.shared().setFlavorList(flavorsList);
         return flavorsExtras;
@@ -207,6 +209,7 @@ public class Stackerz extends Activity
     public Bundle glanceBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         SharedPreferences firstSP = getSharedPreferences("First", first);
+        int drawerPos = 4;
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -235,7 +238,7 @@ public class Stackerz extends Activity
             glanceExtras.putSerializable("ImagesParsed", imagesList);
         }
         if (first == 0 && (imagesList == null || imagesList.size() == 0)) {
-            emptyViewAlert();
+            emptyViewAlert(drawerPos);
         }
         NovaParser.shared().setImagesList(imagesList);
         return glanceExtras;
@@ -244,6 +247,7 @@ public class Stackerz extends Activity
     public Bundle networksBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         SharedPreferences firstSP = getSharedPreferences("First", first);
+        int drawerPos = 5;
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -272,7 +276,7 @@ public class Stackerz extends Activity
             networksExtras.putSerializable("NetworksParsed", networksList);
         }
         if (first == 0 && (networksList == null || networksList.size() == 0)) {
-            emptyViewAlert();
+            emptyViewAlert(drawerPos);
         }
         return networksExtras;
     }
@@ -280,6 +284,7 @@ public class Stackerz extends Activity
     public Bundle subnetsBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         SharedPreferences firstSP = getSharedPreferences("First", first);
+        int drawerPos = 6;
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -309,7 +314,7 @@ public class Stackerz extends Activity
             subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
         }
         if (first == 0 && (subnetsList == null || subnetsList.size() == 0)) {
-            emptyViewAlert();
+            emptyViewAlert(drawerPos);
         }
         return subnetsExtras;
     }
@@ -317,6 +322,7 @@ public class Stackerz extends Activity
     public Bundle routersBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         SharedPreferences firstSP = getSharedPreferences("First", first);
+        int drawerPos = 7;
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -345,7 +351,7 @@ public class Stackerz extends Activity
             routersExtras.putSerializable("RoutersParsed", routersList);
         }
         if (first == 0 && (routersList == null || routersList.size() == 0)) {
-            emptyViewAlert();
+            emptyViewAlert(drawerPos);
         }
         return routersExtras;
     }
@@ -354,6 +360,7 @@ public class Stackerz extends Activity
     public Bundle securityBundle() {
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
         SharedPreferences firstSP = getSharedPreferences("First", first);
+        int drawerPos = 8;
         endpoints = shPref.getString("KeystoneData", endpoints);
         authToken = shPref.getString("AuthToken", authToken);
         jsonList = EndpointsParser.parseJSON(endpoints);
@@ -382,7 +389,7 @@ public class Stackerz extends Activity
             securityExtras.putSerializable("SecurityParsed", securityList);
         }
         if (first == 0 && (securityList == null || securityList.size() == 0)) {
-            emptyViewAlert();
+            emptyViewAlert(drawerPos);
         }
         return securityExtras;
     }
@@ -404,13 +411,14 @@ public class Stackerz extends Activity
     alertDialog.show();
     }
 
-    public void emptyViewAlert(){
+    public void emptyViewAlert(final int pos){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Retrieving Data");
-        alert.setMessage("It's taking too long to get the data from the Server. Please re-select the option on the navigation drawer to try again.")
+        alert.setMessage("The server is taking too long to respond. Try again?")
                 .setNeutralButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        onNavigationDrawerItemSelected(pos);
                     }
                 });
         AlertDialog alertDialog = alert.create();
