@@ -31,5 +31,9 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.android.support:palette-v7:+'
     compile 'com.mcxiaoke.volley:library:+'
-    compile 'com.ikimuhendis:ldrawer:0.1'
+    compile 'com.squareup.retrofit:retrofit:+'
+    compile 'com.google.code.gson:gson:+'
+    compile 'com.squareup.okhttp:okhttp:+'
+    compile 'com.ikimuhendis:ldrawer:+'
+    //compile 'org.lucasr.twowayview:twowayview:0.1.4'
 }
