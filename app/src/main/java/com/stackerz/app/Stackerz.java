@@ -24,15 +24,18 @@ import android.widget.Toast;
 import com.squareup.okhttp.OkHttpClient;
 import com.stackerz.app.Endpoints.EndpointsParser;
 import com.stackerz.app.Endpoints.OverviewFragment;
+import com.stackerz.app.Flavors.FlavorsAPI;
 import com.stackerz.app.Flavors.FlavorsFragment;
 import com.stackerz.app.Flavors.FlavorsJSON;
 import com.stackerz.app.Flavors.FlavorsParser;
+import com.stackerz.app.Images.ImagesAPI;
 import com.stackerz.app.Images.ImagesFragment;
 import com.stackerz.app.Images.ImagesJSON;
 import com.stackerz.app.Images.ImagesParser;
 import com.stackerz.app.Instances.InstancesFragment;
 import com.stackerz.app.Instances.NovaJSON;
 import com.stackerz.app.Instances.NovaParser;
+import com.stackerz.app.Networks.NetworksAPI;
 import com.stackerz.app.Networks.NetworksFragment;
 import com.stackerz.app.Networks.NetworksJSON;
 import com.stackerz.app.Networks.NetworksParser;
@@ -47,6 +50,7 @@ import com.stackerz.app.Security.SecurityFragment;
 import com.stackerz.app.Security.SecurityJSON;
 import com.stackerz.app.Security.SecurityParser;
 import com.stackerz.app.Subnets.Subnets;
+import com.stackerz.app.Subnets.SubnetsAPI;
 import com.stackerz.app.Subnets.SubnetsFragment;
 import com.stackerz.app.Subnets.SubnetsJSON;
 import com.stackerz.app.Subnets.SubnetsParser;
@@ -126,7 +130,7 @@ public class Stackerz extends Activity
             networksBundle();
             routersBundle();
             subnetsBundle();
-            //securityBundle();
+            securityBundle();
         }
         first = 0;
         auth = 0;
@@ -197,7 +201,35 @@ public class Stackerz extends Activity
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String novaURL = EndpointsParser.getNovaURL();
-        flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
+        //flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(novaURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        FlavorsAPI api = adapter.create(FlavorsAPI.class);
+        if (flavors == null){
+            pDialog.setMessage("Contacting Server...");
+            pDialog.show();
+        }
+        api.getFlavorsContent(new Callback<Response>() {
+            @Override
+            public void success(Response result, Response response) {
+                flavors = getRawJSON(result);
+                pDialog.dismiss();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Retrofit Error", error.toString());
+            }
+        });
         flavorsExtras = new Bundle();
         if (flavors != null && !flavors.contains("Bad URL")) {
             if (auth == 0 && flavors.contains("com.android.volley.AuthFailureError")) {
@@ -235,7 +267,35 @@ public class Stackerz extends Activity
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String glanceURL = EndpointsParser.getGlanceURL();
-        images = ImagesJSON.shared().receiveData(glanceURL, authToken);
+        //images = ImagesJSON.shared().receiveData(glanceURL, authToken);
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(glanceURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        ImagesAPI api = adapter.create(ImagesAPI.class);
+        if (images == null){
+            pDialog.setMessage("Contacting Server...");
+            pDialog.show();
+        }
+        api.getImagesContent(new Callback<Response>() {
+            @Override
+            public void success(Response result, Response response) {
+                images = getRawJSON(result);
+                pDialog.dismiss();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Retrofit Error", error.toString());
+            }
+        });
         glanceExtras = new Bundle();
         if (images != null && !images.contains("Bad URL")) {
             if (auth == 0 && images.contains("com.android.volley.AuthFailureError")) {
@@ -273,7 +333,35 @@ public class Stackerz extends Activity
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String neutronURL = EndpointsParser.getNeutronURL();
-        networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
+        //networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(neutronURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        NetworksAPI api = adapter.create(NetworksAPI.class);
+        if (networks == null){
+            pDialog.setMessage("Contacting Server...");
+            pDialog.show();
+        }
+        api.getNetworksContent(new Callback<Response>() {
+            @Override
+            public void success(Response result, Response response) {
+                networks = getRawJSON(result);
+                pDialog.dismiss();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Retrofit Error", error.toString());
+            }
+        });
         networksExtras = new Bundle();
         if (networks != null && !networks.contains("Bad URL")) {
             if (auth == 0 && networks.contains("com.android.volley.AuthFailureError")) {
@@ -310,7 +398,35 @@ public class Stackerz extends Activity
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String neutronURL = EndpointsParser.getNeutronURL();
-        subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
+        //subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(neutronURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        SubnetsAPI api = adapter.create(SubnetsAPI.class);
+        if (subnets == null){
+            pDialog.setMessage("Contacting Server...");
+            pDialog.show();
+        }
+        api.getSubnetsContent(new Callback<Response>() {
+            @Override
+            public void success(Response result, Response response) {
+                subnets = getRawJSON(result);
+                pDialog.dismiss();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Retrofit Error", error.toString());
+            }
+        });
         subnetsExtras = new Bundle();
         if (subnets != null && !subnets.contains("Bad URL")) {
             if (auth == 0 && subnets.contains("com.android.volley.AuthFailureError")) {
@@ -348,7 +464,35 @@ public class Stackerz extends Activity
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String neutronURL = EndpointsParser.getNeutronURL();
-        routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
+        //routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(neutronURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        RoutersAPI api = adapter.create(RoutersAPI.class);
+        if (routers == null){
+            pDialog.setMessage("Contacting Server...");
+            pDialog.show();
+        }
+        api.getRoutersContent(new Callback<Response>() {
+            @Override
+            public void success(Response result, Response response) {
+                routers = getRawJSON(result);
+                pDialog.dismiss();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Retrofit Error", error.toString());
+            }
+        });
         routersExtras = new Bundle();
         if (routers != null && !routers.contains("Bad URL")) {
             if (auth == 0 && routers.contains("com.android.volley.AuthFailureError")) {
