@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,6 +66,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import retrofit.Callback;
+import retrofit.ErrorHandler;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -112,6 +114,7 @@ public class Stackerz extends Activity
     public String securityCached = "";
     public int first = 0;
     public int auth = 0;
+    public int offline = 0;
 
 
     @Override
@@ -119,6 +122,12 @@ public class Stackerz extends Activity
         super.onCreate(savedInstanceState);
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_stackerz);
+
+        //DISABLE THIS AFTER TESTING SYNC CALLS
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         first = 1;
         auth =1;
         pDialog = new ProgressDialog(this);
@@ -130,7 +139,7 @@ public class Stackerz extends Activity
             networksBundle();
             routersBundle();
             subnetsBundle();
-            securityBundle();
+            //securityBundle();
         }
         first = 0;
         auth = 0;
@@ -228,11 +237,17 @@ public class Stackerz extends Activity
             @Override
             public void failure(RetrofitError error) {
                 Log.d("Retrofit Error", error.toString());
+                if (error.toString().contains("Unauthorized")){
+                    tokenExpiredAlert();
+                }
+                if (offline==0 && error.toString().contains("Unable to resolve host")){
+                    offlineAlert();
+                }
             }
         });
         flavorsExtras = new Bundle();
         if (flavors != null && !flavors.contains("Bad URL")) {
-            if (auth == 0 && flavors.contains("com.android.volley.AuthFailureError")) {
+            /*if (auth == 0 && flavors.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 flavorsCached = shPref.getString("Flavors", flavors);
                 flavorsList = FlavorsParser.parseJSON(flavorsCached);
@@ -241,11 +256,11 @@ public class Stackerz extends Activity
                 if (flavorsCached != null){
                     flavors = flavorsCached;
                 }
-            } else {
+            } else {*/
                 shPref.edit().putString("Flavors", flavors).commit();
                 flavorsList = FlavorsParser.parseJSON(flavors);
                 flavorsExtras.putSerializable("FlavorsParsed", flavorsList);
-            }
+            //}
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Flavors", flavors) != null) {
             flavorsCached = shPref.getString("Flavors", flavors);
             flavorsList = FlavorsParser.parseJSON(flavorsCached);
@@ -294,11 +309,17 @@ public class Stackerz extends Activity
             @Override
             public void failure(RetrofitError error) {
                 Log.d("Retrofit Error", error.toString());
+                if (error.toString().contains("Unauthorized")){
+                    tokenExpiredAlert();
+                }
+                if (offline==0 && error.toString().contains("Unable to resolve host")){
+                    offlineAlert();
+                }
             }
         });
         glanceExtras = new Bundle();
         if (images != null && !images.contains("Bad URL")) {
-            if (auth == 0 && images.contains("com.android.volley.AuthFailureError")) {
+            /*if (auth == 0 && images.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 imagesCached = shPref.getString("Images", images);
                 imagesList = ImagesParser.parseJSON(imagesCached);
@@ -307,11 +328,11 @@ public class Stackerz extends Activity
                 if (imagesCached != null){
                     images = imagesCached;
                 }
-            } else {
+            } else {*/
                 shPref.edit().putString("Images", images).commit();
                 imagesList = ImagesParser.parseJSON(images);
                 glanceExtras.putSerializable("ImagesParsed", imagesList);
-            }
+            //}
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Images", images) != null) {
             imagesCached = shPref.getString("Images", images);
             imagesList = ImagesParser.parseJSON(imagesCached);
@@ -360,11 +381,17 @@ public class Stackerz extends Activity
             @Override
             public void failure(RetrofitError error) {
                 Log.d("Retrofit Error", error.toString());
+                if (error.toString().contains("Unauthorized")){
+                    tokenExpiredAlert();
+                }
+                if (offline==0 && error.toString().contains("Unable to resolve host")){
+                    offlineAlert();
+                }
             }
         });
         networksExtras = new Bundle();
         if (networks != null && !networks.contains("Bad URL")) {
-            if (auth == 0 && networks.contains("com.android.volley.AuthFailureError")) {
+            /*if (auth == 0 && networks.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 networksCached = shPref.getString("Networks", networks);
                 networksList = NetworksParser.parseJSON(networksCached);
@@ -373,11 +400,11 @@ public class Stackerz extends Activity
                 if (networksCached != null){
                     networks = networksCached;
                 }
-            } else {
+            } else {*/
                 shPref.edit().putString("Networks", networks).commit();
                 networksList = NetworksParser.parseJSON(networks);
                 networksExtras.putSerializable("NetworksParsed", networksList);
-            }
+            //}
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Networks", networks) != null) {
             networksCached = shPref.getString("Networks", networks);
             networksList = NetworksParser.parseJSON(networksCached);
@@ -425,11 +452,17 @@ public class Stackerz extends Activity
             @Override
             public void failure(RetrofitError error) {
                 Log.d("Retrofit Error", error.toString());
+                if (error.toString().contains("Unauthorized")){
+                    tokenExpiredAlert();
+                }
+                if (offline==0 && error.toString().contains("Unable to resolve host")){
+                    offlineAlert();
+                }
             }
         });
         subnetsExtras = new Bundle();
         if (subnets != null && !subnets.contains("Bad URL")) {
-            if (auth == 0 && subnets.contains("com.android.volley.AuthFailureError")) {
+            /*if (auth == 0 && subnets.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 subnetsCached = shPref.getString("Subnets", subnets);
                 subnetsList = SubnetsParser.parseJSON(subnetsCached);
@@ -438,12 +471,12 @@ public class Stackerz extends Activity
                 if (subnetsCached != null){
                     subnets = subnetsCached;
                 }
-            } else {
+            } else {*/
                 shPref.edit().putString("Subnets", subnets).commit();
                 subnetsList = SubnetsParser.parseJSON(subnets);
                 subnetsExtras.putString("SubnetsJSON", subnets);
                 subnetsExtras.putSerializable("SubnetsParsed", subnetsList);
-            }
+            //}
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Subnets", subnets) != null) {
             subnetsCached = shPref.getString("Subnets", subnets);
             subnetsList = SubnetsParser.parseJSON(subnetsCached);
@@ -491,11 +524,17 @@ public class Stackerz extends Activity
             @Override
             public void failure(RetrofitError error) {
                 Log.d("Retrofit Error", error.toString());
+                if (error.toString().contains("Unauthorized")){
+                    tokenExpiredAlert();
+                }
+                if (offline==0 && error.toString().contains("Unable to resolve host")){
+                    offlineAlert();
+                }
             }
         });
         routersExtras = new Bundle();
         if (routers != null && !routers.contains("Bad URL")) {
-            if (auth == 0 && routers.contains("com.android.volley.AuthFailureError")) {
+            /*if (auth == 0 && routers.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 routersCached = shPref.getString("Routers", routers);
                 routersList = RoutersParser.parseJSON(routersCached);
@@ -504,11 +543,11 @@ public class Stackerz extends Activity
                 if (routersCached != null){
                     routers = routersCached;
                 }
-            } else {
+            } else {*/
                 shPref.edit().putString("Routers", routers).commit();
                 routersList = RoutersParser.parseJSON(routers);
                 routersExtras.putSerializable("RoutersParsed", routersList);
-            }
+            //}
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Routers", routers) != null) {
             routersCached = shPref.getString("Routers", routers);
             routersList = RoutersParser.parseJSON(routersCached);
@@ -547,7 +586,21 @@ public class Stackerz extends Activity
             pDialog.setMessage("Contacting Server...");
             pDialog.show();
         }
-        api.getSecurityContent(new Callback<Response>() {
+
+        try {
+            Response result = api.getSecSync();
+            security = getRawJSON(result);
+        } catch (RetrofitError e) {
+            Log.d("Retrofit Error", e.toString());
+            if (e.toString().contains("Unauthorized")){
+                tokenExpiredAlert();
+            }
+            if (offline==0 && e.toString().contains("Unable to resolve host")){
+                offlineAlert();
+            }
+        }
+
+        /*api.getSecurityContent(new Callback<Response>() {
             @Override
             public void success(Response result, Response response) {
                 security = getRawJSON(result);
@@ -558,10 +611,10 @@ public class Stackerz extends Activity
             public void failure(RetrofitError error) {
                 Log.d("Retrofit Error", error.toString());
             }
-        });
+        });*/
         securityExtras = new Bundle();
         if (security != null && !security.contains("Bad URL")) {
-            if (auth == 0 && security.contains("com.android.volley.AuthFailureError")) {
+            /*if (auth == 0 && security.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 securityCached = shPref.getString("Security", security);
                 securityList = SecurityParser.parseJSON(securityCached);
@@ -570,11 +623,11 @@ public class Stackerz extends Activity
                 if (securityCached != null){
                     security = securityCached;
                 }
-            } else {
+            } else {*/
                 shPref.edit().putString("Security", security).commit();
                 securityList = SecurityParser.parseJSON(security);
                 securityExtras.putSerializable("SecurityParsed", securityList);
-            }
+           // }
         } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Security", security) != null) {
             securityCached = shPref.getString("Security", security);
             securityList = SecurityParser.parseJSON(securityCached);
@@ -605,6 +658,7 @@ public class Stackerz extends Activity
         }
 
         raw = sb.toString();
+        offline = 0;
         return raw;
     }
 
@@ -637,6 +691,20 @@ public class Stackerz extends Activity
                 });
         AlertDialog alertDialog = alert.create();
         alertDialog.show();
+    }
+
+    public void offlineAlert(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Server Unreachable");
+        alert.setMessage("Either the server is not responding or you're not connected to the same network as the server anymore. Now displaying offline content from the local cache.")
+                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+        AlertDialog alertDialog = alert.create();
+        alertDialog.show();
+        offline = 1;
     }
 
     @Override

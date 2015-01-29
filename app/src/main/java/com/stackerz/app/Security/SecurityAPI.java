@@ -19,6 +19,7 @@ public interface SecurityAPI {
             "Content-Type: application/json; charset=utf-8"
     })
     @GET("/v2.0/security-groups")
-    void getSecurityContent(Callback<Response> callback);
+    //void getSecurityContent(Callback<Response> callback);
+    Response getSecSync();
 
 }
