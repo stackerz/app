@@ -397,35 +397,33 @@ public class Stackerz extends Activity
         RestAdapter adapter = builder.build();
         SecurityAPI api = adapter.create(SecurityAPI.class);
         api.getSecurityContent(new Callback<Response>() {
-                                   @Override
-                                   public void success(Response result, Response response) {
-                                       //Try to get response body
-                                       BufferedReader reader = null;
-                                       StringBuilder sb = new StringBuilder();
-                                       try {
+            @Override
+            public void success(Response result, Response response) {
+                //Try to get response body
+                BufferedReader reader = null;
+                StringBuilder sb = new StringBuilder();
+                try {
+                    reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+                    String line;
+                    try {
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                                           reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+                security = sb.toString();
+            }
 
-                                           String line;
-
-                                           try {
-                                               while ((line = reader.readLine()) != null) {
-                                                   sb.append(line);
-                                               }
-                                           } catch (IOException e) {
-                                               e.printStackTrace();
-                                           }
-                                       } catch (IOException e) {
-                                           e.printStackTrace();
-                                       }
-                                       security = sb.toString();
-                                   }
-
-                                   @Override
-                                   public void failure(RetrofitError error) {
-                                       Log.d("Retrofit Error", error.toString());
-                                   }
-                               });
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Retrofit Error", error.toString());
+            }
+        });
         securityExtras = new Bundle();
         if (security != null && !security.contains("Bad URL")) {
             if (auth == 0 && security.contains("com.android.volley.AuthFailureError")) {
