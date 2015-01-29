@@ -406,24 +406,7 @@ public class Stackerz extends Activity
         api.getSecurityContent(new Callback<Response>() {
             @Override
             public void success(Response result, Response response) {
-                //Try to get response body
-                BufferedReader reader = null;
-                StringBuilder sb = new StringBuilder();
-                try {
-                    reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
-                    String line;
-                    try {
-                        while ((line = reader.readLine()) != null) {
-                            sb.append(line);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                security = sb.toString();
+                security = getRawJSON(result);
                 pDialog.dismiss();
             }
 
@@ -457,6 +440,28 @@ public class Stackerz extends Activity
             emptyViewAlert(drawerPos);
         }
         return securityExtras;
+    }
+
+    public String getRawJSON (Response response){
+        String raw = null;
+        BufferedReader reader = null;
+        StringBuilder sb = new StringBuilder();
+        try {
+            reader = new BufferedReader(new InputStreamReader(response.getBody().in()));
+            String line;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        raw = sb.toString();
+        return raw;
     }
 
     public void tokenExpiredAlert() {
