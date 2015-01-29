@@ -361,7 +361,7 @@ public class Login extends Activity implements View.OnClickListener{
                 networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
                 subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
                 routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
-                security = SecurityJSON.shared().receiveData(neutronURL, authToken);
+                //security = SecurityJSON.shared().receiveData(neutronURL, authToken);
             }
 
             if (instances != null) {

@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -88,6 +89,7 @@ public class Stackerz extends Activity
     public ArrayList<HashMap<String, String>> routersList;
     public ArrayList<HashMap<String, String>> subnetsList;
     public ArrayList<HashMap<String, String>> securityList;
+    public ProgressDialog pDialog;
     public String endpoints = "";
     public String authToken = "";
     public String instances = "";
@@ -115,6 +117,7 @@ public class Stackerz extends Activity
         setContentView(R.layout.activity_stackerz);
         first = 1;
         auth =1;
+        pDialog = new ProgressDialog(this);
         // have to do it a couple of times because Volley sucks at this!
         for (int i = 0; i < 5; i++) {
             novaBundle();
@@ -123,7 +126,7 @@ public class Stackerz extends Activity
             networksBundle();
             routersBundle();
             subnetsBundle();
-            securityBundle();
+            //securityBundle();
         }
         first = 0;
         auth = 0;
@@ -396,6 +399,10 @@ public class Stackerz extends Activity
         });
         RestAdapter adapter = builder.build();
         SecurityAPI api = adapter.create(SecurityAPI.class);
+        if (security == null){
+            pDialog.setMessage("Contacting Server...");
+            pDialog.show();
+        }
         api.getSecurityContent(new Callback<Response>() {
             @Override
             public void success(Response result, Response response) {
@@ -417,6 +424,7 @@ public class Stackerz extends Activity
                 }
 
                 security = sb.toString();
+                pDialog.dismiss();
             }
 
             @Override
