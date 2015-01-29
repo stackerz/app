@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.squareup.okhttp.OkHttpClient;
 import com.stackerz.app.Endpoints.EndpointsParser;
 import com.stackerz.app.Endpoints.OverviewFragment;
 import com.stackerz.app.Flavors.FlavorsFragment;
@@ -33,9 +35,13 @@ import com.stackerz.app.Instances.NovaParser;
 import com.stackerz.app.Networks.NetworksFragment;
 import com.stackerz.app.Networks.NetworksJSON;
 import com.stackerz.app.Networks.NetworksParser;
+import com.stackerz.app.Routers.Routers;
+import com.stackerz.app.Routers.RoutersAPI;
 import com.stackerz.app.Routers.RoutersFragment;
 import com.stackerz.app.Routers.RoutersJSON;
 import com.stackerz.app.Routers.RoutersParser;
+import com.stackerz.app.Security.Security;
+import com.stackerz.app.Security.SecurityAPI;
 import com.stackerz.app.Security.SecurityFragment;
 import com.stackerz.app.Security.SecurityJSON;
 import com.stackerz.app.Security.SecurityParser;
@@ -46,8 +52,19 @@ import com.stackerz.app.Subnets.SubnetsParser;
 import com.stackerz.app.System.ObscuredSharedPreferences;
 import com.stackerz.app.System.SSLCerts;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RequestInterceptor;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.OkClient;
+import retrofit.client.Response;
 
 
 public class Stackerz extends Activity
@@ -366,7 +383,49 @@ public class Stackerz extends Activity
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String neutronURL = EndpointsParser.getNeutronURL();
-        security = SecurityJSON.shared().receiveData(neutronURL, authToken);
+        //security = SecurityJSON.shared().receiveData(neutronURL, authToken);
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(neutronURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        SecurityAPI api = adapter.create(SecurityAPI.class);
+        api.getSecurityContent(new Callback<Response>() {
+                                   @Override
+                                   public void success(Response result, Response response) {
+                                       //Try to get response body
+                                       BufferedReader reader = null;
+                                       StringBuilder sb = new StringBuilder();
+                                       try {
+
+                                           reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+
+                                           String line;
+
+                                           try {
+                                               while ((line = reader.readLine()) != null) {
+                                                   sb.append(line);
+                                               }
+                                           } catch (IOException e) {
+                                               e.printStackTrace();
+                                           }
+                                       } catch (IOException e) {
+                                           e.printStackTrace();
+                                       }
+                                       security = sb.toString();
+                                   }
+
+                                   @Override
+                                   public void failure(RetrofitError error) {
+                                       Log.d("Retrofit Error", error.toString());
+                                   }
+                               });
         securityExtras = new Bundle();
         if (security != null && !security.contains("Bad URL")) {
             if (auth == 0 && security.contains("com.android.volley.AuthFailureError")) {
