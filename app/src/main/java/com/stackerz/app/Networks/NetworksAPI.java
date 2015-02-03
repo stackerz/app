@@ -15,6 +15,6 @@ public interface NetworksAPI {
             "Content-Type: application/json; charset=utf-8"
     })
     @GET("/v2.0/networks")
-    void getNetworksContent(Callback<Response> callback);
-
+    //void getNetworksContent(Callback<Response> callback);
+    Response getNetSync();
 }

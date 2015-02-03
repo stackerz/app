@@ -121,14 +121,14 @@ public class Stackerz extends Activity
         auth =1;
         pDialog = new ProgressDialog(this);
         // have to do it a couple of times because Volley sucks at this!
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
             novaBundle();
             flavorsBundle();
             glanceBundle();
             networksBundle();
             routersBundle();
             subnetsBundle();
-            //securityBundle();
+            securityBundle();
         }
         first = 0;
         auth = 0;
@@ -245,24 +245,18 @@ public class Stackerz extends Activity
             pDialog.setMessage("Contacting Server...");
             pDialog.show();
         }
-        api.getFlavorsContent(new Callback<Response>() {
-            @Override
-            public void success(Response result, Response response) {
-                flavors = getRawJSON(result);
-                pDialog.dismiss();
+        try {
+            Response result = api.getFlavorsSync();
+            flavors = getRawJSON(result);
+        } catch (RetrofitError e) {
+            Log.d("Retrofit Error", e.toString());
+            if (e.toString().contains("Unauthorized")){
+                tokenExpiredAlert();
             }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("Retrofit Error", error.toString());
-                if (error.toString().contains("Unauthorized")){
-                    tokenExpiredAlert();
-                }
-                if (offline==0 && error.toString().contains("Unable to resolve host")){
-                    offlineAlert();
-                }
+            if (offline==0 && e.toString().contains("Unable to resolve host")){
+                offlineAlert();
             }
-        });
+        }
         flavorsExtras = new Bundle();
         if (flavors != null && !flavors.contains("Bad URL")) {
             /*if (auth == 0 && flavors.contains("com.android.volley.AuthFailureError")) {
@@ -317,24 +311,18 @@ public class Stackerz extends Activity
             pDialog.setMessage("Contacting Server...");
             pDialog.show();
         }
-        api.getImagesContent(new Callback<Response>() {
-            @Override
-            public void success(Response result, Response response) {
-                images = getRawJSON(result);
-                pDialog.dismiss();
+        try {
+            Response result = api.getImagesSync();
+            images = getRawJSON(result);
+        } catch (RetrofitError e) {
+            Log.d("Retrofit Error", e.toString());
+            if (e.toString().contains("Unauthorized")){
+                tokenExpiredAlert();
             }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("Retrofit Error", error.toString());
-                if (error.toString().contains("Unauthorized")){
-                    tokenExpiredAlert();
-                }
-                if (offline==0 && error.toString().contains("Unable to resolve host")){
-                    offlineAlert();
-                }
+            if (offline==0 && e.toString().contains("Unable to resolve host")){
+                offlineAlert();
             }
-        });
+        }
         glanceExtras = new Bundle();
         if (images != null && !images.contains("Bad URL")) {
             /*if (auth == 0 && images.contains("com.android.volley.AuthFailureError")) {
@@ -389,24 +377,18 @@ public class Stackerz extends Activity
             pDialog.setMessage("Contacting Server...");
             pDialog.show();
         }
-        api.getNetworksContent(new Callback<Response>() {
-            @Override
-            public void success(Response result, Response response) {
-                networks = getRawJSON(result);
-                pDialog.dismiss();
+        try {
+            Response result = api.getNetSync();
+            networks = getRawJSON(result);
+        } catch (RetrofitError e) {
+            Log.d("Retrofit Error", e.toString());
+            if (e.toString().contains("Unauthorized")){
+                tokenExpiredAlert();
             }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("Retrofit Error", error.toString());
-                if (error.toString().contains("Unauthorized")){
-                    tokenExpiredAlert();
-                }
-                if (offline==0 && error.toString().contains("Unable to resolve host")){
-                    offlineAlert();
-                }
+            if (offline==0 && e.toString().contains("Unable to resolve host")){
+                offlineAlert();
             }
-        });
+        }
         networksExtras = new Bundle();
         if (networks != null && !networks.contains("Bad URL")) {
             /*if (auth == 0 && networks.contains("com.android.volley.AuthFailureError")) {
@@ -460,24 +442,18 @@ public class Stackerz extends Activity
             pDialog.setMessage("Contacting Server...");
             pDialog.show();
         }
-        api.getSubnetsContent(new Callback<Response>() {
-            @Override
-            public void success(Response result, Response response) {
-                subnets = getRawJSON(result);
-                pDialog.dismiss();
+        try {
+            Response result = api.getSubnetsSync();
+            subnets = getRawJSON(result);
+        } catch (RetrofitError e) {
+            Log.d("Retrofit Error", e.toString());
+            if (e.toString().contains("Unauthorized")){
+                tokenExpiredAlert();
             }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("Retrofit Error", error.toString());
-                if (error.toString().contains("Unauthorized")){
-                    tokenExpiredAlert();
-                }
-                if (offline==0 && error.toString().contains("Unable to resolve host")){
-                    offlineAlert();
-                }
+            if (offline==0 && e.toString().contains("Unable to resolve host")){
+                offlineAlert();
             }
-        });
+        }
         subnetsExtras = new Bundle();
         if (subnets != null && !subnets.contains("Bad URL")) {
             /*if (auth == 0 && subnets.contains("com.android.volley.AuthFailureError")) {
@@ -532,24 +508,18 @@ public class Stackerz extends Activity
             pDialog.setMessage("Contacting Server...");
             pDialog.show();
         }
-        api.getRoutersContent(new Callback<Response>() {
-            @Override
-            public void success(Response result, Response response) {
-                routers = getRawJSON(result);
-                pDialog.dismiss();
+        try {
+            Response result = api.getRoutersSync();
+            routers = getRawJSON(result);
+        } catch (RetrofitError e) {
+            Log.d("Retrofit Error", e.toString());
+            if (e.toString().contains("Unauthorized")){
+                tokenExpiredAlert();
             }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("Retrofit Error", error.toString());
-                if (error.toString().contains("Unauthorized")){
-                    tokenExpiredAlert();
-                }
-                if (offline==0 && error.toString().contains("Unable to resolve host")){
-                    offlineAlert();
-                }
+            if (offline==0 && e.toString().contains("Unable to resolve host")){
+                offlineAlert();
             }
-        });
+        }
         routersExtras = new Bundle();
         if (routers != null && !routers.contains("Bad URL")) {
             /*if (auth == 0 && routers.contains("com.android.volley.AuthFailureError")) {

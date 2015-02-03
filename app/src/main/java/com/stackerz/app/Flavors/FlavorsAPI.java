@@ -15,6 +15,7 @@ public interface FlavorsAPI {
             "Content-Type: application/json; charset=utf-8"
     })
     @GET("/flavors/detail")
-    void getFlavorsContent(Callback<Response> callback);
+    //void getFlavorsContent(Callback<Response> callback);
+    Response getFlavorsSync();
 
 }

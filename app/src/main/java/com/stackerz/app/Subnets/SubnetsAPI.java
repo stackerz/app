@@ -15,6 +15,7 @@ public interface SubnetsAPI {
             "Content-Type: application/json; charset=utf-8"
     })
     @GET("/v2.0/subnets")
-    void getSubnetsContent(Callback<Response> callback);
+    //void getSubnetsContent(Callback<Response> callback);
+    Response getSubnetsSync();
 
 }

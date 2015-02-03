@@ -16,6 +16,7 @@ public interface RoutersAPI {
     })
     @GET("/v2.0/routers")
     //public void getRoutersContent(Callback<List<Routers>> response);
-    void getRoutersContent(Callback<Response> callback);
+    //void getRoutersContent(Callback<Response> callback);
+    Response getRoutersSync();
 
 }

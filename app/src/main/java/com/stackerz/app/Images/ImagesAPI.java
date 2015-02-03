@@ -15,6 +15,7 @@ public interface ImagesAPI {
             "Content-Type: application/json; charset=utf-8"
     })
     @GET("/v2/images")
-    void getImagesContent(Callback<Response> callback);
+    //void getImagesContent(Callback<Response> callback);
+    Response getImagesSync();
 
 }
