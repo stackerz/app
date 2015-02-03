@@ -10,13 +10,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.squareup.okhttp.OkHttpClient;
 import com.stackerz.app.System.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+
+import retrofit.RequestInterceptor;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.OkClient;
 
 /**
  * Created by ed on 19/11/14.
@@ -91,7 +100,7 @@ public class NovaJSON extends Activity {
 
     public String receiveDetail (String id){
         setId(id);
-        getJSONdetail();
+        getJSONdetail2();
         getNovaJSONdetail();
         return novaJSONdetail;
     }
@@ -178,6 +187,59 @@ public class NovaJSON extends Activity {
         //progressDialog.setMessage("Loading...");
        // progressDialog.show();
     }
+
+    public void getJSONdetail2() {
+        final String authToken = getAuth();
+        String novaURL = getNova();
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(novaURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestInterceptor.RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        NovaDetailAPI api = adapter.create(NovaDetailAPI.class);
+
+        try {
+            retrofit.client.Response result = api.getNovaDetailSync(id);
+            setNovaJSONdetail(getRawJSON(result));
+        } catch (RetrofitError e) {
+            Log.d("Retrofit Error", e.toString());
+            /*if (e.toString().contains("Unauthorized")){
+                tokenExpiredAlert();
+            }
+            if (offline==0 && e.toString().contains("Unable to resolve host")){
+                offlineAlert();
+            }*/
+        }
+    }
+
+    public String getRawJSON (retrofit.client.Response response){
+        String raw = null;
+        BufferedReader reader = null;
+        StringBuilder sb = new StringBuilder();
+        try {
+            reader = new BufferedReader(new InputStreamReader(response.getBody().in()));
+            String line;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        raw = sb.toString();
+        return raw;
+    }
+
 
     public void startJSON(String id){
         final String authToken = getAuth();
