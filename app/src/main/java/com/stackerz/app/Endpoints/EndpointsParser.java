@@ -1,15 +1,16 @@
 package com.stackerz.app.Endpoints;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 /**
  * Created by ed on 4/11/14.
  */

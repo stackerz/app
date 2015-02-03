@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.stackerz.app.Instances.NovaAdapter;
 import com.stackerz.app.Login;
 import com.stackerz.app.R;
 import com.stackerz.app.Stackerz;

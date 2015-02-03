@@ -2,7 +2,6 @@ package com.stackerz.app.Endpoints;
 
 import android.app.Activity;
 import android.app.Fragment;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,10 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.stackerz.app.System.DividerItemDecoration;
 import com.stackerz.app.R;
-import com.stackerz.app.System.RecyclerItemClickListener;
 import com.stackerz.app.Stackerz;
+import com.stackerz.app.System.DividerItemDecoration;
+import com.stackerz.app.System.RecyclerItemClickListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;

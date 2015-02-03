@@ -27,33 +27,24 @@ import com.stackerz.app.Endpoints.EndpointsParser;
 import com.stackerz.app.Endpoints.OverviewFragment;
 import com.stackerz.app.Flavors.FlavorsAPI;
 import com.stackerz.app.Flavors.FlavorsFragment;
-import com.stackerz.app.Flavors.FlavorsJSON;
 import com.stackerz.app.Flavors.FlavorsParser;
 import com.stackerz.app.Images.ImagesAPI;
 import com.stackerz.app.Images.ImagesFragment;
-import com.stackerz.app.Images.ImagesJSON;
 import com.stackerz.app.Images.ImagesParser;
 import com.stackerz.app.Instances.InstancesFragment;
-import com.stackerz.app.Instances.NovaJSON;
+import com.stackerz.app.Instances.NovaAPI;
 import com.stackerz.app.Instances.NovaParser;
 import com.stackerz.app.Networks.NetworksAPI;
 import com.stackerz.app.Networks.NetworksFragment;
-import com.stackerz.app.Networks.NetworksJSON;
 import com.stackerz.app.Networks.NetworksParser;
-import com.stackerz.app.Routers.Routers;
 import com.stackerz.app.Routers.RoutersAPI;
 import com.stackerz.app.Routers.RoutersFragment;
-import com.stackerz.app.Routers.RoutersJSON;
 import com.stackerz.app.Routers.RoutersParser;
-import com.stackerz.app.Security.Security;
 import com.stackerz.app.Security.SecurityAPI;
 import com.stackerz.app.Security.SecurityFragment;
-import com.stackerz.app.Security.SecurityJSON;
 import com.stackerz.app.Security.SecurityParser;
-import com.stackerz.app.Subnets.Subnets;
 import com.stackerz.app.Subnets.SubnetsAPI;
 import com.stackerz.app.Subnets.SubnetsFragment;
-import com.stackerz.app.Subnets.SubnetsJSON;
 import com.stackerz.app.Subnets.SubnetsParser;
 import com.stackerz.app.System.ObscuredSharedPreferences;
 import com.stackerz.app.System.SSLCerts;
@@ -63,10 +54,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import retrofit.Callback;
-import retrofit.ErrorHandler;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -173,10 +162,39 @@ public class Stackerz extends Activity
         jsonList = EndpointsParser.parseJSON(endpoints);
         EndpointsParser.shared().getURLs(jsonList);
         String novaURL = EndpointsParser.getNovaURL();
-        instances = NovaJSON.shared().receiveData(novaURL, authToken);
+        //instances = NovaJSON.shared().receiveData(novaURL, authToken);
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(novaURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        NovaAPI api = adapter.create(NovaAPI.class);
+        if (instances == null){
+            pDialog.setMessage("Contacting Server...");
+            pDialog.show();
+        }
+
+        try {
+            Response result = api.getNovaSync();
+            instances = getRawJSON(result);
+        } catch (RetrofitError e) {
+            Log.d("Retrofit Error", e.toString());
+            if (e.toString().contains("Unauthorized")){
+                tokenExpiredAlert();
+            }
+            if (offline==0 && e.toString().contains("Unable to resolve host")){
+                offlineAlert();
+            }
+        }
         novaExtras = new Bundle();
         if (instances != null && !instances.contains("Bad URL")) {
-            if (auth == 0 && instances.contains("com.android.volley.AuthFailureError")) {
+            /*if (auth == 0 && instances.contains("com.android.volley.AuthFailureError")) {
                 tokenExpiredAlert();
                 instancesCached = shPref.getString("Instances", instances);
                 novaList = NovaParser.parseJSON(instancesCached);
@@ -185,12 +203,12 @@ public class Stackerz extends Activity
                 if (instancesCached != null){
                     instances = instancesCached;
                 }
-            } else {
+            } else {*/
                 shPref.edit().putString("Instances", instances).commit();
                 novaList = NovaParser.parseJSON(instances);
                 novaExtras.putSerializable("NovaParsed", novaList);
             }
-        } else if (firstSP.getInt("First", first) > 1 && shPref.getString("Instances", instances) != null) {
+        else if (firstSP.getInt("First", first) > 1 && shPref.getString("Instances", instances) != null) {
             instancesCached = shPref.getString("Instances", instances);
             novaList = NovaParser.parseJSON(instancesCached);
             novaExtras.putSerializable("NovaParsed", novaList);

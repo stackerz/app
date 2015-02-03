@@ -1,9 +1,5 @@
 package com.stackerz.app.Instances;
 
-import android.os.Bundle;
-
-import java.util.ArrayList;
-
 /**
  * Created by ed on 4/11/14.
  */

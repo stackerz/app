@@ -1,27 +1,20 @@
 package com.stackerz.app.Instances;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-
-import com.stackerz.app.Flavors.FlavorsParser;
-import com.stackerz.app.System.ObscuredSharedPreferences;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.Stack;
 
 /**
  * Created by ed on 4/11/14.

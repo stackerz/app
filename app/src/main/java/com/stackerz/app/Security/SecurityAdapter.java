@@ -1,6 +1,6 @@
 package com.stackerz.app.Security;
+
 import android.animation.ValueAnimator;
-import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

@@ -1,7 +1,5 @@
 package com.stackerz.app.Routers;
 
-import java.util.List;
-
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.GET;

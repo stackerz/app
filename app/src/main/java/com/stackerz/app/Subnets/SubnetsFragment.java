@@ -3,13 +3,11 @@ package com.stackerz.app.Subnets;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +17,6 @@ import android.view.ViewGroup;
 
 import com.stackerz.app.Login;
 import com.stackerz.app.R;
-import com.stackerz.app.Routers.RoutersAdapter;
 import com.stackerz.app.Stackerz;
 import com.stackerz.app.System.DividerItemDecoration;
 

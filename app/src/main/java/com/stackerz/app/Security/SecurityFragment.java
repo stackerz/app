@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import com.stackerz.app.Login;
 import com.stackerz.app.R;
 import com.stackerz.app.Stackerz;
-import com.stackerz.app.Security.SecurityAdapter;
 import com.stackerz.app.System.DividerItemDecoration;
 
 import java.io.Serializable;

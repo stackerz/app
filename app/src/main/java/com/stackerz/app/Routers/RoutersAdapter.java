@@ -3,8 +3,8 @@ package com.stackerz.app.Routers;
 /**
  * Created by limedv0 on 27/11/2014.
  */
+
 import android.animation.ValueAnimator;
-import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

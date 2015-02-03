@@ -23,11 +23,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.stackerz.app.Flavors.Flavors;
-import com.stackerz.app.System.ObscuredSharedPreferences;
-import com.stackerz.app.System.SSLCerts;
-import com.stackerz.app.System.VolleySingleton;
-
 import com.stackerz.app.Endpoints.EndpointsParser;
 import com.stackerz.app.Flavors.FlavorsJSON;
 import com.stackerz.app.Flavors.FlavorsParser;
@@ -39,11 +34,12 @@ import com.stackerz.app.Networks.NetworksJSON;
 import com.stackerz.app.Networks.NetworksParser;
 import com.stackerz.app.Routers.RoutersJSON;
 import com.stackerz.app.Routers.RoutersParser;
-import com.stackerz.app.Security.SecurityJSON;
 import com.stackerz.app.Security.SecurityParser;
 import com.stackerz.app.Subnets.SubnetsJSON;
 import com.stackerz.app.Subnets.SubnetsParser;
-
+import com.stackerz.app.System.ObscuredSharedPreferences;
+import com.stackerz.app.System.SSLCerts;
+import com.stackerz.app.System.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;

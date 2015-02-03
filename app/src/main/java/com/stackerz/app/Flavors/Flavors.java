@@ -1,7 +1,5 @@
 package com.stackerz.app.Flavors;
 
-import android.os.Bundle;
-
 /**
  * Created by ed on 4/11/14.
  */

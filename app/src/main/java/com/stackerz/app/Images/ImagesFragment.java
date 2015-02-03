@@ -1,10 +1,7 @@
 package com.stackerz.app.Images;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.stackerz.app.Flavors.FlavorsAdapter;
-import com.stackerz.app.Login;
 import com.stackerz.app.R;
 import com.stackerz.app.Stackerz;
 import com.stackerz.app.System.DividerItemDecoration;

@@ -1,7 +1,6 @@
 package com.stackerz.app.Instances;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -11,7 +10,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.stackerz.app.Endpoints.EndpointsParser;
 import com.stackerz.app.System.VolleySingleton;
 
 import org.json.JSONException;
