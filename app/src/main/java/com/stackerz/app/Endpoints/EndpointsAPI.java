@@ -7,6 +7,7 @@ import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
+import retrofit.mime.TypedInput;
 
 /**
  * Created by limedv0 on 28/01/2015.
@@ -19,6 +20,6 @@ public interface EndpointsAPI {
     })
     @POST("/")
     //void getImagesContent(Callback<Response> callback);
-    Response getEndpointsSync(@Body JSONObject body);
+    Response getEndpointsSync(@Body TypedInput body);
 
 }

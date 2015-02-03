@@ -51,6 +51,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +61,8 @@ import java.util.regex.Pattern;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 
 /**
@@ -290,7 +293,7 @@ public class Login extends Activity implements View.OnClickListener{
         }
 
 
-        /*
+
 
         pDialog.setMessage("Loading...");
         pDialog.show();
@@ -302,7 +305,8 @@ public class Login extends Activity implements View.OnClickListener{
         RestAdapter adapter = builder.build();
         EndpointsAPI api = adapter.create(EndpointsAPI.class);
         try {
-            retrofit.client.Response result = api.getEndpointsSync(login);
+            TypedInput in = new TypedByteArray("application/json", json.getBytes());
+            retrofit.client.Response result = api.getEndpointsSync(in);
             JSONObject raw = null;
             try {
                 raw = new JSONObject(getRawJSON(result));
@@ -336,7 +340,7 @@ public class Login extends Activity implements View.OnClickListener{
             }
         }
     }
-        */
+        /*
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, login,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -394,7 +398,7 @@ public class Login extends Activity implements View.OnClickListener{
         pDialog.setMessage("Loading...");
         pDialog.show();
 
-    }
+    }*/
 
     public String getRawJSON (retrofit.client.Response response){
         String raw = null;
@@ -435,7 +439,7 @@ public class Login extends Activity implements View.OnClickListener{
             String glanceURL = EndpointsParser.getGlanceURL();
             String neutronURL = EndpointsParser.getNeutronURL();
 
-            if (novaURL != null) {
+            /*if (novaURL != null) {
                 instances = NovaJSON.shared().receiveData(novaURL, authToken);
                 flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
             }
@@ -476,7 +480,7 @@ public class Login extends Activity implements View.OnClickListener{
             if (security != null) {
                 shPref.edit().putString("Security", security).commit();
                 securityList = SecurityParser.parseJSON(security);
-            }
+            }*/
         }
     }
 }
