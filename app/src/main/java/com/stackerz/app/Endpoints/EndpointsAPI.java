@@ -17,7 +17,7 @@ public interface EndpointsAPI {
             "Accept: application/json",
             "Content-Type: application/json; charset=utf-8"
     })
-    @POST("")
+    @POST("/")
     //void getImagesContent(Callback<Response> callback);
     Response getEndpointsSync(@Body JSONObject body);
 

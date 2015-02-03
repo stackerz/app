@@ -9,6 +9,7 @@ import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
@@ -109,6 +110,12 @@ public class Login extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         SSLCerts.sslHandling();
         setContentView(R.layout.activity_login);
+
+        //DISABLE THIS AFTER TESTING SYNC CALLS
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         getInit();
         SharedPreferences firstSP = getSharedPreferences("First",first);
         if (firstSP.getInt("First",first)>0){
@@ -118,6 +125,8 @@ public class Login extends Activity implements View.OnClickListener{
             userInput.setText(shPref.getString("Username", username));
             passInput.requestFocus();
         }
+
+
     }
 
     public void getInit() {
@@ -226,7 +235,7 @@ public class Login extends Activity implements View.OnClickListener{
                 Intent intent = new Intent(Login.this, Stackerz.class);
                 intent.putExtra("AuthToken", authToken);
                 startActivityForResult(intent,1);
-                setupCache();
+                //setupCache();
                 first = (firstSP.getInt("First",first));
                 first++;
                 firstSP.edit().putInt ("First", first).commit();
@@ -280,6 +289,7 @@ public class Login extends Activity implements View.OnClickListener{
             e.printStackTrace();
         }
 
+
         /*
 
         pDialog.setMessage("Loading...");
@@ -325,8 +335,8 @@ public class Login extends Activity implements View.OnClickListener{
 
             }
         }
-    }*/
-
+    }
+        */
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, login,
                 new Response.Listener<JSONObject>() {
                     @Override
