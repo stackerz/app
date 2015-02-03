@@ -54,6 +54,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
@@ -163,10 +164,13 @@ public class Stackerz extends Activity
         EndpointsParser.shared().getURLs(jsonList);
         String novaURL = EndpointsParser.getNovaURL();
         //instances = NovaJSON.shared().receiveData(novaURL, authToken);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setReadTimeout(3, TimeUnit.SECONDS);
+        okHttpClient.setConnectTimeout(3, TimeUnit.SECONDS);
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(novaURL)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setClient(new OkClient(new OkHttpClient()));
+                .setClient(new OkClient(okHttpClient));
         builder.setRequestInterceptor(new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
@@ -188,7 +192,7 @@ public class Stackerz extends Activity
             if (e.toString().contains("Unauthorized")){
                 tokenExpiredAlert();
             }
-            if (offline==0 && e.toString().contains("Unable to resolve host")){
+            if (offline==0 && (e.toString().contains("Unable to resolve host") || e.toString().contains("failed"))){
                 offlineAlert();
             }
         }
@@ -229,10 +233,13 @@ public class Stackerz extends Activity
         EndpointsParser.shared().getURLs(jsonList);
         String novaURL = EndpointsParser.getNovaURL();
         //flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setReadTimeout(3, TimeUnit.SECONDS);
+        okHttpClient.setConnectTimeout(3, TimeUnit.SECONDS);
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(novaURL)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setClient(new OkClient(new OkHttpClient()));
+                .setClient(new OkClient(okHttpClient));
         builder.setRequestInterceptor(new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
@@ -253,7 +260,7 @@ public class Stackerz extends Activity
             if (e.toString().contains("Unauthorized")){
                 tokenExpiredAlert();
             }
-            if (offline==0 && e.toString().contains("Unable to resolve host")){
+            if (offline==0 && (e.toString().contains("Unable to resolve host") || e.toString().contains("failed"))){
                 offlineAlert();
             }
         }
@@ -295,10 +302,13 @@ public class Stackerz extends Activity
         EndpointsParser.shared().getURLs(jsonList);
         String glanceURL = EndpointsParser.getGlanceURL();
         //images = ImagesJSON.shared().receiveData(glanceURL, authToken);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setReadTimeout(3, TimeUnit.SECONDS);
+        okHttpClient.setConnectTimeout(3, TimeUnit.SECONDS);
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(glanceURL)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setClient(new OkClient(new OkHttpClient()));
+                .setClient(new OkClient(okHttpClient));
         builder.setRequestInterceptor(new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
@@ -319,7 +329,7 @@ public class Stackerz extends Activity
             if (e.toString().contains("Unauthorized")){
                 tokenExpiredAlert();
             }
-            if (offline==0 && e.toString().contains("Unable to resolve host")){
+            if (offline==0 && (e.toString().contains("Unable to resolve host") || e.toString().contains("failed"))){
                 offlineAlert();
             }
         }
@@ -361,10 +371,13 @@ public class Stackerz extends Activity
         EndpointsParser.shared().getURLs(jsonList);
         String neutronURL = EndpointsParser.getNeutronURL();
         //networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setReadTimeout(3, TimeUnit.SECONDS);
+        okHttpClient.setConnectTimeout(3, TimeUnit.SECONDS);
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(neutronURL)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setClient(new OkClient(new OkHttpClient()));
+                .setClient(new OkClient(okHttpClient));
         builder.setRequestInterceptor(new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
@@ -385,7 +398,7 @@ public class Stackerz extends Activity
             if (e.toString().contains("Unauthorized")){
                 tokenExpiredAlert();
             }
-            if (offline==0 && e.toString().contains("Unable to resolve host")){
+            if (offline==0 && (e.toString().contains("Unable to resolve host") || e.toString().contains("failed"))){
                 offlineAlert();
             }
         }
@@ -426,10 +439,13 @@ public class Stackerz extends Activity
         EndpointsParser.shared().getURLs(jsonList);
         String neutronURL = EndpointsParser.getNeutronURL();
         //subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setReadTimeout(3, TimeUnit.SECONDS);
+        okHttpClient.setConnectTimeout(3, TimeUnit.SECONDS);
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(neutronURL)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setClient(new OkClient(new OkHttpClient()));
+                .setClient(new OkClient(okHttpClient));
         builder.setRequestInterceptor(new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
@@ -450,7 +466,7 @@ public class Stackerz extends Activity
             if (e.toString().contains("Unauthorized")){
                 tokenExpiredAlert();
             }
-            if (offline==0 && e.toString().contains("Unable to resolve host")){
+            if (offline==0 && (e.toString().contains("Unable to resolve host") || e.toString().contains("failed"))){
                 offlineAlert();
             }
         }
@@ -492,10 +508,13 @@ public class Stackerz extends Activity
         EndpointsParser.shared().getURLs(jsonList);
         String neutronURL = EndpointsParser.getNeutronURL();
         //routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setReadTimeout(3, TimeUnit.SECONDS);
+        okHttpClient.setConnectTimeout(3, TimeUnit.SECONDS);
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(neutronURL)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setClient(new OkClient(new OkHttpClient()));
+                .setClient(new OkClient(okHttpClient));
         builder.setRequestInterceptor(new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
@@ -516,7 +535,7 @@ public class Stackerz extends Activity
             if (e.toString().contains("Unauthorized")){
                 tokenExpiredAlert();
             }
-            if (offline==0 && e.toString().contains("Unable to resolve host")){
+            if (offline==0 && (e.toString().contains("Unable to resolve host") || e.toString().contains("failed"))){
                 offlineAlert();
             }
         }
@@ -558,10 +577,13 @@ public class Stackerz extends Activity
         EndpointsParser.shared().getURLs(jsonList);
         String neutronURL = EndpointsParser.getNeutronURL();
         //security = SecurityJSON.shared().receiveData(neutronURL, authToken);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setReadTimeout(3, TimeUnit.SECONDS);
+        okHttpClient.setConnectTimeout(3, TimeUnit.SECONDS);
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(neutronURL)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setClient(new OkClient(new OkHttpClient()));
+                .setClient(new OkClient(okHttpClient));
         builder.setRequestInterceptor(new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
@@ -583,7 +605,7 @@ public class Stackerz extends Activity
             if (e.toString().contains("Unauthorized")){
                 tokenExpiredAlert();
             }
-            if (offline==0 && e.toString().contains("Unable to resolve host")){
+            if (offline==0 && (e.toString().contains("Unable to resolve host") || e.toString().contains("failed"))){
                 offlineAlert();
             }
         }

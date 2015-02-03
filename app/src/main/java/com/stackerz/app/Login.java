@@ -1,8 +1,10 @@
 package com.stackerz.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -55,6 +57,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,6 +78,7 @@ public class Login extends Activity implements View.OnClickListener{
     public EditText userInput, passInput, tenantInput, serverInput;
     public SharedPreferences shPref;
     public Editor toEdit;
+    public ProgressDialog pDialog;
     public JSONObject endpoints;
     public String authToken;
     public String endpointStr;
@@ -118,6 +122,8 @@ public class Login extends Activity implements View.OnClickListener{
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        pDialog = new ProgressDialog(this);
 
         getInit();
         SharedPreferences firstSP = getSharedPreferences("First",first);
@@ -274,7 +280,7 @@ public class Login extends Activity implements View.OnClickListener{
         final String url = shPref.getString("Endpoint", endpoint);
         final String tnt = shPref.getString("Tenant", tenant);
         final String json = "{\"auth\": {\"tenantName\": \"" + tnt + "\", \"passwordCredentials\": {\"username\": \"" + user + "\", \"password\": \"" + pass + "\"}}}";
-        final ProgressDialog pDialog = new ProgressDialog(this);
+
 
 
         //Handler handler = new Handler();
@@ -285,24 +291,18 @@ public class Login extends Activity implements View.OnClickListener{
         //}, 5000);  // 5000 milliseconds
 
 
-        JSONObject login = null;
-        try {
-            login = new JSONObject(json);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-        pDialog.setMessage("Loading...");
-        pDialog.show();
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setReadTimeout(8, TimeUnit.SECONDS);
+        okHttpClient.setConnectTimeout(8, TimeUnit.SECONDS);
 
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(url)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setClient(new OkClient(new OkHttpClient()));
+                .setClient(new OkClient(okHttpClient));
         RestAdapter adapter = builder.build();
+        pDialog.setMessage("Loading...");
+        pDialog.getProgress();
+        pDialog.show();
         EndpointsAPI api = adapter.create(EndpointsAPI.class);
         try {
             TypedInput in = new TypedByteArray("application/json", json.getBytes());
@@ -326,21 +326,38 @@ public class Login extends Activity implements View.OnClickListener{
         } catch (RetrofitError e) {
             Log.d("Retrofit Error", e.toString());
             if (e.toString().contains("Unauthorized")) {
+                pDialog.dismiss();
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Cannot connect, wrong user name or password. Please try to login again", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast.show();
+                reachable = false;
             }
             if (e.toString().contains("Unable to resolve host")) {
+                pDialog.dismiss();
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "The server is not reachable. Please try again later.", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast.show();
-
+                reachable = false;
+            }
+            if (e.toString().contains("failed")) {
+                pDialog.dismiss();
+                reachable = false;
+                finishActivity(1);
+                offlineAlert();
             }
         }
     }
         /*
+
+        JSONObject login = null;
+        try {
+            login = new JSONObject(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, login,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -422,6 +439,21 @@ public class Login extends Activity implements View.OnClickListener{
         return raw;
     }
 
+    public void offlineAlert(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Server Unreachable");
+        alert.setMessage("The server is not responding, the connection timed out. Please try again later.")
+                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(Login.this, Connect.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+        AlertDialog alertDialog = alert.create();
+        alertDialog.show();
+    }
 
     public void setupCache(){
         SharedPreferences shPref = new ObscuredSharedPreferences(this, this.getSharedPreferences("Login_Credentials", Context.MODE_PRIVATE));
