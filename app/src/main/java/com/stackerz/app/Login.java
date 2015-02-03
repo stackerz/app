@@ -9,6 +9,7 @@ import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
@@ -23,6 +24,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.squareup.okhttp.OkHttpClient;
+import com.stackerz.app.Endpoints.EndpointsAPI;
 import com.stackerz.app.Endpoints.EndpointsParser;
 import com.stackerz.app.Flavors.FlavorsJSON;
 import com.stackerz.app.Flavors.FlavorsParser;
@@ -44,11 +47,18 @@ import com.stackerz.app.System.VolleySingleton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.OkClient;
 
 
 /**
@@ -262,12 +272,60 @@ public class Login extends Activity implements View.OnClickListener{
         //    }
         //}, 5000);  // 5000 milliseconds
 
+
         JSONObject login = null;
         try {
             login = new JSONObject(json);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        /*
+
+        pDialog.setMessage("Loading...");
+        pDialog.show();
+
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(url)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        RestAdapter adapter = builder.build();
+        EndpointsAPI api = adapter.create(EndpointsAPI.class);
+        try {
+            retrofit.client.Response result = api.getEndpointsSync(login);
+            JSONObject raw = null;
+            try {
+                raw = new JSONObject(getRawJSON(result));
+                JSONObject access = raw.getJSONObject("access");
+                JSONObject token = access.getJSONObject("token");
+                String id = token.getString("id");
+                setAuthToken(id);
+                Toast.makeText(getApplicationContext(), "New Authentication Token acquired", Toast.LENGTH_LONG).show();
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+            setEndpoints(raw);
+            setEndpointStr(raw.toString());
+            reachable = true;
+            pDialog.dismiss();
+        } catch (RetrofitError e) {
+            Log.d("Retrofit Error", e.toString());
+            if (e.toString().contains("Unauthorized")) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Cannot connect, wrong user name or password. Please try to login again", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+            }
+            if (e.toString().contains("Unable to resolve host")) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "The server is not reachable. Please try again later.", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+
+            }
+        }
+    }*/
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, login,
                 new Response.Listener<JSONObject>() {
@@ -325,9 +383,30 @@ public class Login extends Activity implements View.OnClickListener{
         queue.add(getRequest);
         pDialog.setMessage("Loading...");
         pDialog.show();
+
     }
 
+    public String getRawJSON (retrofit.client.Response response){
+        String raw = null;
+        BufferedReader reader = null;
+        StringBuilder sb = new StringBuilder();
+        try {
+            reader = new BufferedReader(new InputStreamReader(response.getBody().in()));
+            String line;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        raw = sb.toString();
+        return raw;
+    }
 
 
     public void setupCache(){
