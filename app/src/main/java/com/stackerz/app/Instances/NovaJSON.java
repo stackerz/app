@@ -309,7 +309,7 @@ public class NovaJSON extends Activity {
     public void pauseJSON(String id){
         final String authToken = getAuth();
         String novaURL = getNova();
-        novaURL = novaURL+"/servers/"+id+"/action";
+        novaURL = novaURL+"/servers/"+id;
         String pause = "{ \"pause\": null }";
 
         RestAdapter.Builder builder = new RestAdapter.Builder()
@@ -375,7 +375,7 @@ public class NovaJSON extends Activity {
     public void unpauseJSON(String id){
         final String authToken = getAuth();
         String novaURL = getNova();
-        novaURL = novaURL+"/servers/"+id+"/action";
+        novaURL = novaURL+"/servers/"+id;
         String unpause = "{ \"unpause\": null }";
 
         RestAdapter.Builder builder = new RestAdapter.Builder()
@@ -508,7 +508,7 @@ public class NovaJSON extends Activity {
     public void backupJSON(String id, String name){
         final String authToken = getAuth();
         String novaURL = getNova();
-        novaURL = novaURL+"/servers/"+id+"/action";
+        novaURL = novaURL+"/servers/"+id;
         String backup = "{ \"createBackup\": { \"name\": \""+name+"Backup\", \"backup_type\": \"daily\", \"rotation\": 1 }}}";
 
         RestAdapter.Builder builder = new RestAdapter.Builder()
