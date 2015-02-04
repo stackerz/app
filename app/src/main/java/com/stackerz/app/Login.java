@@ -83,7 +83,6 @@ public class Login extends Activity implements View.OnClickListener{
     public EditText userInput, passInput, tenantInput, serverInput;
     public SharedPreferences shPref;
     public Editor toEdit;
-    public ProgressDialog pDialog;
     public JSONObject endpoints;
     public String authToken;
     public String endpointStr;
@@ -127,8 +126,6 @@ public class Login extends Activity implements View.OnClickListener{
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
-        pDialog = new ProgressDialog(this);
 
         getInit();
         SharedPreferences firstSP = getSharedPreferences("First",first);
@@ -285,9 +282,9 @@ public class Login extends Activity implements View.OnClickListener{
         final String url = shPref.getString("Endpoint", endpoint);
         final String tnt = shPref.getString("Tenant", tenant);
         final String json = "{\"auth\": {\"tenantName\": \"" + tnt + "\", \"passwordCredentials\": {\"username\": \"" + user + "\", \"password\": \"" + pass + "\"}}}";
-
+        final ProgressDialog pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
-        pDialog.getProgress();
+        pDialog.setIndeterminate(true);
         pDialog.show();
 
 
