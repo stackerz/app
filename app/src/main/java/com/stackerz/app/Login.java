@@ -30,16 +30,19 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.squareup.okhttp.OkHttpClient;
 import com.stackerz.app.Endpoints.EndpointsAPI;
 import com.stackerz.app.Endpoints.EndpointsParser;
+import com.stackerz.app.Flavors.FlavorsAPI;
 import com.stackerz.app.Flavors.FlavorsJSON;
 import com.stackerz.app.Flavors.FlavorsParser;
 import com.stackerz.app.Images.ImagesJSON;
 import com.stackerz.app.Images.ImagesParser;
+import com.stackerz.app.Instances.NovaAPI;
 import com.stackerz.app.Instances.NovaJSON;
 import com.stackerz.app.Instances.NovaParser;
 import com.stackerz.app.Networks.NetworksJSON;
 import com.stackerz.app.Networks.NetworksParser;
 import com.stackerz.app.Routers.RoutersJSON;
 import com.stackerz.app.Routers.RoutersParser;
+import com.stackerz.app.Security.SecurityJSON;
 import com.stackerz.app.Security.SecurityParser;
 import com.stackerz.app.Subnets.SubnetsJSON;
 import com.stackerz.app.Subnets.SubnetsParser;
@@ -61,6 +64,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import retrofit.Callback;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
@@ -244,7 +249,7 @@ public class Login extends Activity implements View.OnClickListener{
                 Intent intent = new Intent(Login.this, Stackerz.class);
                 intent.putExtra("AuthToken", authToken);
                 startActivityForResult(intent,1);
-                setupCache();
+                //setupCache();
                 first = (firstSP.getInt("First",first));
                 first++;
                 firstSP.edit().putInt ("First", first).commit();
@@ -281,14 +286,9 @@ public class Login extends Activity implements View.OnClickListener{
         final String tnt = shPref.getString("Tenant", tenant);
         final String json = "{\"auth\": {\"tenantName\": \"" + tnt + "\", \"passwordCredentials\": {\"username\": \"" + user + "\", \"password\": \"" + pass + "\"}}}";
 
-
-
-        //Handler handler = new Handler();
-        //handler.postDelayed(new Runnable() {
-        //    public void run() {
-        //        pDialog.dismiss();
-        //    }
-        //}, 5000);  // 5000 milliseconds
+        pDialog.setMessage("Loading...");
+        pDialog.getProgress();
+        pDialog.show();
 
 
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -300,9 +300,6 @@ public class Login extends Activity implements View.OnClickListener{
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setClient(new OkClient(okHttpClient));
         RestAdapter adapter = builder.build();
-        pDialog.setMessage("Loading...");
-        pDialog.getProgress();
-        pDialog.show();
         EndpointsAPI api = adapter.create(EndpointsAPI.class);
         try {
             TypedInput in = new TypedByteArray("application/json", json.getBytes());
@@ -321,6 +318,11 @@ public class Login extends Activity implements View.OnClickListener{
             }
             setEndpoints(raw);
             setEndpointStr(raw.toString());
+            jsonList = EndpointsParser.parseJSON(endpointStr);
+            EndpointsParser.shared().getURLs(jsonList);
+            String novaURL = EndpointsParser.getNovaURL();
+            NovaJSON.shared().setCreds(novaURL, authToken);
+            FlavorsJSON.shared().setCreds(novaURL, authToken);
             reachable = true;
             pDialog.dismiss();
         } catch (RetrofitError e) {
@@ -349,8 +351,8 @@ public class Login extends Activity implements View.OnClickListener{
             }
         }
     }
-        /*
 
+        /*
         JSONObject login = null;
         try {
             login = new JSONObject(json);
@@ -471,9 +473,48 @@ public class Login extends Activity implements View.OnClickListener{
             String glanceURL = EndpointsParser.getGlanceURL();
             String neutronURL = EndpointsParser.getNeutronURL();
 
-            /*if (novaURL != null) {
-                instances = NovaJSON.shared().receiveData(novaURL, authToken);
-                flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
+            if (novaURL != null) {
+                //instances = NovaJSON.shared().receiveData(novaURL, authToken);
+                //flavors = FlavorsJSON.shared().receiveData(novaURL, authToken);
+                RestAdapter.Builder builder = new RestAdapter.Builder()
+                        .setEndpoint(novaURL)
+                        .setLogLevel(RestAdapter.LogLevel.FULL)
+                        .setClient(new OkClient(new OkHttpClient()));
+                builder.setRequestInterceptor(new RequestInterceptor() {
+                    @Override
+                    public void intercept(RequestFacade request) {
+                        request.addHeader("X-Auth-Token", authToken);
+                    }
+                });
+                RestAdapter adapter = builder.build();
+                NovaAPI api = adapter.create(NovaAPI.class);
+                api.getNovaAsync(new Callback<retrofit.client.Response>() {
+                    @Override
+                    public void success(retrofit.client.Response response, retrofit.client.Response response2) {
+                        instances = getRawJSON(response);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d("Retrofit Error", error.toString());
+                    }
+                });
+
+                FlavorsAPI flavorsAPI = adapter.create(FlavorsAPI.class);
+                flavorsAPI.getFlavorsAsync(new Callback<retrofit.client.Response>() {
+                    @Override
+                    public void success(retrofit.client.Response response, retrofit.client.Response response2) {
+                        instances = getRawJSON(response);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d("Retrofit Error", error.toString());
+                    }
+                });
+
+                NovaJSON.shared().setCreds(novaURL, authToken);
+                FlavorsJSON.shared().setCreds(novaURL, authToken);
             }
             if (glanceURL != null){
                 images = ImagesJSON.shared().receiveData(glanceURL, authToken);
@@ -482,7 +523,7 @@ public class Login extends Activity implements View.OnClickListener{
                 networks = NetworksJSON.shared().receiveData(neutronURL, authToken);
                 subnets = SubnetsJSON.shared().receiveData(neutronURL, authToken);
                 routers = RoutersJSON.shared().receiveData(neutronURL, authToken);
-                //security = SecurityJSON.shared().receiveData(neutronURL, authToken);
+                security = SecurityJSON.shared().receiveData(neutronURL, authToken);
             }
 
             if (instances != null) {
@@ -512,7 +553,7 @@ public class Login extends Activity implements View.OnClickListener{
             if (security != null) {
                 shPref.edit().putString("Security", security).commit();
                 securityList = SecurityParser.parseJSON(security);
-            }*/
+            }
         }
     }
 }

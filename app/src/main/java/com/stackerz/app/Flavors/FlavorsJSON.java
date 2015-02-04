@@ -60,6 +60,11 @@ public class FlavorsJSON extends Activity {
         this.auth = auth;
     }
 
+    public void setCreds (String novaURL, String authToken) {
+        setNova(novaURL);
+        setAuth(authToken);
+    }
+
     public String receiveData (String novaURL, String authToken){
         setNova(novaURL);
         setAuth(authToken);

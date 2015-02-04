@@ -89,6 +89,10 @@ public class NovaJSON extends Activity {
         this.novaJSONdetail = novaJSONdetail;
     }
 
+    public void setCreds (String novaURL, String authToken) {
+        setNova(novaURL);
+        setAuth(authToken);
+    }
 
     public String receiveData (String novaURL, String authToken){
         setNova(novaURL);
@@ -202,7 +206,7 @@ public class NovaJSON extends Activity {
             }
         });
         RestAdapter adapter = builder.build();
-        NovaDetailAPI api = adapter.create(NovaDetailAPI.class);
+        NovaAPI api = adapter.create(NovaAPI.class);
 
         try {
             retrofit.client.Response result = api.getNovaDetailSync(id);
