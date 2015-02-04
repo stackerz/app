@@ -22,10 +22,13 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 /**
  * Created by ed on 19/11/14.
@@ -213,12 +216,6 @@ public class NovaJSON extends Activity {
             setNovaJSONdetail(getRawJSON(result));
         } catch (RetrofitError e) {
             Log.d("Retrofit Error", e.toString());
-            /*if (e.toString().contains("Unauthorized")){
-                tokenExpiredAlert();
-            }
-            if (offline==0 && e.toString().contains("Unable to resolve host")){
-                offlineAlert();
-            }*/
         }
     }
 
@@ -248,9 +245,33 @@ public class NovaJSON extends Activity {
     public void startJSON(String id){
         final String authToken = getAuth();
         String novaURL = getNova();
-        novaURL = novaURL+"/servers/"+id+"/action";
+        novaURL = novaURL+"/servers/"+id;
         String start = "{ \"os-start\": null }";
-        JSONObject action  = null;
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(novaURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        NovaAPI api = adapter.create(NovaAPI.class);
+        TypedInput in = new TypedByteArray("application/json", start.getBytes());
+        api.getNovaActionAsync(in, new Callback<retrofit.client.Response>() {
+            @Override
+            public void success(retrofit.client.Response response, retrofit.client.Response response2) {
+                Log.d("Retrofit Start", response.toString());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Retrofit Error", error.toString());
+            }
+        });
+        /*JSONObject action  = null;
         try {
             action = new JSONObject(start);
         } catch (JSONException e) {
@@ -282,7 +303,7 @@ public class NovaJSON extends Activity {
 
         };
         queue = VolleySingleton.getInstance(this).getRequestQueue();
-        queue.add(getRequest);
+        queue.add(getRequest);*/
     }
 
     public void pauseJSON(String id){
@@ -368,8 +389,35 @@ public class NovaJSON extends Activity {
     public void stopJSON(String id){
         final String authToken = getAuth();
         String novaURL = getNova();
-        novaURL = novaURL+"/servers/"+id+"/action";
+        novaURL = novaURL+"/servers/"+id;
         String stop = "{ \"os-stop\": null }";
+
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(novaURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        NovaAPI api = adapter.create(NovaAPI.class);
+        TypedInput in = new TypedByteArray("application/json", stop.getBytes());
+        api.getNovaActionAsync(in, new Callback<retrofit.client.Response>() {
+            @Override
+            public void success(retrofit.client.Response response, retrofit.client.Response response2) {
+                Log.d("Retrofit Stop", response.toString());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Retrofit Error", error.toString());
+            }
+        });
+
+        /*
         JSONObject action  = null;
         try {
             action = new JSONObject(stop);
@@ -402,7 +450,7 @@ public class NovaJSON extends Activity {
 
         };
         queue = VolleySingleton.getInstance(this).getRequestQueue();
-        queue.add(getRequest);
+        queue.add(getRequest);*/
     }
 
     public void backupJSON(String id, String name){
