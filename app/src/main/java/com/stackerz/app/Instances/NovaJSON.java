@@ -310,8 +310,34 @@ public class NovaJSON extends Activity {
         final String authToken = getAuth();
         String novaURL = getNova();
         novaURL = novaURL+"/servers/"+id+"/action";
-        String start = "{ \"pause\": null }";
-        JSONObject action  = null;
+        String pause = "{ \"pause\": null }";
+
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(novaURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        NovaAPI api = adapter.create(NovaAPI.class);
+        TypedInput in = new TypedByteArray("application/json", pause.getBytes());
+        api.getNovaActionAsync(in, new Callback<retrofit.client.Response>() {
+            @Override
+            public void success(retrofit.client.Response response, retrofit.client.Response response2) {
+                Log.d("Retrofit Pause", response.toString());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Retrofit Error", error.toString());
+            }
+        });
+
+        /*JSONObject action  = null;
         try {
             action = new JSONObject(start);
         } catch (JSONException e) {
@@ -343,15 +369,41 @@ public class NovaJSON extends Activity {
 
         };
         queue = VolleySingleton.getInstance(this).getRequestQueue();
-        queue.add(getRequest);
+        queue.add(getRequest);*/
     }
 
     public void unpauseJSON(String id){
         final String authToken = getAuth();
         String novaURL = getNova();
         novaURL = novaURL+"/servers/"+id+"/action";
-        String start = "{ \"unpause\": null }";
-        JSONObject action  = null;
+        String unpause = "{ \"unpause\": null }";
+
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(novaURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        NovaAPI api = adapter.create(NovaAPI.class);
+        TypedInput in = new TypedByteArray("application/json", unpause.getBytes());
+        api.getNovaActionAsync(in, new Callback<retrofit.client.Response>() {
+            @Override
+            public void success(retrofit.client.Response response, retrofit.client.Response response2) {
+                Log.d("Retrofit Unpause", response.toString());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Retrofit Error", error.toString());
+            }
+        });
+
+        /*JSONObject action  = null;
         try {
             action = new JSONObject(start);
         } catch (JSONException e) {
@@ -383,7 +435,7 @@ public class NovaJSON extends Activity {
 
         };
         queue = VolleySingleton.getInstance(this).getRequestQueue();
-        queue.add(getRequest);
+        queue.add(getRequest);*/
     }
 
     public void stopJSON(String id){
@@ -457,7 +509,34 @@ public class NovaJSON extends Activity {
         final String authToken = getAuth();
         String novaURL = getNova();
         novaURL = novaURL+"/servers/"+id+"/action";
-        String stop = "{ \"createBackup\": { \"name\": \""+name+"Backup\", \"backup_type\": \"daily\", \"rotation\": 1 }}}";
+        String backup = "{ \"createBackup\": { \"name\": \""+name+"Backup\", \"backup_type\": \"daily\", \"rotation\": 1 }}}";
+
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setEndpoint(novaURL)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(new OkHttpClient()));
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("X-Auth-Token", authToken);
+            }
+        });
+        RestAdapter adapter = builder.build();
+        NovaAPI api = adapter.create(NovaAPI.class);
+        TypedInput in = new TypedByteArray("application/json", backup.getBytes());
+        api.getNovaActionAsync(in, new Callback<retrofit.client.Response>() {
+            @Override
+            public void success(retrofit.client.Response response, retrofit.client.Response response2) {
+                Log.d("Retrofit Backup", response.toString());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Retrofit Error", error.toString());
+            }
+        });
+
+        /*
         JSONObject action  = null;
         try {
             action = new JSONObject(stop);
@@ -490,7 +569,7 @@ public class NovaJSON extends Activity {
 
         };
         queue = VolleySingleton.getInstance(this).getRequestQueue();
-        queue.add(getRequest);
+        queue.add(getRequest);*/
     }
 
 }
