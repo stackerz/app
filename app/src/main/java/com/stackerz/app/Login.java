@@ -292,6 +292,7 @@ public class Login extends Activity implements View.OnClickListener{
         okHttpClient.setReadTimeout(8, TimeUnit.SECONDS);
         okHttpClient.setConnectTimeout(8, TimeUnit.SECONDS);
 
+
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(url)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
