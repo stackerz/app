@@ -7,10 +7,10 @@ Most of the work is done however it is unfinished mostly because I had to cease 
 #Screenshots
 
 <p align="center">
-  <img src="screenshots/1-Splash.png" width="300"/>
-  <img src="screenshots/2-Login.png" width="300"/>
-  <img src="screenshots/3-Navigation.png" width="300"/>
-  <img src="screenshots/4-Instances.png" width="300"/>
-  <img src="screenshots/5-Instance_Actions.png" width="300"/>
-  <img src="screenshots/6-Services.png" width="300"/>
+  <img src="screenshots/1-Splash.png" width="350"/>
+  <img src="screenshots/2-Login.png" width="350"/>
+  <img src="screenshots/3-Navigation.png" width="350"/>
+  <img src="screenshots/4-Instances.png" width="350"/>
+  <img src="screenshots/5-Instance_Actions.png" width="350"/>
+  <img src="screenshots/6-Services.png" width="350"/>
 </p>
