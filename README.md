@@ -6,7 +6,7 @@ It is unfinished and I had to cease develpoment due to lack of time and other re
 
 Screenshots
 
-![alt tag](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+
 ![alt "Splash Screen"](https://github.com/stackerz/app/screenshots/1-Splash.png)
 ![alt "Login Screen"](https://github.com/stackerz/app/screenshots/2-Login.png)
 ![alt "Navigation Drawer"](https://github.com/stackerz/app/screenshots/3-Navigation.png)
