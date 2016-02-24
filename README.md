@@ -1,8 +1,10 @@
 #Stackerz
 
-This is an Android app I developed to manage OpenStack Juno 2014.2.4 services, instances and objects. I believe it'll be easy enough to update to be used with newer versions.
+This is an Android app developed to manage OpenStack Juno 2014.2.4 services, instances and objects. 
 
-Most of the work is done however it is unfinished mostly because I had to cease develpoment due to lack of time and other reasons. Feel free to fork and use the code!
+Most of the work is done and I believe it'll be easy enough to update to be used with newer versions. However it is unfinished mostly because I had to cease develpoment due to lack of time and other reasons. 
+
+Feel free to fork and use the code!
 
 #Screenshots
 
